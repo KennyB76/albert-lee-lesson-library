@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ANSWER KEY — Sound &amp; Waves (icp13) — Albert Lee</title>
+<script>
+window.MathJax = {
+    tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+/* ===== base-print.css ===== */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .answer-block, .concept-box { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, .problem-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+}
+
+/* ===== theme-boy.css ===== */
+:root {
+    --color-primary: #1565c0;
+    --color-primary-dark: #0d47a1;
+    --color-accent: #00838f;
+    --color-header-border: #1565c0;
+    --color-final-answer: #2e7d32;
+    --color-warning: #c62828;
+    --color-tag-border: #1565c0;
+    --color-tag-text: #1565c0;
+    --color-muted: #555;
+    --color-rule: #ccc;
+}
+
+/* ===== level-high.css ===== */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 16pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+
+/* Answer-key blocks */
+.answer-block { margin: 14px 0; padding: 10px 14px; border: 1px solid #ddd; border-radius: 4px; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 5px; }
+.problem-text { font-size: 9.5pt; padding: 6px 10px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 8px; line-height: 1.5; }
+.concept-tag { display: inline-block; font-size: 8pt; padding: 2px 8px; margin: 2px 3px 5px 0; border: 1px solid var(--color-tag-border); color: var(--color-tag-text); border-radius: 10px; }
+.solution { margin: 6px 0; padding-left: 8px; border-left: 3px solid var(--color-final-answer); }
+.solution-step { margin: 4px 0; font-size: 10pt; line-height: 1.6; }
+.final-answer { display: inline-block; border: 2px solid var(--color-final-answer); color: var(--color-final-answer); font-weight: bold; padding: 4px 12px; border-radius: 4px; margin-top: 6px; font-size: 11pt; }
+.sub-result { margin-left: 16px; font-size: 10pt; }
+.sub-result strong { color: var(--color-primary); }
+.note-box { font-size: 9.5pt; font-style: italic; color: var(--color-warning); margin-top: 6px; }
+
+table.k-table { border-collapse: collapse; margin: 8px 0; font-size: 10pt; }
+table.k-table th, table.k-table td { border: 1px solid #555; padding: 4px 12px; text-align: center; }
+table.k-table th { color: var(--color-primary); }
+
+ul.def-list { margin: 6px 0 0 0; padding-left: 18px; font-size: 10pt; }
+ul.def-list li { margin: 3px 0; }
+</style>
+</head>
+<body>
+
+<!-- ============= PAGE 1 — SOLUTIONS HEADER + Q1-Q4 ============= -->
+<div class="page">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PHYSICS HONORS</div>
+    <div class="key-tag">ANSWER KEY</div>
+    <h1>Sound &amp; Waves Homework — icp13 · Solutions</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Albert Lee</span>
+        <span><strong>Date:</strong> 2026-05-06</span>
+    </div>
+    <div class="standard"><strong>For teacher reference</strong> — full step-by-step solutions for all 14 problems.</div>
+</div>
+
+<div class="part-header">SOLUTIONS</div>
+
+<!-- ===== Problem 1 ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem 1</div>
+    <div class="problem-text">Calculate the speed of sound at 25 °C.</div>
+    <span class="concept-tag">Speed of sound</span>
+    <span class="concept-tag">Temperature dependence</span>
+    <div class="solution">
+        <div class="solution-step">Apply $v = 331 + 0.6T$ with $T = 25$ °C.</div>
+        <div class="solution-step">$v = 331 + 0.6(25) = 331 + 15$</div>
+    </div>
+    <div class="final-answer">$v = 346$ m/s</div>
+</div>
+
+<!-- ===== Problem 2 ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem 2</div>
+    <div class="problem-text">Light waves with $f = 7.0 \times 10^{14}$ Hz cannot be detected by most human eyes. Calculate the wavelength.</div>
+    <span class="concept-tag">Wave equation</span>
+    <span class="concept-tag">EM waves</span>
+    <div class="solution">
+        <div class="solution-step">Light travels at $c = 3.0 \times 10^{8}$ m/s. Use $\lambda = c/f$.</div>
+        <div class="solution-step">$\lambda = \dfrac{3.0 \times 10^{8}}{7.0 \times 10^{14}} = 4.29 \times 10^{-7}$ m</div>
+    </div>
+    <div class="final-answer">$\lambda \approx 4.3 \times 10^{-7}$ m = 429 nm</div>
+    <div class="note-box">Note: 429 nm is actually visible (violet-blue). The problem statement may be slightly off — but the calculation is what matters.</div>
+</div>
+
+<!-- ===== Problem 3 ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem 3</div>
+    <div class="problem-text">Wavelength in air at 20 °C of middle C (260 Hz).</div>
+    <span class="concept-tag">Wave equation</span>
+    <span class="concept-tag">Sound in air</span>
+    <div class="solution">
+        <div class="solution-step">$v = 331 + 0.6(20) = 343$ m/s</div>
+        <div class="solution-step">$\lambda = v/f = 343/260$</div>
+    </div>
+    <div class="final-answer">$\lambda \approx 1.32$ m</div>
+</div>
+
+<!-- ===== Problem 4 ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem 4</div>
+    <div class="problem-text">Room 4.0 m × 5.2 m × 3.5 m. First 3 harmonics for each dimension. Any double/triple resonances?</div>
+    <span class="concept-tag">Standing waves in rooms</span>
+    <span class="concept-tag">Open-open pipe analog</span>
+    <div class="solution">
+        <div class="solution-step">A room dimension behaves like an open-open pipe: $f_n = nv/(2L)$, $v = 343$ m/s.</div>
+        <table class="k-table">
+            <thead><tr><th>$L$</th><th>$f_1$ (Hz)</th><th>$f_2$ (Hz)</th><th>$f_3$ (Hz)</th></tr></thead>
+            <tbody>
+                <tr><td>4.0 m</td><td>42.9</td><td>85.8</td><td>128.6</td></tr>
+                <tr><td>5.2 m</td><td>33.0</td><td>66.0</td><td>99.0</td></tr>
+                <tr><td>3.5 m</td><td>49.0</td><td>98.0</td><td>147.0</td></tr>
+            </tbody>
+        </table>
+        <div class="solution-step"><strong>Coincidence check:</strong> 5.2 m's $f_3 \approx 99.0$ Hz vs. 3.5 m's $f_2 = 98.0$ Hz — these match within ~1% (≈ <strong>double resonance</strong> at ~98 Hz).</div>
+        <div class="solution-step">No triple resonance — no third dimension produces a frequency near 98 Hz.</div>
+    </div>
+    <div class="final-answer">Approximate double resonance at ≈ 98 Hz (5.2 m × 3.5 m).</div>
+</div>
+
+</div>
+
+<!-- ============= PAGE 2 — Q5, Q6 ============= -->
+<div class="page page-break">
+
+<!-- ===== Problem 5 ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem 5</div>
+    <div class="problem-text">1.5 W sound source, uniform in all directions. (a) Intensity at 2.5 m. (b) dB level. (c) dB level at 1.0 m.</div>
+    <span class="concept-tag">Inverse-square law</span>
+    <span class="concept-tag">Decibel scale</span>
+    <div class="solution">
+        <div class="solution-step"><strong>(a)</strong> $I = \dfrac{P}{4\pi r^{2}} = \dfrac{1.5}{4\pi (2.5)^{2}} = \dfrac{1.5}{78.54}$</div>
+        <div class="sub-result"><strong>$I_{2.5} \approx 1.91 \times 10^{-2}$ W/m²</strong></div>
+        <div class="solution-step"><strong>(b)</strong> $\beta = 10\log_{10}\!\left(\dfrac{1.91 \times 10^{-2}}{1.0 \times 10^{-12}}\right) = 10\log_{10}(1.91 \times 10^{10})$</div>
+        <div class="sub-result">$\beta = 10 (10.281) \approx \mathbf{102.8 \text{ dB}}$</div>
+        <div class="solution-step"><strong>(c)</strong> At $r = 1.0$ m: $I_{1.0} = \dfrac{1.5}{4\pi(1.0)^{2}} = 0.1194$ W/m²</div>
+        <div class="sub-result">$\beta = 10\log_{10}(1.194 \times 10^{11}) = 10 (11.077) \approx \mathbf{110.8 \text{ dB}}$</div>
+        <div class="solution-step"><em>★ Pattern check:</em> moving from 2.5 m → 1.0 m (factor 2.5×) makes intensity $2.5^2 = 6.25\times$ larger, which is $10\log(6.25) = +8.0$ dB — and 110.8 − 102.8 = 8.0 dB ✓</div>
+    </div>
+    <div class="final-answer">(a) $1.91 \times 10^{-2}$ W/m² &nbsp; (b) 102.8 dB &nbsp; (c) 110.8 dB</div>
+</div>
+
+<!-- ===== Problem 6 ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem 6</div>
+    <div class="problem-text">Wave on string: $v = \sqrt{T/(m/L)}$. (a) Guitar B-string, $f_1 = 247$ Hz, $L = 60$ cm. (b) Rope $m = 160$ g, $L = 4.0$ m, $T = 400$ N.</div>
+    <span class="concept-tag">String wave speed</span>
+    <span class="concept-tag">Harmonic series (fixed-fixed)</span>
+    <div class="solution">
+        <div class="solution-step"><strong>(a) i.</strong> Fundamental: $\lambda_1 = 2L = 1.20$ m. Then $v = f_1 \lambda_1 = 247 \times 1.20$.</div>
+        <div class="sub-result"><strong>$v = 296.4$ m/s</strong></div>
+        <div class="solution-step"><strong>(a) ii.</strong> $f_3 = 3 f_1 = 3(247)$.</div>
+        <div class="sub-result"><strong>$f_3 = 741$ Hz</strong></div>
+        <div class="solution-step"><strong>(a) iii.</strong> $\mu = 0.01$ g/cm $= 1.0 \times 10^{-3}$ kg/m. From $v = \sqrt{T/\mu}$: &nbsp; $T = \mu v^{2} = (1.0 \times 10^{-3})(296.4)^{2}$.</div>
+        <div class="sub-result"><strong>$T \approx 87.9$ N</strong></div>
+        <div class="solution-step"><strong>(b)</strong> $\mu = 0.160/4.0 = 0.040$ kg/m. $v = \sqrt{400/0.040} = \sqrt{10{,}000} = 100$ m/s.</div>
+        <div class="solution-step"><strong>(b) i.</strong> $\lambda_1 = 2L = 8.0$ m, &nbsp; $\lambda_2 = L = 4.0$ m.</div>
+        <div class="solution-step"><strong>(b) ii.</strong> $f_1 = v/\lambda_1 = 100/8 = 12.5$ Hz, &nbsp; $f_2 = 100/4 = 25$ Hz.</div>
+    </div>
+    <div class="final-answer">(a) 296.4 m/s · 741 Hz · 87.9 N &nbsp; | &nbsp; (b) λ: 8 m, 4 m &nbsp; f: 12.5 Hz, 25 Hz</div>
+</div>
+
+</div>
+
+<!-- ============= PAGE 3 — Q7, Q8, Q9, Q10 ============= -->
+<div class="page page-break">
+
+<!-- ===== Problem 7 ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem 7</div>
+    <div class="problem-text">String 0.85 m long. $f_3 = 780$ Hz. Find fundamental and propagation velocity.</div>
+    <span class="concept-tag">Harmonic ratios</span>
+    <div class="solution">
+        <div class="solution-step">$f_n = n f_1 \Rightarrow f_1 = f_3/3 = 780/3 = 260$ Hz.</div>
+        <div class="solution-step">$\lambda_1 = 2L = 1.70$ m, &nbsp; $v = f_1 \lambda_1 = 260 \times 1.70$.</div>
+    </div>
+    <div class="final-answer">$f_1 = 260$ Hz, &nbsp; $v = 442$ m/s</div>
+</div>
+
+<!-- ===== Problem 8 ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem 8</div>
+    <div class="problem-text">Air column open at one end, $L = 0.075$ m. (a) Frequency at 20 °C. (b) % change at 50 °C.</div>
+    <span class="concept-tag">Closed-end pipe ($f_n = nv/4L$)</span>
+    <span class="concept-tag">Temperature effect</span>
+    <div class="solution">
+        <div class="solution-step">"Open at one end" → closed at the other. Fundamental: $f_1 = v/(4L)$.</div>
+        <div class="solution-step"><strong>At 20 °C:</strong> $v = 343$ m/s. $f_1 = 343/(4 \cdot 0.075) = 343/0.3$.</div>
+        <div class="sub-result"><strong>$f_1 = 1143$ Hz</strong></div>
+        <div class="solution-step"><strong>At 50 °C:</strong> $v' = 331 + 0.6(50) = 361$ m/s. $f_1' = 361/0.3 = 1203$ Hz.</div>
+        <div class="solution-step">% change: $\dfrac{1203 - 1143}{1143} \times 100\%$.</div>
+    </div>
+    <div class="final-answer">$f_1 \approx 1143$ Hz; &nbsp; ≈ +5.25% at 50 °C</div>
+</div>
+
+<!-- ===== Problem 9 ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem 9</div>
+    <div class="problem-text">50 cm organ pipe at 20 °C. First three harmonic frequencies for: (a) open both ends; (b) closed at one end.</div>
+    <span class="concept-tag">Harmonic series · pipes</span>
+    <div class="solution">
+        <div class="solution-step">$L = 0.5$ m, $v = 343$ m/s.</div>
+        <div class="solution-step"><strong>(a) Open-open</strong> &nbsp; $f_n = nv/2L = n \cdot 343$ Hz.</div>
+        <div class="sub-result">$f_1 = 343$ Hz, $f_2 = 686$ Hz, $f_3 = 1029$ Hz</div>
+        <div class="solution-step"><strong>(b) Closed-one-end</strong> &nbsp; $f_n = nv/4L$, $n$ odd. $v/4L = 171.5$ Hz.</div>
+        <div class="sub-result">$f_1 = 171.5$ Hz, $f_3 = 514.5$ Hz, $f_5 = 857.5$ Hz</div>
+    </div>
+    <div class="final-answer">(a) 343, 686, 1029 Hz &nbsp; | &nbsp; (b) 171.5, 514.5, 857.5 Hz</div>
+</div>
+
+<!-- ===== Problem 10 ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem 10</div>
+    <div class="problem-text">Successive harmonics: 240 Hz, 280 Hz at 20 °C. (a) Open or closed? (b) Length?</div>
+    <span class="concept-tag">Diagnostic — odd vs. all harmonics</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Test "Open-open":</strong> successive harmonics differ by $f_1$. So $f_1 = 280 - 240 = 40$ Hz. Check: $240/40 = 6$, $280/40 = 7$ (consecutive integers ✓).</div>
+        <div class="solution-step"><strong>Test "Closed-one-end":</strong> only odd harmonics, so successive ones differ by $2 f_1$. So $f_1 = 20$ Hz, but then $240/20 = 12$ — even, not allowed. ✗</div>
+        <div class="solution-step"><strong>(a) Open at both ends.</strong></div>
+        <div class="solution-step"><strong>(b)</strong> $f_1 = v/(2L) = 40$ Hz $\Rightarrow L = v/(2 \cdot 40) = 343/80$.</div>
+    </div>
+    <div class="final-answer">(a) Open &nbsp; | &nbsp; (b) $L \approx 4.29$ m</div>
+</div>
+
+</div>
+
+<!-- ============= PAGE 4 — Q11, Q12 ============= -->
+<div class="page page-break">
+
+<!-- ===== Problem 11 ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem 11</div>
+    <div class="problem-text">(a) Longitudinal vs. transverse. (b) Define: constructive/destructive interference, superposition, standing wave, node, antinode, harmonic, loudness, pitch, sound quality.</div>
+    <span class="concept-tag">Definitions / vocabulary</span>
+    <div class="solution">
+        <div class="solution-step"><strong>(a)</strong> <strong>Longitudinal:</strong> medium oscillates <em>parallel</em> to wave propagation (compressions/rarefactions). E.g., sound. &nbsp; <strong>Transverse:</strong> medium oscillates <em>perpendicular</em> to wave propagation. E.g., string waves, light.</div>
+        <div class="solution-step"><strong>(b) Definitions:</strong></div>
+        <ul class="def-list">
+            <li><strong>Superposition</strong> — when two waves overlap, the total displacement at every point is the algebraic sum of each individual displacement.</li>
+            <li><strong>Constructive interference</strong> — overlap in phase → amplitudes add (large displacement).</li>
+            <li><strong>Destructive interference</strong> — overlap out of phase (180°) → amplitudes subtract (zero or small displacement).</li>
+            <li><strong>Standing wave</strong> — pattern formed when two equal waves traveling in opposite directions interfere; produces fixed nodes and antinodes (no net energy transfer).</li>
+            <li><strong>Node</strong> — point on a standing wave with zero displacement (always still).</li>
+            <li><strong>Antinode</strong> — point with maximum displacement (oscillates with full amplitude).</li>
+            <li><strong>Harmonic</strong> — integer-multiple resonant frequency of a system: $f_n = n f_1$.</li>
+            <li><strong>Loudness</strong> — perception related to wave <em>intensity</em> (amplitude²).</li>
+            <li><strong>Pitch</strong> — perception related to wave <em>frequency</em>.</li>
+            <li><strong>Sound quality (timbre)</strong> — perception related to the <em>mix of harmonics</em> present (waveform shape).</li>
+        </ul>
+    </div>
+    <div class="final-answer">Vocab — see definitions above.</div>
+</div>
+
+<!-- ===== Problem 12 ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem 12</div>
+    <div class="problem-text">French horn, $L = 3.7$ m, mouthpiece = closed end. First overtone is the lowest playable note. (a) Hand keeps far end open — frequency? (c) Hand closes far end — frequency?</div>
+    <span class="concept-tag">Closed-open vs. closed-closed pipe</span>
+    <span class="concept-tag">"First overtone" interpretation</span>
+    <div class="solution">
+        <div class="solution-step">$v = 343$ m/s. "First overtone" = next harmonic above the fundamental.</div>
+        <div class="solution-step"><strong>(a) Hand open</strong> → closed-one-end pipe. Allowed: $n = 1, 3, 5, \dots$. The fundamental ($f_1$) is "not playable" → <em>first overtone</em> = $f_3$.</div>
+        <div class="solution-step">$f_3 = \dfrac{3v}{4L} = \dfrac{3 \cdot 343}{4 \cdot 3.7} = \dfrac{1029}{14.8}$.</div>
+        <div class="sub-result"><strong>$f_3 \approx 69.5$ Hz</strong></div>
+        <div class="solution-step"><strong>(b) Sketches:</strong> displacement and pressure for $n = 1, 3, 5$ — closed end has displacement <em>node</em> (pressure antinode); open end has displacement <em>antinode</em> (pressure node). Pressure graph is the "complement" of the displacement graph.</div>
+        <div class="solution-step"><strong>(c) Hand closes</strong> → both ends closed. Both ends are displacement nodes. Allowed: $n = 1, 2, 3, \dots$ with $f_n = nv/2L$. Fundamental not playable → <em>first overtone</em> = $f_2$.</div>
+        <div class="solution-step">$f_1 = \dfrac{v}{2L} = \dfrac{343}{7.4} = 46.4$ Hz, &nbsp; $f_2 = 2f_1$.</div>
+        <div class="sub-result"><strong>$f_2 \approx 92.7$ Hz</strong></div>
+        <div class="solution-step"><strong>(d) Sketches:</strong> displacement nodes at <em>both</em> ends, antinodes in the middle ($n=1$: 1 antinode in center; $n=2$: 2 antinodes; $n=3$: 3). Pressure graph: pressure antinodes at both ends, nodes between.</div>
+    </div>
+    <div class="final-answer">(a) ≈ 69.5 Hz &nbsp; | &nbsp; (c) ≈ 92.7 Hz</div>
+</div>
+
+</div>
+
+<!-- ============= PAGE 5 — Q13 ============= -->
+<div class="page page-break">
+
+<!-- ===== Problem 13 ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem 13</div>
+    <div class="problem-text">Guitar string, $f_1 = 440$ Hz, $L = 0.85$ m. (a) Sketch first two modes. (b) i. Speed in string. ii. $f_4$. (c) Length needed for 660 Hz (same tension). (d) Crevasse 610 m, 13 s total time → temperature inside.</div>
+    <span class="concept-tag">String harmonics</span>
+    <span class="concept-tag">Free-fall + sound delay</span>
+    <div class="solution">
+        <div class="solution-step"><strong>(a) Sketches:</strong> 1st mode — single half-wavelength, nodes at both ends, one antinode in middle. 2nd mode — full wavelength, nodes at both ends and middle, two antinodes.</div>
+        <div class="solution-step"><strong>(b) i.</strong> $\lambda_1 = 2L = 1.70$ m, &nbsp; $v = f_1 \lambda_1 = 440 \times 1.70$.</div>
+        <div class="sub-result"><strong>$v = 748$ m/s</strong></div>
+        <div class="solution-step"><strong>(b) ii.</strong> $f_4 = 4 f_1 = 4(440)$.</div>
+        <div class="sub-result"><strong>$f_4 = 1760$ Hz</strong></div>
+        <div class="solution-step"><strong>(c)</strong> Same string, same tension, same $\mu$ → same $v = 748$ m/s. For new $f = 660$ Hz: $\lambda = v/f = 748/660 = 1.133$ m. Fundamental of new length: $L' = \lambda/2$.</div>
+        <div class="sub-result"><strong>$L' \approx 0.567$ m (≈ 56.7 cm)</strong></div>
+        <div class="solution-step"><strong>(d)</strong> Total time = fall time + sound-travel time = 13 s.</div>
+        <div class="solution-step">Free-fall: $h = \tfrac{1}{2} g\, t_{\text{fall}}^{2} \Rightarrow t_{\text{fall}} = \sqrt{2h/g} = \sqrt{2(610)/9.8} = \sqrt{124.5} \approx 11.16$ s.</div>
+        <div class="solution-step">Sound time: $t_{\text{sound}} = 13 - 11.16 = 1.84$ s. Speed of sound: $v = h/t_{\text{sound}} = 610/1.84 \approx 331.0$ m/s.</div>
+        <div class="solution-step">Solve for $T$: &nbsp; $331.0 = 331 + 0.6T \Rightarrow T \approx 0$ °C.</div>
+        <div class="sub-result"><strong>$T \approx 0$ °C</strong> &nbsp; <em>(makes sense — glaciers are at freezing!)</em></div>
+    </div>
+    <div class="final-answer">(b) 748 m/s · 1760 Hz &nbsp; | &nbsp; (c) ≈ 0.567 m &nbsp; | &nbsp; (d) ≈ 0 °C</div>
+</div>
+
+</div>
+
+<!-- ============= PAGE 6 — Q14 ============= -->
+<div class="page page-break">
+
+<!-- ===== Problem 14 ===== -->
+<div class="answer-block">
+    <div class="problem-header">Problem 14</div>
+    <div class="problem-text">288 Hz tuning fork over water-filled glass tube. Resonances at $L = 0.28, 0.80, 1.40$ m. Glass tube total = 1.5 m. (a) Velocities. (b) Higher or lower freq for more resonances? (c) % diff vs. theoretical at 20 °C.</div>
+    <span class="concept-tag">Resonance tube (closed-end)</span>
+    <span class="concept-tag">Experimental error / end correction</span>
+    <div class="solution">
+        <div class="solution-step"><strong>(a)</strong> Closed-end pipe (water = closed end). Resonance lengths: $L_n = (2n-1)\lambda/4$, so $\lambda = 4L_n/(2n-1)$ and $v = f\lambda$.</div>
+        <table class="k-table">
+            <thead><tr><th>n</th><th>$L$ (m)</th><th>$\lambda = 4L/(2n-1)$</th><th>$v = 288 \lambda$</th></tr></thead>
+            <tbody>
+                <tr><td>1</td><td>0.28</td><td>1.120 m</td><td><strong>322.6 m/s</strong></td></tr>
+                <tr><td>2</td><td>0.80</td><td>1.067 m</td><td><strong>307.2 m/s</strong></td></tr>
+                <tr><td>3</td><td>1.40</td><td>1.120 m</td><td><strong>322.6 m/s</strong></td></tr>
+            </tbody>
+        </table>
+        <div class="solution-step"><em>★ Note:</em> Resonance #2's discrepancy is due to <strong>end correction</strong> (effective tube length is slightly longer than measured). The two consistent values (#1 and #3) give $v \approx 322.6$ m/s.</div>
+        <div class="solution-step"><strong>(b) Higher frequency.</strong> Higher $f$ → smaller $\lambda$ → resonance positions $L_n = (2n-1)\lambda/4$ are <em>closer together</em>, so more resonances fit inside the 1.5 m tube.</div>
+        <div class="solution-step"><strong>(c)</strong> Theoretical at 20 °C: $v_\text{theory} = 343$ m/s. Experimental best estimate: $v_\text{exp} \approx 322.6$ m/s.</div>
+        <div class="solution-step">$\%\text{ diff} = \dfrac{|343 - 322.6|}{343} \times 100\%$.</div>
+        <div class="sub-result"><strong>≈ 5.95%</strong></div>
+    </div>
+    <div class="final-answer">(a) 322.6, 307.2, 322.6 m/s &nbsp; | &nbsp; (b) Higher freq &nbsp; | &nbsp; (c) ≈ 6.0%</div>
+</div>
+
+<div class="footer">Created by Newton School 2026-05-06 &copy; Copyright</div>
+
+</div>
+
+</body>
+</html>

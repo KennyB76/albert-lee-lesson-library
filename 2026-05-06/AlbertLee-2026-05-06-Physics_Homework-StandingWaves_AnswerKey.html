@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Answer Key — Standing Waves on Strings & in Pipes</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']] },
+  startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+/* base-print */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; color: #000; font-size: 10pt; line-height: 1.55; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; }
+  .answer-block, .equation-sheet { page-break-inside: avoid; break-inside: avoid; }
+  .part-header, .problem-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+  .page-break { page-break-before: always; break-before: page; }
+}
+
+/* theme-boy */
+:root {
+  --color-primary:        #1565c0;
+  --color-primary-dark:   #0d47a1;
+  --color-accent:         #00838f;
+  --color-final-answer:   #2e7d32;
+  --color-warning:        #c62828;
+  --color-tag-border:     #1565c0;
+  --color-tag-text:       #1565c0;
+  --color-muted:          #555;
+  --color-rule:           #ccc;
+}
+
+/* level-high */
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-primary); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 15pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 18px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.answer-block { margin: 12px 0; padding: 10px 14px; border: 1px solid #ddd; border-radius: 4px; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 5px; }
+.problem-text { font-size: 9.5pt; padding: 6px 10px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 8px; line-height: 1.5; }
+.concept-tag { display: inline-block; font-size: 8pt; padding: 2px 8px; margin: 2px 3px 5px 0; border: 1px solid var(--color-tag-border); color: var(--color-tag-text); border-radius: 10px; }
+.solution { margin: 6px 0; padding-left: 10px; border-left: 3px solid var(--color-final-answer); }
+.solution-step { margin: 4px 0; font-size: 10pt; line-height: 1.6; }
+.final-answer { display: inline-block; border: 2px solid var(--color-final-answer); color: var(--color-final-answer); font-weight: bold; padding: 4px 12px; border-radius: 4px; margin-top: 6px; font-size: 11pt; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+
+/* equation sheet */
+.equation-sheet { border: 2px solid var(--color-primary); padding: 12px 16px; margin: 8px 0 16px 0; }
+.equation-sheet .es-title { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 6px; text-align: center; letter-spacing: 1.5px; }
+.equation-sheet table { width: 100%; border-collapse: collapse; font-size: 9.5pt; }
+.equation-sheet th, .equation-sheet td { border: 1.5px solid #333; padding: 5px 8px; vertical-align: top; }
+.equation-sheet th { color: var(--color-primary); font-weight: bold; width: 24%; }
+.equation-sheet .eq-cell { text-align: center; }
+.equation-sheet .note { font-size: 8.5pt; color: var(--color-muted); font-style: italic; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">AP PHYSICS 1</div>
+    <span class="key-tag">ANSWER KEY</span>
+    <h1>Standing Waves on Strings &amp; in Pipes — Solutions</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Albert Lee</span>
+      <span><strong>Date:</strong> 2026-05-06</span>
+    </div>
+  </div>
+
+  <!-- Quick Equation Recap -->
+  <div class="equation-sheet">
+    <div class="es-title">QUICK RECAP</div>
+    <table>
+      <tr>
+        <th>String / Open pipe</th>
+        <td class="eq-cell">$f_n = \dfrac{nv}{2L}, \quad \lambda_n = \dfrac{2L}{n}$</td>
+        <td class="note">$n=1,2,3,\ldots$ — all harmonics.</td>
+      </tr>
+      <tr>
+        <th>Closed pipe</th>
+        <td class="eq-cell">$f_n = \dfrac{nv}{4L}, \quad \lambda_n = \dfrac{4L}{n}$</td>
+        <td class="note">$n=1,3,5,\ldots$ — odd only.</td>
+      </tr>
+      <tr>
+        <th>Universal</th>
+        <td class="eq-cell">$v = f\lambda$</td>
+        <td class="note">Always check: $v = f_n \lambda_n$.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="part-header">Solutions</div>
+
+  <!-- Problem 1 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 1</div>
+    <div class="problem-text">String fixed at both ends. $L = 1.20~\text{m}$, $v = 480~\text{m/s}$. Find $f_1$ and $\lambda_1$.</div>
+    <span class="concept-tag">String fixed-fixed</span>
+    <span class="concept-tag">Fundamental</span>
+    <div class="solution">
+      <div class="solution-step">Boundary: nodes at both ends $\Rightarrow$ $f_n = \dfrac{nv}{2L}$, $\lambda_n = \dfrac{2L}{n}$.</div>
+      <div class="solution-step">$f_1 = \dfrac{(1)(480)}{2(1.20)} = \dfrac{480}{2.40} = 200~\text{Hz}$.</div>
+      <div class="solution-step">$\lambda_1 = 2L = 2.40~\text{m}$.</div>
+    </div>
+    <div class="final-answer">$f_1 = 200~\text{Hz}, \ \lambda_1 = 2.40~\text{m}$</div>
+  </div>
+
+  <!-- Problem 2 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 2</div>
+    <div class="problem-text">String fixed at both ends, $f_1 = 220~\text{Hz}$. List $f_2, f_3, f_4$.</div>
+    <span class="concept-tag">Harmonic series</span>
+    <div class="solution">
+      <div class="solution-step">All harmonics allowed: $f_n = n\,f_1$.</div>
+      <div class="solution-step">$f_2 = 2(220) = 440~\text{Hz}$.</div>
+      <div class="solution-step">$f_3 = 3(220) = 660~\text{Hz}$.</div>
+      <div class="solution-step">$f_4 = 4(220) = 880~\text{Hz}$.</div>
+    </div>
+    <div class="final-answer">$f_2 = 440, \ f_3 = 660, \ f_4 = 880~\text{Hz}$</div>
+  </div>
+
+  <!-- Problem 3 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 3</div>
+    <div class="problem-text">Open pipe, $L = 0.85~\text{m}$, $v = 343~\text{m/s}$. Find $f_1, f_2$.</div>
+    <span class="concept-tag">Open pipe</span>
+    <span class="concept-tag">All harmonics</span>
+    <div class="solution">
+      <div class="solution-step">Open-open boundary: same formula as fixed string, $f_n = \dfrac{nv}{2L}$.</div>
+      <div class="solution-step">$f_1 = \dfrac{343}{2(0.85)} = \dfrac{343}{1.70} \approx 201.8~\text{Hz}$.</div>
+      <div class="solution-step">$f_2 = 2 f_1 \approx 403.5~\text{Hz}$.</div>
+    </div>
+    <div class="final-answer">$f_1 \approx 202~\text{Hz}, \ f_2 \approx 404~\text{Hz}$</div>
+  </div>
+
+  <!-- Problem 4 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 4</div>
+    <div class="problem-text">Closed pipe, $L = 0.85~\text{m}$, $v = 343~\text{m/s}$. Find $f_1$ and the next allowed harmonic.</div>
+    <span class="concept-tag">Closed pipe</span>
+    <span class="concept-tag">Odd harmonics</span>
+    <div class="solution">
+      <div class="solution-step">Closed pipe: node at closed end, antinode at open end $\Rightarrow$ $f_n = \dfrac{nv}{4L}$, with $n = 1, 3, 5, \ldots$</div>
+      <div class="solution-step">$f_1 = \dfrac{343}{4(0.85)} = \dfrac{343}{3.40} \approx 100.9~\text{Hz}$.</div>
+      <div class="solution-step">Next allowed is $n = 3$: $f_3 = 3 f_1 \approx 302.6~\text{Hz}$.</div>
+    </div>
+    <div class="final-answer">$f_1 \approx 101~\text{Hz}, \ f_3 \approx 303~\text{Hz}$</div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- Problem 5 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 5</div>
+    <div class="problem-text">Same length $L$. Pipe A open both ends, Pipe B closed one end. Show $f_{1,A} = 2 f_{1,B}$ and explain why B has only odd harmonics.</div>
+    <span class="concept-tag">Conceptual</span>
+    <span class="concept-tag">Boundary conditions</span>
+    <div class="solution">
+      <div class="solution-step">Pipe A (open-open): $f_{1,A} = \dfrac{v}{2L}$.</div>
+      <div class="solution-step">Pipe B (closed): $f_{1,B} = \dfrac{v}{4L}$.</div>
+      <div class="solution-step">Ratio: $\dfrac{f_{1,A}}{f_{1,B}} = \dfrac{v/(2L)}{v/(4L)} = \dfrac{4L}{2L} = 2$. $\therefore f_{1,A} = 2\,f_{1,B}$. ✓</div>
+      <div class="solution-step"><strong>Why odd-only for closed pipe:</strong> the closed end forces a displacement <em>node</em> while the open end forces a displacement <em>antinode</em>. The shortest distance from a node to the next antinode is $\lambda/4$, so $L$ must equal an <em>odd</em> number of quarter-wavelengths: $L = n\lambda/4$ with $n = 1, 3, 5, \ldots$ Even $n$ would put a node at the open end, violating the boundary.</div>
+    </div>
+    <div class="final-answer">Shown: $f_{1,A} = 2 f_{1,B}$; closed pipe needs odd $\lambda/4$ count.</div>
+  </div>
+
+  <!-- Problem 6 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 6</div>
+    <div class="problem-text">Closed pipe, $f_1 = 196~\text{Hz}$, $v = 343~\text{m/s}$. Find $L$ and $\lambda_1$.</div>
+    <span class="concept-tag">Closed pipe</span>
+    <span class="concept-tag">Solve for L</span>
+    <div class="solution">
+      <div class="solution-step">Closed: $f_1 = \dfrac{v}{4L} \Rightarrow L = \dfrac{v}{4 f_1}$.</div>
+      <div class="solution-step">$L = \dfrac{343}{4(196)} = \dfrac{343}{784} \approx 0.4375~\text{m}$.</div>
+      <div class="solution-step">$\lambda_1 = 4L \approx 1.75~\text{m}$ (or directly $\lambda_1 = v/f_1 = 343/196 \approx 1.75~\text{m}$). ✓</div>
+    </div>
+    <div class="final-answer">$L \approx 0.438~\text{m}, \ \lambda_1 \approx 1.75~\text{m}$</div>
+  </div>
+
+  <!-- Problem 7 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 7</div>
+    <div class="problem-text">String fixed both ends, $L = 0.50~\text{m}$, $f_4 = 880~\text{Hz}$. Find $v$ and $\lambda_4$.</div>
+    <span class="concept-tag">String fixed-fixed</span>
+    <span class="concept-tag">Solve for v</span>
+    <div class="solution">
+      <div class="solution-step">$f_n = \dfrac{nv}{2L} \Rightarrow v = \dfrac{2L\,f_n}{n}$.</div>
+      <div class="solution-step">$v = \dfrac{2(0.50)(880)}{4} = \dfrac{880}{4} = 220~\text{m/s}$.</div>
+      <div class="solution-step">$\lambda_4 = \dfrac{2L}{4} = \dfrac{1.00}{4} = 0.250~\text{m}$.</div>
+      <div class="solution-step">Check: $v = f_4 \lambda_4 = (880)(0.250) = 220~\text{m/s}$. ✓</div>
+    </div>
+    <div class="final-answer">$v = 220~\text{m/s}, \ \lambda_4 = 0.250~\text{m}$</div>
+  </div>
+
+  <!-- Problem 8 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 8</div>
+    <div class="problem-text">Closed pipe, $L = 1.10~\text{m}$, $v = 343~\text{m/s}$. List the first three allowed harmonic frequencies.</div>
+    <span class="concept-tag">Closed pipe</span>
+    <span class="concept-tag">Odd harmonics</span>
+    <div class="solution">
+      <div class="solution-step">$f_1 = \dfrac{v}{4L} = \dfrac{343}{4(1.10)} = \dfrac{343}{4.40} \approx 77.95~\text{Hz}$.</div>
+      <div class="solution-step">Odd harmonics only: $f_3 = 3 f_1 \approx 233.9~\text{Hz}$, $f_5 = 5 f_1 \approx 389.8~\text{Hz}$.</div>
+    </div>
+    <div class="final-answer">$f_1 \approx 78.0~\text{Hz}, \ f_3 \approx 234~\text{Hz}, \ f_5 \approx 390~\text{Hz}$</div>
+  </div>
+
+  <div class="page-break"></div>
+
+  <!-- Problem 9 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 9</div>
+    <div class="problem-text">Guitar string, $L = 0.64~\text{m}$, $f_1 = 330~\text{Hz}$. Find $v$ and $\lambda_2$.</div>
+    <span class="concept-tag">String fixed-fixed</span>
+    <span class="concept-tag">Wave speed</span>
+    <div class="solution">
+      <div class="solution-step">$f_1 = \dfrac{v}{2L} \Rightarrow v = 2L\,f_1$.</div>
+      <div class="solution-step">$v = 2(0.64)(330) = 1.28 \times 330 = 422.4~\text{m/s}$.</div>
+      <div class="solution-step">$\lambda_2 = \dfrac{2L}{2} = L = 0.64~\text{m}$.</div>
+      <div class="solution-step">Check: $f_2 = 2 f_1 = 660~\text{Hz}$, and $v = f_2 \lambda_2 = (660)(0.64) = 422.4~\text{m/s}$. ✓</div>
+    </div>
+    <div class="final-answer">$v \approx 422~\text{m/s}, \ \lambda_2 = 0.640~\text{m}$</div>
+  </div>
+
+  <!-- Problem 10 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 10</div>
+    <div class="problem-text">Pipe resonates at $250~\text{Hz}$ and $750~\text{Hz}$, but not $500~\text{Hz}$, $v = 343~\text{m/s}$. (a) Open or closed? (b) Find $L$.</div>
+    <span class="concept-tag">Identify boundary</span>
+    <span class="concept-tag">Pattern recognition</span>
+    <div class="solution">
+      <div class="solution-step"><strong>(a)</strong> If the pipe were open at both ends, every integer multiple of $f_1$ would resonate, including $500~\text{Hz}$. Since $500~\text{Hz}$ is missing, it must be a <strong>closed pipe</strong> (odd harmonics only). Check: $250 = 1\cdot f_1$, $750 = 3\cdot f_1 \Rightarrow f_1 = 250~\text{Hz}$. The next would be $5 f_1 = 1250~\text{Hz}$, with $500$ and $1000$ skipped — consistent.</div>
+      <div class="solution-step"><strong>(b)</strong> $f_1 = \dfrac{v}{4L} \Rightarrow L = \dfrac{v}{4 f_1} = \dfrac{343}{4(250)} = \dfrac{343}{1000} = 0.343~\text{m}$.</div>
+    </div>
+    <div class="final-answer">(a) Closed pipe; (b) $L = 0.343~\text{m}$</div>
+  </div>
+
+  <div class="footer">Created by Newton School 2026-05-06 &copy; Copyright</div>
+</div>
+</body>
+</html>

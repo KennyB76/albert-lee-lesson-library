@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Physics Honors Homework: Sound &amp; Waves (icp13) — Albert Lee</title>
+<script>
+window.MathJax = {
+    tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+/* ===== base-print.css ===== */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .problem, .answer-block, .reminder, .parent-note, .example, .word-problem,
+    .eq-block, .concept-box { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, .directions, .problem-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+}
+
+/* ===== theme-boy.css ===== */
+:root {
+    --color-primary: #1565c0;
+    --color-primary-dark: #0d47a1;
+    --color-accent: #00838f;
+    --color-header-border: #1565c0;
+    --color-final-answer: #2e7d32;
+    --color-warning: #c62828;
+    --color-parent-note: #283593;
+    --color-tag-bg: transparent;
+    --color-tag-border: #1565c0;
+    --color-tag-text: #1565c0;
+    --color-muted: #555;
+    --color-rule: #ccc;
+}
+
+/* ===== level-high.css ===== */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+h1 { font-size: 16pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 12px; line-height: 1.5; }
+.directions strong { color: #000; font-style: normal; }
+.problem { margin: 14px 0; font-size: 10.5pt; line-height: 1.6; padding-left: 8px; border-left: 3px solid var(--color-primary); }
+.q-num { display: inline-block; min-width: 26px; font-weight: bold; color: var(--color-primary); }
+.work-space { min-height: 110px; margin-left: 24px; margin-top: 6px; }
+.concept-box { border: 1.5px solid var(--color-accent); background: transparent; padding: 10px 14px; margin: 12px 0; font-size: 10pt; border-left-width: 4px; }
+.concept-box .title { font-weight: bold; color: var(--color-accent); margin-bottom: 4px; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+
+/* ===== Equation Sheet specific ===== */
+.eq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; margin: 16px 0; }
+.eq-block { border: 1.5px solid var(--color-primary); padding: 10px 14px; }
+.eq-block .eq-title { font-weight: bold; color: var(--color-primary); font-size: 10.5pt; margin-bottom: 6px; border-bottom: 1px solid var(--color-rule); padding-bottom: 3px; }
+.eq-block ul { margin: 6px 0 0 0; padding-left: 18px; }
+.eq-block li { margin: 4px 0; font-size: 10pt; }
+.var-list { font-size: 9pt; color: #333; margin-top: 8px; padding-left: 18px; }
+.var-list li { margin: 2px 0; }
+.eq-note { font-size: 9.5pt; font-style: italic; color: var(--color-warning); margin-top: 6px; }
+
+/* Sub-part lists */
+.subparts { margin: 6px 0 6px 26px; padding-left: 14px; }
+.subparts li { margin: 4px 0; }
+.subparts ol.roman { list-style-type: lower-roman; padding-left: 20px; margin: 4px 0; }
+.subparts ol.roman li { margin: 2px 0; }
+
+/* Compact resonance table */
+.res-table { border-collapse: collapse; margin: 8px 0 8px 24px; font-size: 10pt; }
+.res-table th, .res-table td { border: 1px solid #555; padding: 4px 12px; text-align: center; }
+.res-table th { background: transparent; color: var(--color-primary); }
+</style>
+</head>
+<body>
+
+<!-- ============= PAGE 1 — EQUATION SHEET ============= -->
+<div class="page">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PHYSICS HONORS</div>
+    <h1>Sound &amp; Waves Homework — icp13</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Albert Lee</span>
+        <span><strong>Date:</strong> 2026-05-06</span>
+    </div>
+    <div class="standard"><strong>Topic:</strong> Speed of sound, wave equation, intensity &amp; dB, standing waves on strings, open/closed pipes, resonance experiments.</div>
+</div>
+
+<div class="part-header">EQUATION SHEET</div>
+<div class="directions"><em>Reference page — keep this open while working. All formulas you need for the 14 problems.</em></div>
+
+<div class="eq-grid">
+
+  <div class="eq-block">
+    <div class="eq-title">1 · Speed of Sound in Air</div>
+    <ul>
+      <li>$v_{\text{sound}} = 331 + 0.6\,T$ &nbsp;&nbsp;($T$ in °C, $v$ in m/s)</li>
+      <li>At 20 °C: $v \approx 343$ m/s</li>
+    </ul>
+  </div>
+
+  <div class="eq-block">
+    <div class="eq-title">2 · Wave Equation (any wave)</div>
+    <ul>
+      <li>$v = f\,\lambda$</li>
+      <li>Period: $T = \dfrac{1}{f}$</li>
+      <li>Light: $c = 3.0 \times 10^{8}$ m/s</li>
+    </ul>
+  </div>
+
+  <div class="eq-block">
+    <div class="eq-title">3 · Intensity &amp; Decibels</div>
+    <ul>
+      <li>$I = \dfrac{P}{4\pi r^{2}}$ &nbsp;(point source)</li>
+      <li>$\beta = 10\,\log_{10}\!\left(\dfrac{I}{I_0}\right)$ dB</li>
+      <li>$I_0 = 1.0 \times 10^{-12}$ W/m²</li>
+    </ul>
+  </div>
+
+  <div class="eq-block">
+    <div class="eq-title">4 · Wave on a Stretched String</div>
+    <ul>
+      <li>$v = \sqrt{\dfrac{T}{\mu}}\,$, &nbsp;$\mu = \dfrac{m}{L}$</li>
+      <li>$T$ = tension (N), $\mu$ = linear mass density (kg/m)</li>
+    </ul>
+  </div>
+
+  <div class="eq-block">
+    <div class="eq-title">5 · String Fixed at Both Ends</div>
+    <ul>
+      <li>$\lambda_n = \dfrac{2L}{n}$, &nbsp; $f_n = \dfrac{n\,v}{2L}$</li>
+      <li>$n = 1,2,3,\dots$ (all integers)</li>
+    </ul>
+  </div>
+
+  <div class="eq-block">
+    <div class="eq-title">6 · Pipe Open at Both Ends</div>
+    <ul>
+      <li>$\lambda_n = \dfrac{2L}{n}$, &nbsp; $f_n = \dfrac{n\,v}{2L}$</li>
+      <li>$n = 1,2,3,\dots$ &nbsp; (same as string)</li>
+    </ul>
+  </div>
+
+  <div class="eq-block">
+    <div class="eq-title">7 · Pipe Closed at One End</div>
+    <ul>
+      <li>$\lambda_n = \dfrac{4L}{n}$, &nbsp; $f_n = \dfrac{n\,v}{4L}$</li>
+      <li>$n = 1,3,5,\dots$ &nbsp; (odd only)</li>
+    </ul>
+  </div>
+
+  <div class="eq-block">
+    <div class="eq-title">8 · Pipe Closed at Both Ends</div>
+    <ul>
+      <li>$\lambda_n = \dfrac{2L}{n}$, &nbsp; $f_n = \dfrac{n\,v}{2L}$</li>
+      <li>Same harmonics as open-open (different pressure pattern)</li>
+    </ul>
+  </div>
+
+  <div class="eq-block">
+    <div class="eq-title">9 · Free-Fall (problem 13d)</div>
+    <ul>
+      <li>$h = \tfrac{1}{2}\,g\,t_{\text{fall}}^{2}$</li>
+      <li>$g = 9.8$ m/s²</li>
+    </ul>
+  </div>
+
+  <div class="eq-block">
+    <div class="eq-title">10 · Resonance Tube (problem 14)</div>
+    <ul>
+      <li>Closed end at water; resonances at $L = \dfrac{(2n-1)\,\lambda}{4}$</li>
+      <li>Successive lengths differ by $\dfrac{\lambda}{2}$</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="concept-box">
+    <div class="title">★ Quick Decision Guide</div>
+    <ul style="margin:4px 0 0 0; padding-left: 18px;">
+        <li><strong>Both ends free</strong> (open-open pipe, string fixed-fixed) → all $n$, $f_n = nv/2L$</li>
+        <li><strong>One end closed, one end free</strong> → odd $n$ only, $f_n = nv/4L$</li>
+        <li><strong>Both ends closed</strong> (problem 12c) → all $n$, $f_n = nv/2L$ &nbsp;<em>(but pressure pattern differs)</em></li>
+        <li><strong>"First overtone"</strong> = next harmonic above $f_1$ &nbsp;(open: $f_2$, closed-one-end: $f_3$)</li>
+    </ul>
+</div>
+
+<div class="footer">Created by Newton School 2026-05-06 &copy; Copyright</div>
+
+</div>
+
+<!-- ============= PAGE 2 — QUESTIONS (1–4) ============= -->
+<div class="page page-break">
+
+<div class="part-header">QUESTIONS</div>
+<div class="directions"><strong>Directions:</strong> Show all work clearly. Box your final answer with units. Use the equation sheet on page 1 for reference.</div>
+
+<div class="problem">
+    <span class="q-num">1.</span> Calculate the speed of sound at 25 °C.
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">2.</span> Light waves with a frequency of $7.0 \times 10^{14}$ Hz cannot be detected by most human eyes. Calculate the wavelength of this light.
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">3.</span> What is the wavelength in air at 20 °C of a middle C (260 Hz)?
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">4.</span> A room has the dimensions 4.0 m × 5.2 m × 3.5 m. Determine the first 3 harmonic frequencies for each of the dimensions. Are there any double or triple resonances?
+    <div class="work-space" style="min-height: 160px;"></div>
+</div>
+
+</div>
+
+<!-- ============= PAGE 3 — QUESTIONS (5–6) ============= -->
+<div class="page page-break">
+
+<div class="problem">
+    <span class="q-num">5.</span> A 1.5 W sound source distributes sound uniformly in all directions.
+    <ol class="subparts" type="a">
+        <li>What is the intensity of the sound at a distance of 2.5 m?</li>
+        <li>What is the dB level of this sound?</li>
+        <li>What is the dB level of the sound a distance of 1.0 m from the source?</li>
+    </ol>
+    <div class="work-space" style="min-height: 180px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">6.</span> The velocity of waves traveling along a stretched string is:
+    $$v = \sqrt{\dfrac{T}{m/L}}$$
+    where $T$ = tension (N), $m$ = mass of string (kg), $L$ = length (m).
+    <ol class="subparts" type="a">
+        <li>A B-string on a guitar is tuned to a fundamental frequency of 247 Hz. The string is 60 cm long.
+            <ol class="roman">
+                <li>Determine the velocity of wave propagation along the string.</li>
+                <li>Determine the frequency of the third harmonic of the string.</li>
+                <li>The linear mass density of the string is 0.01 g/cm. Calculate the tension of the string.</li>
+            </ol>
+        </li>
+        <li>A 160-gram rope 4.0 m long is fixed at both ends. The tension in the rope is 400 N.
+            <ol class="roman">
+                <li>Determine the wavelengths of the first two harmonic waves in the rope.</li>
+                <li>Determine the frequencies of the first two harmonic waves in the rope.</li>
+            </ol>
+        </li>
+    </ol>
+    <div class="work-space" style="min-height: 220px;"></div>
+</div>
+
+</div>
+
+<!-- ============= PAGE 4 — QUESTIONS (7–10) ============= -->
+<div class="page page-break">
+
+<div class="problem">
+    <span class="q-num">7.</span> What is the fundamental frequency of a stretched string that is 0.85 m long, given that the frequency of its third harmonic is 780 Hz? What is the propagation velocity of waves along the string?
+    <div class="work-space" style="min-height: 130px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">8.</span> What is the frequency of an air column, open at one end, that is 0.075 m long? Assume air at 20 °C. By what percentage would the frequency change if the temperature were 50 °C?
+    <div class="work-space" style="min-height: 150px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">9.</span> What will be the first three harmonic frequencies of a 50-cm organ pipe at 20 °C if the pipe is:
+    <ol class="subparts" type="a">
+        <li>open at both ends</li>
+        <li>closed at one end</li>
+    </ol>
+    <div class="work-space" style="min-height: 150px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">10.</span> An organ pipe has successive harmonic frequencies of 240 Hz and 280 Hz at 20 °C.
+    <ol class="subparts" type="a">
+        <li>Is the pipe open or closed?</li>
+        <li>How long is the pipe?</li>
+    </ol>
+    <div class="work-space" style="min-height: 130px;"></div>
+</div>
+
+</div>
+
+<!-- ============= PAGE 5 — QUESTIONS (11–12) ============= -->
+<div class="page page-break">
+
+<div class="problem">
+    <span class="q-num">11.</span>
+    <ol class="subparts" type="a">
+        <li>Distinguish between longitudinal waves and transverse waves.</li>
+        <li>Define: <em>constructive interference, superposition, destructive interference, standing wave, node, antinode, harmonic, loudness, pitch, sound quality.</em></li>
+    </ol>
+    <div class="work-space" style="min-height: 320px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">12.</span> The French horn, one of the most beautiful-sounding instruments in the orchestra, consists of about 3.7 m of thin tubing, rolled into a spiral shape (sizes vary). The player blows into the mouthpiece, which can be treated as a <strong>closed end</strong>, and places his hand on the opposite end, which has a large flared opening. In brass instruments, the fundamental note is not normally playable. Instead, the <strong>first overtone</strong> is the lowest playable note.
+    <ol class="subparts" type="a">
+        <li>If the player's hand keeps the large end <strong>open</strong>, what is the frequency of the lowest playable note?</li>
+        <li>Sketch the displacement vs. position graph and the change in pressure vs. position graph for the first three harmonics in the above situation.</li>
+        <li>If the player now <strong>closes</strong> the large end with his hand, what is the frequency of the lowest playable note?</li>
+        <li>Sketch the displacement vs. position graph and the change in pressure vs. position graph for the first three harmonics in the above situation.</li>
+    </ol>
+    <div class="work-space" style="min-height: 280px;"></div>
+</div>
+
+</div>
+
+<!-- ============= PAGE 6 — QUESTIONS (13–14) ============= -->
+<div class="page page-break">
+
+<div class="problem">
+    <span class="q-num">13.</span> A guitar string is tuned to a fundamental frequency of 440 Hz. The string is 0.85 m long.
+    <ol class="subparts" type="a">
+        <li>Sketch the first two modes of vibration (harmonics) of the string.</li>
+        <li>
+            <ol class="roman">
+                <li>Calculate the speed of disturbances in the string.</li>
+                <li>Calculate the frequency of the 4th harmonic of the string.</li>
+            </ol>
+        </li>
+        <li>A guitarist wishes to play a note of frequency 660 Hz <em>without changing the tension</em> in the string. How long should the vibrating part of the string be?</li>
+        <li><strong>Glacial crevasse:</strong> A 610 m deep crevasse. An explorer drops her cell phone from rest down the crevasse. She measures the elapsed time from when she drops the phone until she hears the sound of the collision with the bottom: <strong>13 seconds</strong>. Determine the air temperature inside the crevasse (assume constant temperature).</li>
+    </ol>
+    <div class="work-space" style="min-height: 280px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">14.</span> Students attempt to measure the speed of sound using resonance. They hold a tuning fork ($f = 288$ Hz) over a glass tube partly filled with water. By varying the height of the water, they can vary the length $L$ of the air column above the water.
+    <ol class="subparts" type="a">
+        <li>Complete the table by calculating the velocities of sound based on the student data.
+            <table class="res-table">
+                <thead>
+                    <tr><th>Resonance pt.</th><th>Length $L$</th><th>Velocity $v$ (m/s)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>0.28 m</td><td>______</td></tr>
+                    <tr><td>2</td><td>0.80 m</td><td>______</td></tr>
+                    <tr><td>3</td><td>1.40 m</td><td>______</td></tr>
+                </tbody>
+            </table>
+        </li>
+        <li>The glass tube is 1.5 m long. The students would like to collect data for <strong>more</strong> than 3 resonance points for a single frequency. Should they use a tuning fork with a <em>higher</em> frequency or a <em>lower</em> frequency to get more resonance points? <strong>Explain your reasoning.</strong></li>
+        <li>Room temperature is 20 °C. Calculate the percentage difference between the students' experimental value for the speed of sound and the theoretical value.</li>
+    </ol>
+    <div class="work-space" style="min-height: 220px;"></div>
+</div>
+
+<div class="footer">Created by Newton School 2026-05-06 &copy; Copyright</div>
+
+</div>
+
+</body>
+</html>
