@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Problem 16 — Moon-Reflected Light & Photoelectric Effect (Albert Lee · 5/13)</title>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+/* base-print.css (inlined) */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+  .problem-wrap, .statement, .solution-block, .reminder, .setup-block, .constants {
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  .part-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+  .page-break { page-break-before: always; break-before: page; }
+}
+
+/* theme-boy.css (inlined) */
+:root {
+  --color-primary: #1565c0;
+  --color-primary-dark: #0d47a1;
+  --color-accent: #00838f;
+  --color-header-border: #1565c0;
+  --color-final-answer: #2e7d32;
+  --color-warning: #c62828;
+  --color-muted: #555;
+  --color-rule: #ccc;
+}
+
+/* level-high.css (inlined) */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag {
+  display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px;
+  margin: 5px 3px 7px 3px; font-weight: bold;
+}
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 16pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+
+/* setup + constants */
+.setup-block {
+  background: #f5f5f5;
+  border-left: 4px solid #888;
+  padding: 12px 16px;
+  margin: 8px 0 10px 0;
+  font-size: 10.5pt;
+  line-height: 1.6;
+}
+.setup-block .label {
+  font-size: 8.5pt; font-weight: bold; color: #555;
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px;
+}
+.setup-block .given {
+  margin-top: 6px;
+  font-family: 'Consolas', monospace;
+  font-size: 10pt;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 6px 10px;
+  border-radius: 3px;
+  display: inline-block;
+}
+.constants {
+  background: #fff;
+  border: 1px solid #cfd8dc;
+  border-left: 4px solid var(--color-accent);
+  border-radius: 3px;
+  padding: 8px 12px;
+  margin: 10px 0 14px 0;
+  font-size: 9.5pt;
+  line-height: 1.7;
+}
+.constants .label {
+  font-weight: bold; color: var(--color-accent);
+  font-size: 9pt; letter-spacing: 0.08em; text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+/* reminder */
+.reminder {
+  border: 1.5px solid #e65100;
+  border-left-width: 5px;
+  padding: 10px 14px;
+  margin: 14px 0 18px 0;
+  font-size: 10pt;
+  background: transparent;
+}
+.reminder .title { font-weight: bold; color: #e65100; margin-bottom: 4px; }
+
+/* problem layout */
+.part-header {
+  font-size: 13pt; font-weight: bold; color: var(--color-primary);
+  margin: 22px 0 6px 0; padding-bottom: 3px;
+  border-bottom: 1.5px solid var(--color-primary);
+}
+.problem-number {
+  display: inline-block;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: bold;
+  font-size: 11pt;
+  padding: 3px 12px;
+  border-radius: 14px;
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+.problem-title {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 11.5pt;
+  color: var(--color-primary-dark);
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.problem-wrap { margin: 16px 0 22px 0; }
+
+.statement {
+  background: #f5f5f5;
+  border-left: 4px solid #888;
+  padding: 10px 14px;
+  margin: 8px 0 10px 0;
+  font-size: 10.5pt;
+  line-height: 1.6;
+}
+.statement .label {
+  font-size: 8.5pt; font-weight: bold; color: #555;
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px;
+}
+
+.work-space {
+  min-height: 180px;
+  margin: 8px 0 10px 4px;
+  padding: 10px;
+  border: 1px dashed #b0bec5;
+  border-radius: 3px;
+  background: #fbfcfd;
+  position: relative;
+}
+.work-space::before {
+  content: "Work space — your solution";
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  font-size: 7.5pt;
+  color: #90a4ae;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.solution-block {
+  border-left: 4px solid var(--color-final-answer);
+  background: #f7fbf7;
+  padding: 10px 14px;
+  margin: 8px 0 14px 0;
+  font-size: 10.5pt;
+  line-height: 1.65;
+}
+.solution-block .label {
+  font-size: 8.5pt; font-weight: bold; color: var(--color-final-answer);
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px;
+}
+.solution-block .step { margin: 5px 0; padding-left: 6px; }
+.solution-block .step b { color: var(--color-primary-dark); }
+
+.boxed-final {
+  display: inline-block;
+  border: 1.5px solid var(--color-final-answer);
+  color: var(--color-final-answer);
+  font-weight: bold;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 10.5pt;
+  margin: 4px 0;
+}
+
+.qed { display: inline-block; font-weight: bold; color: var(--color-final-answer); margin-left: 6px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ========== HEADER ========== -->
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div>
+      <span class="subject-tag">AP PHYSICS</span>
+      <span class="key-tag">MODERN PHYSICS</span>
+    </div>
+    <h1>Problem 16 — Moon-Reflected Light &amp; Photoelectric Effect</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Albert Lee</span>
+      <span><strong>Date:</strong> May 13, 2026</span>
+    </div>
+    <div class="standard">
+      Problem 16 — Photon intensity, photon flux, photocurrent, work function, stopping potential.
+      Companion piece to today's Lecture Note (Problems 7–15).
+    </div>
+  </div>
+
+  <!-- Reminder -->
+  <div class="reminder">
+    <div class="title">⚡ How to use this worksheet</div>
+    Six parts (a → f) all share the same Setup. Solve each one in the dashed work-space first —
+    <em>don't peek at the green Solution box until you've tried</em>. Final answers are boxed in green.
+    Notice how part (a) → (b) → (c) → (d) is one continuous chain: each answer feeds the next.
+  </div>
+
+  <!-- ========== SETUP ========== -->
+  <div class="setup-block">
+    <div class="label">Setup</div>
+    The average earth–moon distance is $3.84 \times 10^{8}\,\text{m}$.
+    Suppose the moon reflects light with an average wavelength of $550\,\text{nm}$.
+    Suppose the intensity of this radiation on a given clear night, neglecting atmospheric losses,
+    is $0.10\,\text{W/m}^{2}$.
+    <br>
+    <span class="given"><strong>Given:</strong> $d = 3.84\times10^{8}$ m, &nbsp; $\lambda = 550$ nm, &nbsp; $I = 0.10\,\text{W/m}^{2}$</span>
+  </div>
+
+  <div class="constants">
+    <div class="label">Useful constants</div>
+    $h = 6.626\times10^{-34}\,\text{J}\!\cdot\!\text{s}$ &nbsp;·&nbsp;
+    $c = 3.00\times10^{8}\,\text{m/s}$ &nbsp;·&nbsp;
+    $e = 1.602\times10^{-19}\,\text{C}$ &nbsp;·&nbsp;
+    $1\,\text{eV} = 1.602\times10^{-19}\,\text{J}$ &nbsp;·&nbsp;
+    $hc \approx 1240\,\text{eV}\!\cdot\!\text{nm}$
+  </div>
+
+  <!-- ========== PART (a) ========== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Part (a)</span>
+    <span class="problem-title">Average photon energy</span>
+    <div class="statement">
+      <div class="label">Question</div>
+      What is the average energy of the photons reflected by the moon?
+    </div>
+    <div class="work-space"></div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Formula.</b> $\;E = hf = \dfrac{hc}{\lambda}.$ Use the shortcut $hc = 1240\,\text{eV}\!\cdot\!\text{nm}.$</div>
+      <div class="step"><b>Substitute.</b>
+        $\;E = \dfrac{1240\,\text{eV}\!\cdot\!\text{nm}}{550\,\text{nm}} \approx 2.255\,\text{eV}.$
+      </div>
+      <div class="step"><b>In joules.</b>
+        $\;E \approx 2.255 \times 1.602\!\times\!10^{-19} \approx 3.61\!\times\!10^{-19}\,\text{J}.$
+      </div>
+      <div class="step">
+        <span class="boxed-final">$E \approx 2.26$ eV $\;\approx\; 3.61 \times 10^{-19}$ J</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PART (b) ========== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Part (b)</span>
+    <span class="problem-title">Photons striking $1\,\text{m}^{2}$ on earth per second</span>
+    <div class="statement">
+      <div class="label">Question</div>
+      How many photons strike a square meter on earth per second?
+    </div>
+    <div class="work-space"></div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Idea.</b> Intensity = energy flux. Divide by energy-per-photon to get photon flux.
+        $$\frac{N}{A\cdot t} \;=\; \frac{I}{E_{\text{photon}}}.$$
+      </div>
+      <div class="step"><b>Substitute.</b>
+        $\;\dfrac{N}{(1\,\text{m}^2)(1\,\text{s})} = \dfrac{0.10\,\text{W/m}^{2}}{3.61\!\times\!10^{-19}\,\text{J}}
+        \approx 2.77 \times 10^{17}\,\text{photons/m}^{2}\text{/s}.$
+      </div>
+      <div class="step">
+        <span class="boxed-final">$N/(\text{m}^{2}\!\cdot\!\text{s}) \approx 2.77 \times 10^{17}$ photons</span>
+      </div>
+      <div class="step" style="color:#555; font-size:9.5pt;">
+        <em>Scale check.</em> A typical clear night → about $10^{17}$ visible photons hitting every square meter per second from the moon alone. Light is "lumpy," but the lumps are absurdly numerous.
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PART (c) ========== -->
+  <div class="problem-wrap page-break">
+    <span class="problem-number">Part (c)</span>
+    <span class="problem-title">Photons striking a $1\,\text{cm}^{2}$ photocell per second</span>
+    <div class="statement">
+      <div class="label">Question</div>
+      How many photons strike a photocell, $1\,\text{cm}$ on a side, per second?
+    </div>
+    <div class="work-space"></div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Convert area.</b>
+        $\;A = 1\,\text{cm}^{2} = (10^{-2}\,\text{m})^{2} = 10^{-4}\,\text{m}^{2}.$
+      </div>
+      <div class="step"><b>Scale (b) by area.</b>
+        $\;N_{\text{cell}}/s = (2.77\!\times\!10^{17}) \times 10^{-4}
+        \approx 2.77 \times 10^{13}\,\text{photons/s}.$
+      </div>
+      <div class="step">
+        <span class="boxed-final">$N_{\text{cell}} \approx 2.77 \times 10^{13}$ photons/s</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PART (d) ========== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Part (d)</span>
+    <span class="problem-title">Ideal-photocell photocurrent</span>
+    <div class="statement">
+      <div class="label">Question</div>
+      If the photocell is ideal (each photon causes one electron to be emitted), what is the photocurrent?
+    </div>
+    <div class="work-space"></div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Idea.</b> 1 photon → 1 electron, so the number of electrons per second equals the number of photons per second. Each electron carries charge $e$:
+        $$I_{\text{cur}} \;=\; \frac{N_{\text{cell}}}{t}\cdot e.$$
+      </div>
+      <div class="step"><b>Substitute.</b>
+        $\;I_{\text{cur}} = (2.77\!\times\!10^{13}) \times (1.602\!\times\!10^{-19})
+        \approx 4.44\!\times\!10^{-6}\,\text{A}.$
+      </div>
+      <div class="step">
+        <span class="boxed-final">$I_{\text{cur}} \approx 4.44\,\mu\text{A}$</span>
+      </div>
+      <div class="step" style="color:#555; font-size:9.5pt;">
+        <em>Unit sanity.</em> $\text{photons/s} \times \text{C/photon} = \text{C/s} = \text{A}.$ Makes sense.
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PART (e) ========== -->
+  <div class="problem-wrap page-break">
+    <span class="problem-number">Part (e)</span>
+    <span class="problem-title">Maximum allowable work function</span>
+    <div class="statement">
+      <div class="label">Question</div>
+      What is the maximum work function of the cell to emit this current?
+    </div>
+    <div class="work-space"></div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Idea.</b> For photoemission to occur, the photon must carry at least the work function's worth of energy:
+        $\;hf \geq W_{0}.$
+        The <em>maximum</em> allowable $W_{0}$ is the case of equality — i.e., $W_{0}$ exactly equals the photon energy.
+      </div>
+      <div class="step"><b>Plug in (a).</b>
+        $\;W_{0,\max} = E_{\text{photon}} \approx 2.26\,\text{eV} \approx 3.61 \times 10^{-19}\,\text{J}.$
+      </div>
+      <div class="step">
+        <span class="boxed-final">$W_{0,\max} \approx 2.26$ eV $\;\approx\; 3.61\times10^{-19}$ J</span>
+      </div>
+      <div class="step" style="color:#555; font-size:9.5pt;">
+        <em>What if $W_{0}$ is bigger?</em> The photon would not have enough energy; no electrons ejected; $I_{\text{cur}} = 0.$
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PART (f) ========== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Part (f)</span>
+    <span class="problem-title">Stopping voltage when $W = 1.0$ eV</span>
+    <div class="statement">
+      <div class="label">Question</div>
+      If the work function is $1.0\,\text{eV}$, what is the stopping voltage of the emitted electrons?
+    </div>
+    <div class="work-space"></div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>Einstein's equation.</b>
+        $\;KE_{\max} = hf - W_{0} = E_{\text{photon}} - W_{0}.$
+      </div>
+      <div class="step"><b>Substitute.</b>
+        $\;KE_{\max} = 2.255\,\text{eV} - 1.0\,\text{eV} = 1.255\,\text{eV}.$
+      </div>
+      <div class="step"><b>Stopping potential.</b>
+        $\;eV_{s} = KE_{\max} \Longrightarrow V_{s} = \dfrac{KE_{\max}}{e}.$
+        Numerically (in eV): $V_{s}$ in volts equals $KE_{\max}$ in eV.
+      </div>
+      <div class="step">
+        <span class="boxed-final">$V_{s} \approx 1.26\,\text{V}$</span>
+      </div>
+      <div class="step" style="color:#555; font-size:9.5pt;">
+        <em>Connection to the lab.</em> If you ran an I–V sweep on this photocell, you would find the photocurrent drops to zero at $V \approx -1.26\,\text{V}.$ That cut-off point <em>is</em> the stopping voltage — it's how $V_{s}$ is measured experimentally.
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Newton School · 2026-05-13 · Albert Lee · AP Physics<br>
+    Companion to the Photoelectric Effect Lecture Note (Problems 7–15). &copy; Copyright Newton School.
+  </div>
+
+</div>
+</body>
+</html>

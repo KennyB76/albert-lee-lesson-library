@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Photoelectric Effect — Interactive (Albert Lee · Problem 9)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+  :root {
+    --student: #4a90d9;
+    --student-soft: #e8f2fd;
+    --student-deep: #1a5fa8;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --bg: #f5f8ff;
+    --paper: #fff;
+    --line: #dee5ed;
+    --metal: #b0bec5;
+    --metal-edge: #455a64;
+    --electron: #ffd84a;
+    --photon-base: #f0a;
+    --vacuum: linear-gradient(180deg,#0c1933 0%,#1d2c5b 100%);
+    --ok-color: #2e7d32;
+    --no-color: #c62828;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--ink); padding: 16px; line-height: 1.55; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  header { padding: 18px 22px; background: var(--paper); border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); margin-bottom: 16px; }
+  header h1 { font-size: 22px; font-weight: 700; color: var(--student-deep); margin-bottom: 4px; }
+  header .meta { font-size: 12px; color: var(--ink-soft); letter-spacing: 0.05em; }
+
+  .grid { display: grid; grid-template-columns: 360px 1fr; gap: 16px; }
+  @media (max-width: 880px) { .grid { grid-template-columns: 1fr; } }
+  .panel { background: var(--paper); border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .panel h2 { font-size: 14px; color: var(--student-deep); margin-bottom: 12px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; }
+
+  .controls .field { margin-bottom: 14px; }
+  .controls label { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .controls label .val { font-family: 'JetBrains Mono', monospace; color: var(--student-deep); font-weight: 700; }
+  .controls input[type=range] { width: 100%; accent-color: var(--student); }
+  .controls .help { font-size: 11px; color: var(--ink-soft); margin-top: 2px; line-height: 1.4; }
+
+  .preset-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .preset {
+    padding: 4px 8px; font-size: 11px; font-weight: 600;
+    border: 1px solid var(--student); background: var(--paper); color: var(--student);
+    border-radius: 4px; cursor: pointer;
+  }
+  .preset:hover { background: var(--student); color: #fff; }
+
+  .scene svg { width: 100%; height: auto; max-height: 300px; background: var(--vacuum); border-radius: 8px; }
+
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
+  @media (max-width: 540px) { .stats { grid-template-columns: 1fr; } }
+  .stat {
+    background: var(--student-soft); border-left: 3px solid var(--student);
+    padding: 9px 12px; border-radius: 4px;
+  }
+  .stat .key { font-size: 10.5px; color: var(--student-deep); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2px; }
+  .stat .v { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: var(--ink); }
+  .stat.ok { background: #e8f5e9; border-left-color: var(--ok-color); }
+  .stat.ok .key, .stat.ok .v { color: var(--ok-color); }
+  .stat.no { background: #ffebee; border-left-color: var(--no-color); }
+  .stat.no .key, .stat.no .v { color: var(--no-color); }
+
+  .formula {
+    background: #f8fafd; border: 1px solid var(--line); border-left: 3px solid var(--student);
+    padding: 10px 14px; border-radius: 4px; margin-top: 12px; font-size: 13px;
+  }
+  .formula .ftitle { font-weight: 700; color: var(--student-deep); margin-bottom: 4px; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  .iv-graph { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 8px; }
+  .iv-graph svg { width: 100%; height: auto; max-height: 260px; }
+  .iv-caption { font-size: 11.5px; color: var(--ink-soft); text-align: center; margin-top: 4px; }
+
+  footer { text-align: center; padding: 18px; font-size: 11px; color: var(--ink-soft); margin-top: 16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Photoelectric Effect — Live</h1>
+    <div class="meta">Albert Lee · AP Physics · Problem 9 companion · drag the sliders, watch electrons fly + I-V curve change</div>
+  </header>
+
+  <div class="grid">
+
+    <!-- ============================ CONTROLS ============================ -->
+    <div class="panel controls">
+      <h2>Controls</h2>
+
+      <div class="field">
+        <label>Work function $W_0$ <span class="val"><span id="WVal">3.0</span> eV</span></label>
+        <input type="range" id="W" min="0.5" max="6.0" value="3.0" step="0.05">
+        <div class="help">Energy needed to free an electron from the metal.</div>
+        <div class="preset-row">
+          <button class="preset" data-W="3.0">3.0 (problem)</button>
+          <button class="preset" data-W="1.9">1.9 (cesium)</button>
+          <button class="preset" data-W="2.28">2.28 (sodium)</button>
+          <button class="preset" data-W="4.73">4.73 (silver)</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Wavelength λ <span class="val"><span id="lamVal">248</span> nm</span></label>
+        <input type="range" id="lambda" min="100" max="800" value="248" step="2">
+        <div class="help">Incident light wavelength (UV to red).</div>
+        <div class="preset-row">
+          <button class="preset" data-lam="248">248 (problem)</button>
+          <button class="preset" data-lam="400">400 (violet)</button>
+          <button class="preset" data-lam="550">550 (green)</button>
+          <button class="preset" data-lam="700">700 (red)</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Applied voltage V <span class="val"><span id="VAppVal">0.0</span> V</span></label>
+        <input type="range" id="VApp" min="-5" max="2" value="0" step="0.05">
+        <div class="help">
+          Positive = accelerating electrons (full current flows).<br>
+          Negative = retarding (slows electrons; cuts off at $V = -V_s$).
+        </div>
+      </div>
+
+      <div class="formula">
+        <div class="ftitle">Einstein's photoelectric equation</div>
+        $KE_{\max} = h f - W_0 = \dfrac{hc}{\lambda} - W_0$<br>
+        $e\,V_s = KE_{\max}$ &nbsp; (stopping potential)
+      </div>
+
+    </div>
+
+    <!-- ============================ SCENE + STATS ============================ -->
+    <div>
+
+      <div class="panel">
+        <h2>Setup — photons in, electrons out</h2>
+        <div class="scene">
+          <svg id="scene" viewBox="0 0 720 320"></svg>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:14px;">
+        <h2>Live values</h2>
+        <div class="stats">
+          <div class="stat">
+            <div class="key">Photon energy E = hc/λ</div>
+            <div class="v" id="EStat">—</div>
+          </div>
+          <div class="stat" id="kePanel">
+            <div class="key">Max KE of ejected electron</div>
+            <div class="v" id="KEStat">—</div>
+          </div>
+          <div class="stat">
+            <div class="key">Stopping potential V<sub>s</sub></div>
+            <div class="v" id="VsStat">—</div>
+          </div>
+          <div class="stat" id="curPanel">
+            <div class="key">Photocurrent (now)</div>
+            <div class="v" id="IStat">—</div>
+          </div>
+          <div class="stat">
+            <div class="key">Threshold wavelength λ₀</div>
+            <div class="v" id="lam0Stat">—</div>
+          </div>
+          <div class="stat">
+            <div class="key">Electron speed v<sub>max</sub></div>
+            <div class="v" id="vStat">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:14px;">
+        <h2>I-V curve — what the experiment measures</h2>
+        <div class="iv-graph">
+          <svg id="ivg" viewBox="0 0 720 260"></svg>
+        </div>
+        <div class="iv-caption">
+          The current drops to zero at $V = -V_s$ — that's how stopping voltage is <em>measured</em>.
+          Brighter light raises the plateau (more photons → more electrons) but does <strong>not</strong> shift $V_s.$
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>Newton School · Albert Lee · interactive companion to Problem 9 · 2026-05-13</footer>
+</div>
+
+<script>
+// ============================================================
+// Constants
+// ============================================================
+const HC_EV_NM = 1240;          // hc in eV·nm
+const ME = 9.10938356e-31;      // electron mass
+const EV = 1.602176634e-19;     // 1 eV in J
+
+const state = { W: 3.0, lam: 248, V: 0.0 };
+
+const $ = id => document.getElementById(id);
+const WIn = $('W'), lamIn = $('lambda'), VIn = $('VApp');
+const WVal = $('WVal'), lamVal = $('lamVal'), VAppVal = $('VAppVal');
+const EStat = $('EStat'), KEStat = $('KEStat'), VsStat = $('VsStat');
+const IStat = $('IStat'), lam0Stat = $('lam0Stat'), vStat = $('vStat');
+const kePanel = $('kePanel'), curPanel = $('curPanel');
+const svg = $('scene'), ivg = $('ivg');
+
+// ============================================================
+// Helpers
+// ============================================================
+function wavelengthToColor(wl) {
+  if (wl < 200) return '#dab8ff';  // UV (synthetic violet)
+  let r=0,g=0,b=0;
+  if (wl < 380) { r=0.7; g=0; b=1; }
+  else if (wl<440) { r=-(wl-440)/(440-380); g=0; b=1; }
+  else if (wl<490) { r=0; g=(wl-440)/(490-440); b=1; }
+  else if (wl<510) { r=0; g=1; b=-(wl-510)/(510-490); }
+  else if (wl<580) { r=(wl-510)/(580-510); g=1; b=0; }
+  else if (wl<645) { r=1; g=-(wl-645)/(645-580); b=0; }
+  else { r=1; g=0; b=0; }
+  return `rgb(${Math.round(r*255)},${Math.round(g*255)},${Math.round(b*255)})`;
+}
+
+// ============================================================
+// Physics
+// ============================================================
+function compute() {
+  const E = HC_EV_NM / state.lam;            // eV
+  const KE = Math.max(0, E - state.W);       // eV
+  const Vs = KE;                              // since e cancels in numeric
+  const lam0 = HC_EV_NM / state.W;            // nm
+  const ejected = E > state.W;
+  const v = ejected ? Math.sqrt(2 * KE * EV / ME) : 0;
+
+  // Current model (qualitative, normalised):
+  // - if photon too weak (E < W₀): I = 0
+  // - else, full plateau when V > 0
+  // - linear ramp from V = -Vs to V = 0 (some electrons can still cross)
+  // - I = 0 for V < -Vs
+  let I = 0;  // arbitrary units (0..1)
+  if (ejected) {
+    if (state.V >= 0) I = 1.0;
+    else if (state.V > -Vs) I = 1 - (-state.V) / Vs;   // 0..1
+    else I = 0;
+  }
+  return { E, KE, Vs, lam0, ejected, v, I };
+}
+
+// ============================================================
+// Scene SVG (photons in -> electrons out)
+// ============================================================
+let animT = 0;
+const photons = [];
+const electrons = [];
+
+function spawnPhoton() {
+  photons.push({ x: 60, y: 130 + Math.random()*60, born: animT });
+}
+function spawnElectron(KE_eV) {
+  const sp = Math.min(1, 0.3 + KE_eV*0.18);   // visual speed
+  electrons.push({ x: 280, y: 130 + Math.random()*60, vx: sp, born: animT });
+}
+
+function tickAnim(c) {
+  animT++;
+  // photon spawn rate scales with "intensity" — we just spawn every few frames
+  if (animT % 8 === 0) spawnPhoton();
+
+  // move photons
+  for (const p of photons) p.x += 4;
+  // when photon reaches surface, decide if electron is ejected
+  for (const p of photons) {
+    if (!p.hit && p.x >= 270) {
+      p.hit = true;
+      if (c.ejected) spawnElectron(c.KE);
+    }
+  }
+  // remove old photons
+  while (photons.length && photons[0].x > 320) photons.shift();
+
+  // move electrons (with V-affected drift)
+  // negative V slows them (retarding) — if V < -Vs they bounce back
+  for (const e of electrons) {
+    let dragX = c.ejected ? 1 : 0;
+    if (state.V < 0) {
+      // retarding: deceleration. If V <= -Vs, electrons stop / reverse.
+      const slow = -state.V / Math.max(0.001, c.Vs);  // 0..1+
+      dragX = 1 - slow;
+    } else {
+      dragX = 1 + state.V * 0.3;
+    }
+    e.vx = Math.max(-0.6, e.vx * 0.985 + dragX * 0.04);
+    e.x += e.vx * 3;
+  }
+  while (electrons.length && (electrons[0].x > 680 || electrons[0].x < 260)) electrons.shift();
+}
+
+function renderScene(c) {
+  const W = 720, H = 320;
+  const surfaceX = 270;
+  const collectorX = 600;
+  const beamColor = wavelengthToColor(state.lam);
+
+  let s = '';
+
+  // Metal block (cathode)
+  s += `<rect x="180" y="100" width="90" height="120" fill="#b0bec5" stroke="#455a64" stroke-width="1.5"/>`;
+  s += `<rect x="180" y="100" width="90" height="120" fill="url(#metalgrad)" opacity="0.35"/>`;
+  s += `<defs><linearGradient id="metalgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#000"/></linearGradient></defs>`;
+  s += `<text x="225" y="245" fill="#cfd8e3" font-size="11" text-anchor="middle">cathode (W₀ = ${state.W.toFixed(2)} eV)</text>`;
+
+  // Collector (anode)
+  s += `<rect x="${collectorX}" y="100" width="14" height="120" fill="#90caf9" stroke="#1a5fa8"/>`;
+  s += `<text x="${collectorX+7}" y="245" fill="#cfd8e3" font-size="11" text-anchor="middle">anode</text>`;
+
+  // Wire / voltage label (top)
+  s += `<line x1="225" y1="100" x2="225" y2="50" stroke="#cfd8e3" stroke-width="1"/>`;
+  s += `<line x1="${collectorX+7}" y1="100" x2="${collectorX+7}" y2="50" stroke="#cfd8e3" stroke-width="1"/>`;
+  s += `<line x1="225" y1="50" x2="${collectorX+7}" y2="50" stroke="#cfd8e3" stroke-width="1"/>`;
+  s += `<circle cx="${(225 + collectorX+7)/2}" cy="50" r="18" fill="#1d2c5b" stroke="#cfd8e3" stroke-width="1.5"/>`;
+  s += `<text x="${(225 + collectorX+7)/2}" y="54" fill="#ffd84a" font-size="13" text-anchor="middle" font-weight="700">${state.V.toFixed(2)} V</text>`;
+  s += `<text x="${(225 + collectorX+7)/2}" y="35" fill="#cfd8e3" font-size="10" text-anchor="middle">applied voltage</text>`;
+
+  // Ammeter ball (bottom)
+  s += `<line x1="225" y1="220" x2="225" y2="275" stroke="#cfd8e3" stroke-width="1"/>`;
+  s += `<line x1="${collectorX+7}" y1="220" x2="${collectorX+7}" y2="275" stroke="#cfd8e3" stroke-width="1"/>`;
+  s += `<line x1="225" y1="275" x2="${collectorX+7}" y2="275" stroke="#cfd8e3" stroke-width="1"/>`;
+  const ammeterX = (225 + collectorX+7)/2;
+  s += `<circle cx="${ammeterX}" cy="275" r="18" fill="#1d2c5b" stroke="#cfd8e3" stroke-width="1.5"/>`;
+  s += `<text x="${ammeterX}" y="280" fill="#90ee90" font-size="14" text-anchor="middle" font-weight="700">A</text>`;
+  s += `<text x="${ammeterX}" y="300" fill="#cfd8e3" font-size="10" text-anchor="middle">ammeter (I = ${(c.I*100).toFixed(0)}%)</text>`;
+
+  // Photons (incoming, animated)
+  for (const p of photons) {
+    if (p.x > surfaceX) continue;
+    const pulse = 0.7 + 0.3*Math.sin((animT + p.born)*0.3);
+    s += `<circle cx="${p.x}" cy="${p.y}" r="5" fill="${beamColor}" opacity="${pulse}"/>`;
+    s += `<circle cx="${p.x}" cy="${p.y}" r="9" fill="none" stroke="${beamColor}" stroke-width="1" opacity="${0.3*pulse}"/>`;
+  }
+
+  // Beam guide
+  s += `<line x1="20" y1="160" x2="${surfaceX}" y2="160" stroke="${beamColor}" stroke-width="1.5" opacity="0.3" stroke-dasharray="6,4"/>`;
+  s += `<text x="20" y="155" fill="${beamColor}" font-size="11" opacity="0.9">light (λ = ${state.lam} nm)</text>`;
+
+  // Electrons
+  for (const e of electrons) {
+    if (e.x < surfaceX) continue;
+    s += `<circle cx="${e.x}" cy="${e.y}" r="4" fill="#ffd84a" stroke="#000" stroke-width="0.5"/>`;
+    s += `<text x="${e.x-3}" y="${e.y+3}" font-size="8" fill="#000">e⁻</text>`;
+  }
+
+  // Status banner
+  if (!c.ejected) {
+    s += `<text x="${(surfaceX + collectorX)/2}" y="160" font-size="14" fill="#ff6b6b" text-anchor="middle" font-weight="700">NO EJECTION — photon energy &lt; W₀</text>`;
+  } else if (state.V <= -c.Vs) {
+    s += `<text x="${(surfaceX + collectorX)/2}" y="160" font-size="13" fill="#ff6b6b" text-anchor="middle" font-weight="700">RETARDED — V ≤ −V_s, no current</text>`;
+  }
+
+  svg.innerHTML = s;
+}
+
+// ============================================================
+// I-V graph
+// ============================================================
+function renderIV(c) {
+  const W = 720, H = 260;
+  const padL = 60, padR = 30, padT = 20, padB = 38;
+  const plotW = W - padL - padR;
+  const plotH = H - padT - padB;
+  const xMin = -5, xMax = 2;
+  const xToPx = v => padL + ((v - xMin) / (xMax - xMin)) * plotW;
+  const Imax = 1;
+  const yToPx = i => padT + (1 - i/Imax) * plotH;
+
+  let s = '';
+  // axes
+  const x0px = xToPx(0);
+  const y0px = yToPx(0);
+  // grid
+  for (let v = xMin; v <= xMax; v++) {
+    const xp = xToPx(v);
+    s += `<line x1="${xp}" y1="${padT}" x2="${xp}" y2="${padT+plotH}" stroke="#eee" stroke-width="1"/>`;
+    s += `<text x="${xp}" y="${padT+plotH+16}" font-size="11" fill="#666" text-anchor="middle">${v}</text>`;
+  }
+  s += `<text x="${padL + plotW/2}" y="${H-6}" font-size="11" fill="#444" text-anchor="middle">Applied voltage V (volts)</text>`;
+  s += `<text x="14" y="${padT + plotH/2}" font-size="11" fill="#444" transform="rotate(-90 14 ${padT + plotH/2})" text-anchor="middle">Photocurrent I</text>`;
+
+  // x-axis
+  s += `<line x1="${padL}" y1="${y0px}" x2="${padL+plotW}" y2="${y0px}" stroke="#000" stroke-width="1.2"/>`;
+  // y-axis at V=0
+  s += `<line x1="${x0px}" y1="${padT}" x2="${x0px}" y2="${padT+plotH}" stroke="#000" stroke-width="1.2"/>`;
+
+  // The IV curve (if ejected)
+  if (c.ejected) {
+    // From V=-Vs to V=0: linear ramp 0 -> 1
+    // From V=0 to V=2: plateau at 1
+    // From V<-Vs: 0 (flatline at axis)
+    const VsClamp = Math.min(c.Vs, 5);
+    const xStart = xToPx(-VsClamp);
+    const xZero  = xToPx(0);
+    const xEnd   = xToPx(xMax);
+
+    // flat at 0 from xMin to -Vs
+    s += `<line x1="${padL}" y1="${y0px}" x2="${xStart}" y2="${y0px}" stroke="#1a5fa8" stroke-width="2.5"/>`;
+    // ramp -Vs to 0
+    s += `<line x1="${xStart}" y1="${y0px}" x2="${xZero}" y2="${yToPx(1)}" stroke="#1a5fa8" stroke-width="2.5"/>`;
+    // plateau 0 to xMax
+    s += `<line x1="${xZero}" y1="${yToPx(1)}" x2="${xEnd}" y2="${yToPx(1)}" stroke="#1a5fa8" stroke-width="2.5"/>`;
+
+    // Mark -Vs
+    s += `<circle cx="${xStart}" cy="${y0px}" r="5" fill="#ff6b6b"/>`;
+    s += `<text x="${xStart}" y="${y0px+20}" font-size="11" fill="#c62828" text-anchor="middle" font-weight="700">−V_s = ${(-c.Vs).toFixed(2)} V</text>`;
+
+    // current operating point
+    const xCur = xToPx(state.V);
+    const yCur = yToPx(c.I);
+    s += `<line x1="${xCur}" y1="${padT}" x2="${xCur}" y2="${padT+plotH}" stroke="#ffd84a" stroke-width="1" stroke-dasharray="4,4"/>`;
+    s += `<circle cx="${xCur}" cy="${yCur}" r="7" fill="#ffd84a" stroke="#000" stroke-width="1.5"/>`;
+    s += `<text x="${xCur+10}" y="${yCur-6}" font-size="11" fill="#000" font-weight="700">now</text>`;
+  } else {
+    s += `<line x1="${padL}" y1="${y0px}" x2="${padL+plotW}" y2="${y0px}" stroke="#c62828" stroke-width="2.5"/>`;
+    s += `<text x="${padL + plotW/2}" y="${padT + plotH/2}" font-size="14" fill="#c62828" text-anchor="middle" font-weight="700">No photoemission (E &lt; W₀)</text>`;
+  }
+
+  ivg.innerHTML = s;
+}
+
+// ============================================================
+// Stats rendering
+// ============================================================
+function fmt(v, units, d=3) {
+  if (v == null || !isFinite(v)) return '—';
+  return v.toFixed(d) + units;
+}
+
+function renderStats(c) {
+  EStat.textContent = `${c.E.toFixed(3)} eV  (${(c.E*EV).toExponential(3)} J)`;
+  if (c.ejected) {
+    KEStat.textContent = `${c.KE.toFixed(3)} eV  (${(c.KE*EV).toExponential(3)} J)`;
+    VsStat.textContent = `${c.Vs.toFixed(3)} V`;
+    vStat.textContent  = c.v.toExponential(3) + ' m/s';
+    kePanel.classList.remove('no'); kePanel.classList.add('ok');
+  } else {
+    KEStat.textContent = '0 — photon too weak';
+    VsStat.textContent = '0 V';
+    vStat.textContent  = '0 m/s';
+    kePanel.classList.remove('ok'); kePanel.classList.add('no');
+  }
+  IStat.textContent = (c.I*100).toFixed(0) + ' %  (relative)';
+  if (c.I > 0.99) { curPanel.classList.remove('no'); curPanel.classList.add('ok'); }
+  else if (c.I === 0) { curPanel.classList.remove('ok'); curPanel.classList.add('no'); }
+  else { curPanel.classList.remove('ok','no'); }
+  lam0Stat.textContent = c.lam0.toFixed(1) + ' nm';
+}
+
+function tick() {
+  const c = compute();
+  tickAnim(c);
+  renderScene(c);
+  renderIV(c);
+  renderStats(c);
+  WVal.textContent = state.W.toFixed(2);
+  lamVal.textContent = state.lam;
+  VAppVal.textContent = state.V.toFixed(2);
+  requestAnimationFrame(tick);
+}
+
+// ============================================================
+// Bind controls
+// ============================================================
+WIn.addEventListener('input', () => { state.W = +WIn.value; });
+lamIn.addEventListener('input', () => { state.lam = +lamIn.value; });
+VIn.addEventListener('input', () => { state.V = +VIn.value; });
+document.querySelectorAll('[data-W]').forEach(b => b.addEventListener('click', () => { state.W = +b.dataset.W; WIn.value = state.W; }));
+document.querySelectorAll('[data-lam]').forEach(b => b.addEventListener('click', () => { state.lam = +b.dataset.lam; lamIn.value = state.lam; }));
+
+tick();
+</script>
+</body>
+</html>

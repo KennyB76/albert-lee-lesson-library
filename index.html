@@ -46,6 +46,18 @@
   .popup-link:hover { color: var(--student); border-bottom-color: var(--student); }
   .pdf-badge { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; background: var(--student-soft); color: var(--student-deep); border-radius: 3px; padding: 1px 5px; vertical-align: middle; }
   .teacher-note { background: var(--bg); padding: 16px 20px; border-radius: 8px; border-left: 3px solid var(--student); margin-top: 12px; font-style: italic; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  .notes-badge { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; background: #e8f5e9; color: #2e7d32; border-radius: 3px; padding: 1px 5px; vertical-align: middle; }
+  .today-badge { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; background: var(--student-deep); color: #fff; border-radius: 3px; padding: 1px 6px; vertical-align: middle; }
+  /* Activity cards */
+  .kenny-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 16px; }
+  @media (max-width: 540px) { .kenny-cards { grid-template-columns: 1fr; } }
+  .kenny-card { display: block; padding: 18px 20px; border-radius: 10px; background: var(--paper); border: 1px solid var(--line); text-decoration: none; color: inherit; transition: all 0.2s; position: relative; overflow: hidden; cursor: pointer; }
+  .kenny-card:hover { border-color: var(--student); box-shadow: 0 4px 16px rgba(0,0,0,0.10); transform: translateY(-2px); }
+  .kenny-card .kc-icon { font-size: 28px; margin-bottom: 8px; }
+  .kenny-card .kc-title { font-family: var(--serif); font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+  .kenny-card .kc-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+  .kenny-card .kc-arrow { position: absolute; top: 18px; right: 18px; color: var(--student); font-size: 14px; opacity: 0.4; transition: opacity 0.2s; }
+  .kenny-card:hover .kc-arrow { opacity: 1; }
   footer { text-align: center; padding: 32px; font-size: 11px; color: var(--ink-soft); }
   footer .copyright { margin-top: 8px; font-style: italic; }
   .modal-overlay { position: fixed; inset: 0; background: rgba(10,20,40,0.78); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
@@ -80,6 +92,28 @@
     <div class="label">Recent Work</div>
     <h2>This Month</h2>
     <ul class="timeline">
+      <!-- 5/13 — TODAY: Photoelectric lecture note + interactive companions -->
+      <li>
+        <span class="date">5/13</span>
+        <a class="popup-link"
+           data-src="2026-05-13/AlbertLee-2026-05-13-Physics_Class-PhotoelectricEffect_LectureNote.pdf"
+           data-fallback="2026-05-13/AlbertLee-2026-05-13-Physics_Class-PhotoelectricEffect_LectureNote.html">
+          Photoelectric Effect &amp; Photon Energy — Lecture Note (Problems 7–15)
+        </a>
+        <span class="notes-badge">Notes</span>
+        <span class="pdf-badge">PDF</span>
+        <span class="today-badge">TODAY</span>
+      </li>
+      <li>
+        <span class="date">5/13</span>
+        <a class="popup-link"
+           data-src="2026-05-13/AlbertLee-2026-05-13-Physics_Class-MoonLightPhotoelectric_Worksheet.pdf"
+           data-fallback="2026-05-13/AlbertLee-2026-05-13-Physics_Class-MoonLightPhotoelectric_Worksheet.html">
+          Problem 16 — Moon-Light Photoelectric (QnA Worksheet)
+        </a>
+        <span class="notes-badge">QnA</span>
+        <span class="pdf-badge">PDF</span>
+      </li>
       <li>
         <span class="date">5/6</span>
         <a class="popup-link"
@@ -99,6 +133,30 @@
         <span class="pdf-badge">PDF</span>
       </li>
     </ul>
+  </section>
+
+  <section>
+    <div class="label">Play With It</div>
+    <h2>Interactive Activities</h2>
+    <p>Drag the sliders &mdash; the physics moves in real time. Try Problem 11 and Problem 9 with these.</p>
+    <div class="kenny-cards">
+      <a class="kenny-card popup-link"
+         data-src="interactive/diffraction-grating.html"
+         data-label="Diffraction Grating — Live (Problem 11)">
+        <div class="kc-icon">🌈</div>
+        <div class="kc-title">Diffraction Grating</div>
+        <div class="kc-desc">$d\sin\theta = m\lambda$ live. Compare exact angle vs small-angle approximation. Move λ, lines/cm, and L.</div>
+        <div class="kc-arrow">→</div>
+      </a>
+      <a class="kenny-card popup-link"
+         data-src="interactive/photoelectric-effect.html"
+         data-label="Photoelectric Effect — Live (Problem 9)">
+        <div class="kc-icon">⚡</div>
+        <div class="kc-title">Photoelectric Effect</div>
+        <div class="kc-desc">Watch photons hit, electrons fly, and the I–V curve change. See how $V_s$ is measured by the ammeter.</div>
+        <div class="kc-arrow">→</div>
+      </a>
+    </div>
   </section>
 
   <section>
@@ -141,7 +199,11 @@
     iframe.src = 'about:blank';
   };
   document.querySelectorAll('.popup-link').forEach(a => {
-    a.addEventListener('click', e => { e.preventDefault(); openModal(a.dataset.src, a.textContent.trim()); });
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const label = a.dataset.label || a.textContent.trim();
+      openModal(a.dataset.src, label);
+    });
   });
   document.getElementById('modalClose').addEventListener('click', closeModal);
   overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });

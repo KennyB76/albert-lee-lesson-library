@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Diffraction Grating — Interactive (Albert Lee · Problem 11)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+  :root {
+    --student: #4a90d9;
+    --student-soft: #e8f2fd;
+    --student-deep: #1a5fa8;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --bg: #f5f8ff;
+    --paper: #fff;
+    --line: #dee5ed;
+    --beam: #c43;
+    --beam-glow: #ff7755;
+    --grating: #333;
+    --screen: #888;
+    --error-color: #d4690d;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--ink); padding: 16px; line-height: 1.55; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  header { padding: 18px 22px; background: var(--paper); border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); margin-bottom: 16px; }
+  header h1 { font-size: 22px; font-weight: 700; color: var(--student-deep); margin-bottom: 4px; }
+  header .meta { font-size: 12px; color: var(--ink-soft); letter-spacing: 0.05em; }
+
+  .grid { display: grid; grid-template-columns: 360px 1fr; gap: 16px; }
+  @media (max-width: 880px) { .grid { grid-template-columns: 1fr; } }
+  .panel { background: var(--paper); border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+  .panel h2 { font-size: 14px; color: var(--student-deep); margin-bottom: 12px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; }
+
+  .controls .field { margin-bottom: 14px; }
+  .controls label { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .controls label .val { font-family: 'JetBrains Mono', monospace; color: var(--student-deep); font-weight: 700; }
+  .controls input[type=range] { width: 100%; accent-color: var(--student); }
+  .controls .help { font-size: 11px; color: var(--ink-soft); margin-top: 2px; line-height: 1.4; }
+  .seg { display: flex; gap: 4px; margin-top: 6px; }
+  .seg button {
+    flex: 1; padding: 6px 8px; font-size: 12px; font-weight: 600;
+    border: 1.5px solid var(--line); background: var(--paper); color: var(--ink-soft);
+    border-radius: 6px; cursor: pointer; transition: all 0.15s;
+  }
+  .seg button.active { background: var(--student); color: #fff; border-color: var(--student); }
+  .seg button:hover:not(.active) { border-color: var(--student); color: var(--student); }
+
+  .scene { position: relative; }
+  .scene svg { width: 100%; height: auto; max-height: 380px; background: linear-gradient(180deg,#0c1933 0%,#1d2c5b 100%); border-radius: 8px; }
+  .scene .legend {
+    position: absolute; top: 10px; left: 14px; color: #fff; font-size: 11px;
+    background: rgba(0,0,0,0.35); padding: 6px 10px; border-radius: 6px;
+  }
+  .legend .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
+  @media (max-width: 540px) { .stats { grid-template-columns: 1fr; } }
+  .stat {
+    background: var(--student-soft); border-left: 3px solid var(--student);
+    padding: 9px 12px; border-radius: 4px;
+  }
+  .stat .key { font-size: 10.5px; color: var(--student-deep); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 2px; }
+  .stat .v { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: var(--ink); }
+
+  table.compare {
+    width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px;
+  }
+  table.compare th, table.compare td {
+    border: 1px solid var(--line); padding: 6px 10px; text-align: center;
+  }
+  table.compare th { background: var(--student-soft); color: var(--student-deep); font-weight: 600; font-size: 11px; letter-spacing: 0.06em; }
+  table.compare td.label { text-align: left; font-weight: 600; }
+  table.compare td.num { font-family: 'JetBrains Mono', monospace; }
+  table.compare .err { color: var(--error-color); font-weight: 600; }
+
+  .formula {
+    background: #f8fafd; border: 1px solid var(--line); border-left: 3px solid var(--student);
+    padding: 10px 14px; border-radius: 4px; margin-top: 12px; font-size: 13px;
+  }
+  .formula .ftitle { font-weight: 700; color: var(--student-deep); margin-bottom: 4px; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  .preset-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .preset {
+    padding: 4px 8px; font-size: 11px; font-weight: 600;
+    border: 1px solid var(--student); background: var(--paper); color: var(--student);
+    border-radius: 4px; cursor: pointer;
+  }
+  .preset:hover { background: var(--student); color: #fff; }
+  .preset.active { background: var(--student); color: #fff; }
+
+  footer { text-align: center; padding: 18px; font-size: 11px; color: var(--ink-soft); margin-top: 16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Diffraction Grating — Live</h1>
+    <div class="meta">Albert Lee · AP Physics · Problem 11 companion · drag the sliders to see exact angle vs small-angle approximation</div>
+  </header>
+
+  <div class="grid">
+
+    <!-- ============================ CONTROLS ============================ -->
+    <div class="panel controls">
+      <h2>Controls</h2>
+
+      <div class="field">
+        <label>Wavelength λ <span class="val"><span id="lamVal">440</span> nm</span></label>
+        <input type="range" id="lambda" min="380" max="750" value="440" step="5">
+        <div class="help">Visible light: 380 nm (violet) — 750 nm (red).</div>
+        <div class="preset-row">
+          <button class="preset" data-preset-lam="440">440 (problem)</button>
+          <button class="preset" data-preset-lam="650">650 (red)</button>
+          <button class="preset" data-preset-lam="405">405 (violet)</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Lines per cm <span class="val"><span id="lpcVal">10000</span></span></label>
+        <input type="range" id="lpc" min="500" max="50000" value="10000" step="500">
+        <div class="help">More lines = smaller slit spacing $d$ = wider fringes.</div>
+        <div class="preset-row">
+          <button class="preset" data-preset-lpc="10000">10,000 (problem)</button>
+          <button class="preset" data-preset-lpc="2000">2,000 (coarse)</button>
+          <button class="preset" data-preset-lpc="30000">30,000 (fine)</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Screen distance L <span class="val"><span id="LVal">1.20</span> m</span></label>
+        <input type="range" id="L" min="0.3" max="3.0" value="1.2" step="0.05">
+        <div class="help">Distance from grating to screen.</div>
+      </div>
+
+      <div class="field">
+        <label>Highlighted order m <span class="val" id="mVal">2</span></label>
+        <div class="seg">
+          <button class="seg-btn" data-m="1">m = 1</button>
+          <button class="seg-btn active" data-m="2">m = 2</button>
+          <button class="seg-btn" data-m="3">m = 3</button>
+        </div>
+      </div>
+
+      <div class="formula">
+        <div class="ftitle">Grating equation</div>
+        $d\sin\theta_m = m\lambda$, &nbsp; slit spacing $\;d = 1\,/\,(\text{lines per meter}).$
+      </div>
+
+    </div>
+
+    <!-- ============================ SCENE + STATS ============================ -->
+    <div>
+
+      <div class="panel">
+        <h2>Geometry</h2>
+        <div class="scene">
+          <svg id="scene" viewBox="0 0 720 360" preserveAspectRatio="xMidYMid meet"></svg>
+          <div class="legend">
+            <span><span class="dot" style="background:#ff7755"></span>Incident beam</span>&nbsp;
+            <span><span class="dot" style="background:#fff"></span>Maxima (m = ±1, ±2, ±3)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:14px;">
+        <h2>Live calculation (highlighted order m = <span id="mLive">2</span>)</h2>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="key">Slit spacing d</div>
+            <div class="v" id="dStat">—</div>
+          </div>
+          <div class="stat">
+            <div class="key">m λ / d (sin θ value)</div>
+            <div class="v" id="sinStat">—</div>
+          </div>
+        </div>
+
+        <h2 style="margin-top:16px;">Exact vs Small-angle</h2>
+        <table class="compare">
+          <thead>
+            <tr><th>Method</th><th>Formula</th><th>θ</th><th>y (on screen)</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="label">Exact</td>
+              <td class="num">θ = arcsin(mλ/d); &nbsp; y = L·tan(θ)</td>
+              <td class="num" id="thExact">—</td>
+              <td class="num" id="yExact">—</td>
+            </tr>
+            <tr>
+              <td class="label">Small-angle</td>
+              <td class="num">θ ≈ mλ/d (rad); &nbsp; y ≈ L·θ</td>
+              <td class="num" id="thSmall">—</td>
+              <td class="num" id="ySmall">—</td>
+            </tr>
+            <tr>
+              <td class="label">Δ (error)</td>
+              <td class="num">small − exact</td>
+              <td class="num err" id="thErr">—</td>
+              <td class="num err" id="yErr">—</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="formula">
+          <div class="ftitle">When is small-angle OK?</div>
+          $\sin\theta \approx \theta \approx \tan\theta$ for $\theta \lesssim 10°$ (error $\lesssim 1\%$).
+          Above $\sim 20°$ the gap blows up — for $\theta = 60°$, $\tan\theta$ is already $\sim 60\%$ larger than $\sin\theta$.
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <footer>Newton School · Albert Lee · interactive companion to Problem 11 · 2026-05-13</footer>
+</div>
+
+<script>
+// ============================================================
+// State + DOM refs
+// ============================================================
+const state = {
+  lam_nm: 440,   // nm
+  lpc:    10000, // lines per cm
+  L:      1.2,   // m
+  m:      2
+};
+
+const $ = (id) => document.getElementById(id);
+const lambda = $('lambda'), lpc = $('lpc'), Lin = $('L');
+const lamVal = $('lamVal'), lpcVal = $('lpcVal'), LVal = $('LVal'), mVal = $('mVal'), mLive = $('mLive');
+const dStat = $('dStat'), sinStat = $('sinStat');
+const thExact = $('thExact'), yExact = $('yExact');
+const thSmall = $('thSmall'), ySmall = $('ySmall');
+const thErr = $('thErr'), yErr = $('yErr');
+const svg = $('scene');
+
+// ============================================================
+// Wavelength -> visible color (approx)
+// ============================================================
+function wavelengthToColor(wl) {
+  let r=0,g=0,b=0;
+  if (wl >= 380 && wl < 440) { r=-(wl-440)/(440-380); g=0; b=1; }
+  else if (wl<490) { r=0; g=(wl-440)/(490-440); b=1; }
+  else if (wl<510) { r=0; g=1; b=-(wl-510)/(510-490); }
+  else if (wl<580) { r=(wl-510)/(580-510); g=1; b=0; }
+  else if (wl<645) { r=1; g=-(wl-645)/(645-580); b=0; }
+  else if (wl<=781){ r=1; g=0; b=0; }
+  return `rgb(${Math.round(r*255)},${Math.round(g*255)},${Math.round(b*255)})`;
+}
+
+// ============================================================
+// Compute
+// ============================================================
+function compute() {
+  const lam_m = state.lam_nm * 1e-9;             // m
+  const lines_per_m = state.lpc * 100;
+  const d_m = 1 / lines_per_m;                   // m
+  const m = state.m;
+  const sinTheta = m * lam_m / d_m;
+
+  let exact = { sin: sinTheta, valid: sinTheta <= 1 };
+  if (exact.valid) {
+    exact.thRad = Math.asin(sinTheta);
+    exact.thDeg = exact.thRad * 180 / Math.PI;
+    exact.y = state.L * Math.tan(exact.thRad);
+  }
+  const small = {
+    thRad: sinTheta,                              // small-angle: θ ≈ sin θ
+    thDeg: sinTheta * 180 / Math.PI,
+    y: state.L * sinTheta
+  };
+  return { d_m, sinTheta, exact, small };
+}
+
+// ============================================================
+// Render
+// ============================================================
+function fmt(v, units, digits=3) {
+  if (v == null || !isFinite(v)) return '—';
+  if (Math.abs(v) > 1e4 || (v !== 0 && Math.abs(v) < 1e-3)) return v.toExponential(digits) + units;
+  return v.toFixed(digits) + units;
+}
+
+function renderStats(c) {
+  dStat.textContent = (c.d_m * 1e6).toFixed(3) + ' μm  (' + c.d_m.toExponential(2) + ' m)';
+  sinStat.textContent = c.sinTheta.toFixed(4);
+
+  if (c.exact.valid) {
+    thExact.textContent = c.exact.thDeg.toFixed(2) + '°';
+    yExact.textContent  = c.exact.y.toFixed(3) + ' m';
+    thSmall.textContent = c.small.thDeg.toFixed(2) + '°';
+    ySmall.textContent  = c.small.y.toFixed(3) + ' m';
+    const dThetaDeg = c.small.thDeg - c.exact.thDeg;
+    const dY = c.small.y - c.exact.y;
+    thErr.textContent = (dThetaDeg >= 0 ? '+' : '') + dThetaDeg.toFixed(2) + '°';
+    yErr.textContent  = (dY >= 0 ? '+' : '') + (dY*100).toFixed(2) + ' cm';
+  } else {
+    thExact.textContent = 'no maximum (sin θ > 1)';
+    yExact.textContent  = '—';
+    thSmall.textContent = c.small.thDeg.toFixed(1) + '° (unphysical extrapolation)';
+    ySmall.textContent  = c.small.y.toFixed(3) + ' m';
+    thErr.textContent = '—'; yErr.textContent = '—';
+  }
+}
+
+function renderSVG(c) {
+  // viewBox 720 x 360
+  const W = 720, H = 360;
+  const gratingX = 140;
+  const screenX  = 640;
+  const cy = H/2;
+  const beamColor = wavelengthToColor(state.lam_nm);
+
+  // Map physical y (meters) to pixels on screen.
+  // We allow visualisation even for big angles; clamp drawing.
+  const orders = [1, 2, 3];
+  // figure out y values + angles
+  function angleForOrder(m) {
+    const sT = m * state.lam_nm*1e-9 / (1/(state.lpc*100));
+    return (sT <= 1) ? Math.asin(sT) : null;
+  }
+
+  // determine vertical scale (so highest order fits if visible)
+  const halfH = H/2 - 30;
+  let maxY = 0;
+  for (const m of orders) {
+    const th = angleForOrder(m);
+    if (th !== null) {
+      const y = state.L * Math.tan(th);
+      if (y > maxY) maxY = y;
+    }
+  }
+  const scale = maxY > 0 ? (halfH / maxY) : 1;
+
+  // Build SVG
+  let svgStr = '';
+
+  // Screen
+  svgStr += `<rect x="${screenX}" y="20" width="14" height="${H-40}" fill="#999" stroke="#bbb"/>`;
+  // Grating
+  svgStr += `<rect x="${gratingX-6}" y="60" width="12" height="${H-120}" fill="#222" stroke="#444"/>`;
+  // grating ticks (visual lines)
+  const ticks = 16;
+  for (let i = 0; i < ticks; i++) {
+    const yT = 70 + i * (H-140)/ticks;
+    svgStr += `<line x1="${gratingX-7}" y1="${yT}" x2="${gratingX+7}" y2="${yT}" stroke="#666" stroke-width="0.7"/>`;
+  }
+
+  // Incident beam (from left into grating)
+  svgStr += `<line x1="20" y1="${cy}" x2="${gratingX}" y2="${cy}" stroke="${beamColor}" stroke-width="3" opacity="0.9"/>`;
+  svgStr += `<line x1="20" y1="${cy-2}" x2="${gratingX}" y2="${cy-2}" stroke="${beamColor}" stroke-width="1" opacity="0.4"/>`;
+  svgStr += `<line x1="20" y1="${cy+2}" x2="${gratingX}" y2="${cy+2}" stroke="${beamColor}" stroke-width="1" opacity="0.4"/>`;
+
+  // central maximum
+  svgStr += `<line x1="${gratingX}" y1="${cy}" x2="${screenX}" y2="${cy}" stroke="${beamColor}" stroke-width="1.5" opacity="0.85"/>`;
+  svgStr += `<circle cx="${screenX+7}" cy="${cy}" r="5" fill="#fff" stroke="${beamColor}" stroke-width="2"/>`;
+  svgStr += `<text x="${screenX+18}" y="${cy+4}" fill="#fff" font-size="11">m = 0</text>`;
+
+  // diffracted orders (both +m and -m, mirror symmetric)
+  for (const m of orders) {
+    const th = angleForOrder(m);
+    if (th === null) continue;
+    const yPhys = state.L * Math.tan(th);
+    const yPx = yPhys * scale;
+    const xEnd = screenX;
+    const isHL = (m === state.m);
+    const op = isHL ? 1 : 0.55;
+    const sw = isHL ? 2.5 : 1.2;
+
+    // upper
+    svgStr += `<line x1="${gratingX}" y1="${cy}" x2="${xEnd}" y2="${cy - yPx}" stroke="${beamColor}" stroke-width="${sw}" opacity="${op}"/>`;
+    // lower (symmetric)
+    svgStr += `<line x1="${gratingX}" y1="${cy}" x2="${xEnd}" y2="${cy + yPx}" stroke="${beamColor}" stroke-width="${sw}" opacity="${op}"/>`;
+
+    // dots on screen
+    const dotR = isHL ? 7 : 4;
+    svgStr += `<circle cx="${screenX+7}" cy="${cy - yPx}" r="${dotR}" fill="#fff" stroke="${beamColor}" stroke-width="${isHL?2.5:1.5}"/>`;
+    svgStr += `<circle cx="${screenX+7}" cy="${cy + yPx}" r="${dotR}" fill="#fff" stroke="${beamColor}" stroke-width="${isHL?2.5:1.5}"/>`;
+    svgStr += `<text x="${screenX+18}" y="${cy - yPx + 4}" fill="#fff" font-size="11" opacity="${op}">m = +${m}</text>`;
+    svgStr += `<text x="${screenX+18}" y="${cy + yPx + 4}" fill="#fff" font-size="11" opacity="${op}">m = −${m}</text>`;
+
+    // angle arc for highlighted order (upper)
+    if (isHL) {
+      const arcR = 60;
+      const arcX = gratingX + arcR;
+      const arcY = cy - 0.001;
+      const thArc = th;
+      const endX = gratingX + arcR * Math.cos(thArc);
+      const endY = cy - arcR * Math.sin(thArc);
+      svgStr += `<path d="M ${arcX} ${arcY} A ${arcR} ${arcR} 0 0 0 ${endX} ${endY}" stroke="#ffd84a" stroke-width="2" fill="none"/>`;
+      svgStr += `<text x="${gratingX + 30}" y="${cy - 30}" fill="#ffd84a" font-size="13" font-weight="700">θ = ${(thArc*180/Math.PI).toFixed(1)}°</text>`;
+    }
+  }
+
+  // d × L label (annotation)
+  svgStr += `<text x="${gratingX}" y="${H-18}" fill="#cfd8e3" font-size="11">grating</text>`;
+  svgStr += `<text x="${screenX-8}" y="${H-18}" fill="#cfd8e3" font-size="11">screen</text>`;
+  svgStr += `<line x1="${gratingX}" y1="${H-30}" x2="${screenX}" y2="${H-30}" stroke="#cfd8e3" stroke-width="0.8" stroke-dasharray="4,3"/>`;
+  svgStr += `<text x="${(gratingX+screenX)/2 - 18}" y="${H-34}" fill="#cfd8e3" font-size="11">L = ${state.L.toFixed(2)} m</text>`;
+
+  svg.innerHTML = svgStr;
+}
+
+function update() {
+  lamVal.textContent = state.lam_nm;
+  lpcVal.textContent = state.lpc.toLocaleString();
+  LVal.textContent = state.L.toFixed(2);
+  mVal.textContent = state.m;
+  mLive.textContent = state.m;
+  const c = compute();
+  renderStats(c);
+  renderSVG(c);
+}
+
+// ============================================================
+// Bind controls
+// ============================================================
+lambda.addEventListener('input', () => { state.lam_nm = +lambda.value; update(); });
+lpc.addEventListener('input', () => { state.lpc = +lpc.value; update(); });
+Lin.addEventListener('input', () => { state.L = +Lin.value; update(); });
+document.querySelectorAll('.seg-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.seg-btn').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    state.m = +b.dataset.m;
+    update();
+  });
+});
+document.querySelectorAll('[data-preset-lam]').forEach(b => {
+  b.addEventListener('click', () => { state.lam_nm = +b.dataset.presetLam; lambda.value = state.lam_nm; update(); });
+});
+document.querySelectorAll('[data-preset-lpc]').forEach(b => {
+  b.addEventListener('click', () => { state.lpc = +b.dataset.presetLpc; lpc.value = state.lpc; update(); });
+});
+
+update();
+</script>
+</body>
+</html>

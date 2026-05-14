@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Photoelectric Effect & Photon Energy — Lecture Note (Albert Lee · 5/13)</title>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+/* ============================================================
+   base-print.css (inlined)
+   ============================================================ */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+  .problem, .answer-block, .reminder, .example, .word-problem,
+  .statement, .solution-block, .notes-block {
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  .part-header, .directions, .problem-header, h1, h2, h3 {
+    page-break-after: avoid; break-after: avoid;
+  }
+  .page-break { page-break-before: always; break-before: page; }
+}
+
+/* ============================================================
+   theme-boy.css (inlined)
+   ============================================================ */
+:root {
+  --color-primary:        #1565c0;
+  --color-primary-dark:   #0d47a1;
+  --color-accent:         #00838f;
+  --color-header-border:  #1565c0;
+  --color-final-answer:   #2e7d32;
+  --color-warning:        #c62828;
+  --color-parent-note:    #283593;
+  --color-tag-bg:         transparent;
+  --color-tag-border:     #1565c0;
+  --color-tag-text:       #1565c0;
+  --color-muted:          #555;
+  --color-rule:           #ccc;
+}
+
+/* ============================================================
+   level-high.css (inlined)
+   ============================================================ */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag {
+  display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px;
+  margin: 5px 3px 7px 3px; font-weight: bold;
+}
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 16pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+
+.part-header {
+  font-size: 13pt; font-weight: bold; color: var(--color-primary);
+  margin: 22px 0 6px 0; padding-bottom: 3px;
+  border-bottom: 1.5px solid var(--color-primary);
+}
+
+.concept-box {
+  border: 1.5px solid var(--color-accent);
+  background: transparent;
+  padding: 10px 14px;
+  margin: 12px 0;
+  font-size: 10pt;
+  border-left-width: 4px;
+}
+.concept-box .title { font-weight: bold; color: var(--color-accent); margin-bottom: 4px; }
+
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+
+/* ============================================================
+   editor-widget components
+   ============================================================ */
+.reminder {
+  border: 1.5px solid #e65100;
+  border-left-width: 5px;
+  padding: 10px 14px;
+  margin: 14px 0 18px 0;
+  font-size: 10pt;
+  background: transparent;
+}
+.reminder .title { font-weight: bold; color: #e65100; margin-bottom: 4px; }
+
+/* Notes block (formula sheet style) */
+.notes-block {
+  border: 1.5px solid var(--color-primary);
+  border-left-width: 5px;
+  background: #f5f9ff;
+  padding: 12px 16px;
+  margin: 14px 0 18px 0;
+  font-size: 10.5pt;
+}
+.notes-block .nb-title {
+  font-weight: bold;
+  color: var(--color-primary-dark);
+  font-size: 11.5pt;
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+.notes-block .nb-subhead {
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-top: 8px;
+  margin-bottom: 3px;
+}
+.notes-block ul { margin: 4px 0 4px 22px; padding: 0; }
+.notes-block li { margin: 3px 0; }
+.constants {
+  background: #fff;
+  border: 1px solid #cfd8dc;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-top: 8px;
+  font-size: 10pt;
+  line-height: 1.8;
+}
+
+/* Worked example */
+.example {
+  border: 2px solid var(--color-final-answer);
+  padding: 12px 16px;
+  margin: 14px 0;
+  background: #f8fbf8;
+}
+.example-title {
+  font-weight: bold;
+  color: var(--color-final-answer);
+  margin-bottom: 6px;
+  font-size: 11pt;
+}
+.example-problem {
+  font-size: 10.5pt;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  background: #fff;
+  border-left: 3px solid #aaa;
+}
+.example-solution {
+  border-left: 3px solid var(--color-final-answer);
+  padding-left: 12px;
+  margin-top: 8px;
+  font-size: 10pt;
+}
+.example-solution p { margin: 4px 0; }
+
+/* Problem statement + big work-space + solution */
+.problem-number {
+  display: inline-block;
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: bold;
+  font-size: 11pt;
+  padding: 3px 12px;
+  border-radius: 14px;
+  margin-bottom: 8px;
+  letter-spacing: 0.04em;
+}
+.problem-title {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 11.5pt;
+  color: var(--color-primary-dark);
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.statement {
+  background: #f5f5f5;
+  border-left: 4px solid #888;
+  padding: 10px 14px;
+  margin: 8px 0 10px 0;
+  font-size: 10.5pt;
+  line-height: 1.6;
+}
+.statement .label {
+  font-size: 8.5pt;
+  font-weight: bold;
+  color: #555;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.statement ol.parts { margin: 4px 0 0 22px; padding: 0; }
+.statement ol.parts li { margin: 3px 0; }
+
+/* Big work-space (for student to solve) */
+.work-space {
+  min-height: 200px;
+  margin: 8px 0 10px 4px;
+  padding: 10px;
+  border: 1px dashed #b0bec5;
+  border-radius: 3px;
+  background: #fbfcfd;
+  position: relative;
+}
+.work-space::before {
+  content: "Work space — your solution";
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  font-size: 7.5pt;
+  color: #90a4ae;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.solution-block {
+  border-left: 4px solid var(--color-final-answer);
+  background: #f7fbf7;
+  padding: 10px 14px;
+  margin: 8px 0 14px 0;
+  font-size: 10.5pt;
+  line-height: 1.65;
+}
+.solution-block .label {
+  font-size: 8.5pt;
+  font-weight: bold;
+  color: var(--color-final-answer);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.solution-block .step {
+  margin: 5px 0;
+  padding-left: 6px;
+}
+.boxed-final {
+  display: inline-block;
+  border: 1.5px solid var(--color-final-answer);
+  color: var(--color-final-answer);
+  font-weight: bold;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 10.5pt;
+  margin: 4px 0;
+}
+
+.problem-wrap {
+  margin: 18px 0 22px 0;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ========== HEADER ========== -->
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div>
+      <span class="subject-tag">AP PHYSICS</span>
+      <span class="key-tag">MODERN PHYSICS</span>
+    </div>
+    <h1>Photoelectric Effect & Photon Energy — Lecture Note</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Albert Lee</span>
+      <span><strong>Date:</strong> May 13, 2026</span>
+    </div>
+    <div class="standard">
+      <strong>Topic:</strong> Photon energy, threshold frequency, work function, stopping potential, intensity vs photon count.
+      Problems 7–15 from class handout.
+    </div>
+  </div>
+
+  <!-- Kenny reminder -->
+  <div class="reminder">
+    <div class="title">⚡ How to use this note</div>
+    Start by reading the <strong>Notes</strong> (key formulas + constants), then work through the two
+    <strong>Examples</strong>. After that, attempt each Problem 7–15 in the dashed work-space first —
+    <em>don't peek at the green Solution box until you've tried</em>. Final answers are boxed in green.
+  </div>
+
+  <!-- ============================================================
+       NOTES — Key Formulas
+       ============================================================ -->
+  <div class="notes-block">
+    <div class="nb-title">📘 Notes — Photoelectric Effect Toolkit</div>
+
+    <div class="nb-subhead">1. Photon energy</div>
+    A single photon of light of frequency $f$ (wavelength $\lambda$) carries energy
+    $$E \;=\; h\,f \;=\; \frac{h\,c}{\lambda}.$$
+
+    <div class="nb-subhead">2. Wave relation</div>
+    $$c \;=\; f\,\lambda \quad\Longleftrightarrow\quad f = \frac{c}{\lambda},\;\; \lambda = \frac{c}{f}.$$
+
+    <div class="nb-subhead">3. Work function $W_0$</div>
+    Minimum energy needed to free an electron from a metal surface (a property of the metal).
+    The <strong>threshold</strong> frequency and wavelength satisfy
+    $$h\,f_0 \;=\; W_0, \qquad \lambda_0 \;=\; \frac{h\,c}{W_0}.$$
+
+    <div class="nb-subhead">4. Einstein's photoelectric equation</div>
+    For a photon with energy <em>greater</em> than $W_0$, the ejected electron carries the surplus as kinetic energy:
+    $$KE_{\max} \;=\; h\,f \;-\; W_0.$$
+
+    <div class="nb-subhead">5. Stopping potential</div>
+    The voltage $V_s$ that just stops the fastest electrons:
+    $$e\,V_s \;=\; KE_{\max} \;=\; h\,f - W_0.$$
+    So $V_s$ (in volts) numerically equals $KE_{\max}$ (in eV).
+
+    <div class="nb-subhead">6. Intensity vs photon count</div>
+    Power $P$ delivered by a beam $=$ (energy per photon) $\times$ (photons per second):
+    $$N \;=\; \frac{P}{E_{\text{photon}}}, \qquad \text{Intensity } I = \frac{P}{A}.$$
+
+    <div class="nb-subhead">7. Diffraction grating</div>
+    For a grating with $d$ = distance between adjacent slits,
+    $$d\,\sin\theta_m \;=\; m\,\lambda \quad (m = 0, \pm1, \pm2, \ldots).$$
+    Distance on a screen at $L$: $\;y_m = L\,\tan\theta_m.$
+
+    <div class="constants">
+      <strong>Useful constants and conversions:</strong><br>
+      $h = 6.626 \times 10^{-34}\,\text{J}\!\cdot\!\text{s}$ &nbsp;·&nbsp;
+      $c = 3.00 \times 10^{8}\,\text{m/s}$ &nbsp;·&nbsp;
+      $e = 1.602 \times 10^{-19}\,\text{C}$<br>
+      $1\,\text{eV} = 1.602 \times 10^{-19}\,\text{J}$ &nbsp;·&nbsp;
+      $h\,c \approx 1.988 \times 10^{-25}\,\text{J}\!\cdot\!\text{m} \approx 1240\,\text{eV}\!\cdot\!\text{nm}$
+    </div>
+  </div>
+
+  <!-- ============================================================
+       EXAMPLES
+       ============================================================ -->
+  <div class="part-header">Worked Examples</div>
+
+  <div class="example">
+    <div class="example-title">Example 1 — Photon energy from wavelength</div>
+    <div class="example-problem">
+      A laser pointer emits red light at $\lambda = 650\,$nm. What is the energy of one photon?
+      Give the answer in both joules and electron-volts.
+    </div>
+    <div class="example-solution">
+      <p><strong>Idea.</strong> Use $E = hc/\lambda$. The shortcut $hc \approx 1240\,\text{eV}\!\cdot\!\text{nm}$ makes the eV form trivial.</p>
+      <p><strong>Step 1 — In joules.</strong>
+        $E = \dfrac{(6.626\!\times\!10^{-34})(3.00\!\times\!10^{8})}{650\!\times\!10^{-9}}
+        = \dfrac{1.988\!\times\!10^{-25}}{6.50\!\times\!10^{-7}}
+        = 3.06\!\times\!10^{-19}\,\text{J}.$
+      </p>
+      <p><strong>Step 2 — In eV.</strong>
+        $E = \dfrac{1240\,\text{eV}\!\cdot\!\text{nm}}{650\,\text{nm}} = 1.91\,\text{eV}.$
+      </p>
+      <p><strong>Answer.</strong>
+        <span class="boxed-final">$E \approx 3.06 \times 10^{-19}\text{ J} \approx 1.91\text{ eV}$</span>
+      </p>
+    </div>
+  </div>
+
+  <div class="example">
+    <div class="example-title">Example 2 — Threshold + Stopping potential</div>
+    <div class="example-problem">
+      Sodium has a work function $W_0 = 2.28\,$eV. Light of $\lambda = 400\,$nm strikes a sodium surface.
+      (a) Find the threshold wavelength. (b) Find the stopping potential $V_s.$
+    </div>
+    <div class="example-solution">
+      <p><strong>(a) Threshold wavelength.</strong>
+        $\lambda_0 = \dfrac{hc}{W_0} = \dfrac{1240\,\text{eV}\!\cdot\!\text{nm}}{2.28\,\text{eV}} \approx 544\,\text{nm}.$
+        Light with $\lambda > 544\,$nm cannot eject electrons from Na.
+      </p>
+      <p><strong>(b) Photon energy at 400 nm.</strong>
+        $E = 1240 / 400 = 3.10\,\text{eV}.$
+      </p>
+      <p><strong>Stopping potential.</strong>
+        $eV_s = E - W_0 = 3.10 - 2.28 = 0.82\,\text{eV}$
+        $\;\Rightarrow\; V_s = 0.82\,\text{V}.$
+      </p>
+      <p><strong>Answers.</strong>
+        <span class="boxed-final">$\lambda_0 \approx 544$ nm,  $V_s \approx 0.82$ V</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PROBLEMS 7–15
+       ============================================================ -->
+  <div class="part-header page-break">Problems 7 – 15</div>
+
+  <!-- ===== Problem 7 ===== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 7</span>
+    <span class="problem-title">Visible-light frequency &amp; photon-energy range</span>
+    <div class="statement">
+      <div class="label">Statement</div>
+      According to Wikipedia, the human eye is sensitive to light with wavelengths between $380\,$nm and $750\,$nm.
+      <ol class="parts">
+        <li>What range of frequencies of radiation does this correspond to?</li>
+        <li>What range of photon energies does this correspond to?</li>
+      </ol>
+    </div>
+    <div class="work-space"></div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>(a) Frequencies.</b> Use $f = c/\lambda$.
+        <br>$\;\;f_{\text{at }750\text{nm}} = \dfrac{3.0 \times 10^8}{7.50 \times 10^{-7}} = 4.00 \times 10^{14}\,\text{Hz}$
+        <br>$\;\;f_{\text{at }380\text{nm}} = \dfrac{3.0 \times 10^8}{3.80 \times 10^{-7}} = 7.89 \times 10^{14}\,\text{Hz}$
+        <br><span class="boxed-final">$f \in [4.00\times10^{14},\; 7.89\times10^{14}]$ Hz</span>
+      </div>
+      <div class="step"><b>(b) Photon energies.</b> $E = hc/\lambda = 1240\,\text{eV}\!\cdot\!\text{nm}/\lambda$:
+        <br>$\;\;E_{750} = 1240/750 = 1.65\,\text{eV} \approx 2.65 \times 10^{-19}\,\text{J}$
+        <br>$\;\;E_{380} = 1240/380 = 3.26\,\text{eV} \approx 5.23 \times 10^{-19}\,\text{J}$
+        <br><span class="boxed-final">$E \in [1.65,\;3.26]$ eV  $\approx [2.65,\;5.23]\!\times\!10^{-19}$ J</span>
+      </div>
+      <div class="step" style="color:#555; font-size:9.5pt;">
+        <em>Mnemonic.</em> Red end = lower frequency, lower energy. Violet end = higher frequency, higher energy.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 8 ===== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 8</span>
+    <span class="problem-title">Work function $W_0 = 4.8 \times 10^{-19}\,$J</span>
+    <div class="statement">
+      <div class="label">Statement</div>
+      A photoemissive surface has a work function of $4.8 \times 10^{-19}\,$J.
+      <ol class="parts">
+        <li>What is the minimum photon energy needed to cause electrons to be emitted from the surface?</li>
+        <li>Determine the threshold frequency and wavelength for photoemission from this surface.</li>
+      </ol>
+    </div>
+    <div class="work-space"></div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>(a) Min photon energy.</b> Equal to the work function: $E_{\min} = W_0$
+        <br><span class="boxed-final">$E_{\min} = 4.8\times 10^{-19}$ J $\approx 3.00$ eV</span>
+      </div>
+      <div class="step"><b>(b) Threshold.</b>
+        <br>$\;\;f_0 = W_0/h = (4.8\times10^{-19})/(6.626\times10^{-34}) = 7.24\times10^{14}\,\text{Hz}$
+        <br>$\;\;\lambda_0 = c/f_0 = (3.0\times10^8)/(7.24\times10^{14}) = 4.14\times10^{-7}\,\text{m}$
+        <br><span class="boxed-final">$f_0 \approx 7.24 \times 10^{14}$ Hz,  $\lambda_0 \approx 414$ nm</span>
+      </div>
+      <div class="step" style="color:#555; font-size:9.5pt;">
+        <em>Sanity check.</em> 414 nm is violet light — makes sense, this metal needs energetic photons.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 9 ===== -->
+  <div class="problem-wrap page-break">
+    <span class="problem-number">Problem 9</span>
+    <span class="problem-title">Work function $W_0 = 3.0\,$eV</span>
+    <div class="statement">
+      <div class="label">Statement</div>
+      A photoemissive surface has a work function of $3.0\,$eV.
+      <ol class="parts">
+        <li>Determine the threshold frequency and wavelength for this material.</li>
+        <li>Photons cause electrons to be emitted with a stopping voltage of $2.0\,$V.
+            Determine the energy of the photons and the wavelength of the light.</li>
+      </ol>
+    </div>
+    <div class="work-space"></div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>(a) Threshold.</b>
+        $\lambda_0 = hc/W_0 = 1240\,\text{eV}\!\cdot\!\text{nm} / 3.0\,\text{eV} = 413\,\text{nm}.$
+        $f_0 = c/\lambda_0 = 3.0\!\times\!10^8/4.13\!\times\!10^{-7} = 7.25\!\times\!10^{14}\,\text{Hz}.$
+        <br><span class="boxed-final">$f_0 \approx 7.25 \times 10^{14}$ Hz,  $\lambda_0 \approx 413$ nm</span>
+      </div>
+      <div class="step"><b>(b) With $V_s = 2.0$ V.</b>
+        $KE_{\max} = eV_s = 2.0\,$eV. So
+        $E_{\text{photon}} = KE_{\max} + W_0 = 2.0 + 3.0 = 5.0\,\text{eV} = 8.01 \times 10^{-19}\,$J.
+        <br>$\lambda = 1240/5.0 = 248\,\text{nm}.$
+        <br><span class="boxed-final">$E = 5.0$ eV  ($8.01\times10^{-19}$ J),  $\lambda \approx 248$ nm</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 10 ===== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 10</span>
+    <span class="problem-title">He-Ne laser, $\lambda = 633\,$nm, $P = 0.50\,$W</span>
+    <div class="statement">
+      <div class="label">Statement</div>
+      A He-Ne laser has a wavelength of $633\,$nm and an output power of $0.50\,$W.
+      <ol class="parts">
+        <li>What is the photon energy for this light?</li>
+        <li>The laser hits a black target. How many photons hit the target per second?</li>
+      </ol>
+    </div>
+    <div class="work-space"></div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>(a) Photon energy.</b>
+        $E = hc/\lambda = 1240/633 = 1.96\,\text{eV} \approx 3.14 \times 10^{-19}\,\text{J}.$
+        <br><span class="boxed-final">$E \approx 1.96$ eV  ($3.14\times10^{-19}$ J)</span>
+      </div>
+      <div class="step"><b>(b) Photons per second.</b> $N = P/E = 0.50/3.14\!\times\!10^{-19}.$
+        <br><span class="boxed-final">$N \approx 1.59 \times 10^{18}$ photons/s</span>
+      </div>
+      <div class="step" style="color:#555; font-size:9.5pt;">
+        <em>Insight.</em> Even a small 0.5 W laser emits about $10^{18}$ photons every second — light is "lumpy" at this scale, but the lumps are so numerous it looks continuous.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 11 ===== -->
+  <div class="problem-wrap page-break">
+    <span class="problem-number">Problem 11</span>
+    <span class="problem-title">$\lambda = 440\,$nm grating with $10{,}000\,$lines/cm</span>
+    <div class="statement">
+      <div class="label">Statement</div>
+      Light of wavelength $440\,$nm is incident on a grating with $10{,}000\,$lines/cm.
+      <ol class="parts">
+        <li>What is the angular deflection of the first and second order maxima?</li>
+        <li>What are the positions of these maxima on a screen that is $1.2\,$m from the grating?</li>
+        <li>Suppose it is desired to detect the maxima with a photocell.
+            What is the maximum allowable work function of the cell if it is to respond to the light?</li>
+      </ol>
+    </div>
+    <div class="work-space"></div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>(a) Angles.</b> Slit spacing $d = 1/(10{,}000\,\text{cm}^{-1}) = 1.0\times10^{-6}\,\text{m}.$
+        Use $d\sin\theta_m = m\lambda$:
+        <br>$\;\;\sin\theta_1 = 440\!\times\!10^{-9}/1.0\!\times\!10^{-6} = 0.44 \Rightarrow \theta_1 \approx 26.1^\circ.$
+        <br>$\;\;\sin\theta_2 = 0.88 \Rightarrow \theta_2 \approx 61.6^\circ.$
+        <br><span class="boxed-final">$\theta_1 \approx 26.1^\circ,\;\; \theta_2 \approx 61.6^\circ$</span>
+      </div>
+      <div class="step"><b>(b) Positions at $L = 1.2$ m.</b> $y_m = L\tan\theta_m:$
+        <br>$\;\;y_1 = 1.2\,\tan(26.1^\circ) = 1.2 \times 0.490 = 0.588\,\text{m}.$
+        <br>$\;\;y_2 = 1.2\,\tan(61.6^\circ) = 1.2 \times 1.847 = 2.22\,\text{m}.$
+        <br><span class="boxed-final">$y_1 \approx 0.59$ m,  $y_2 \approx 2.22$ m</span>
+      </div>
+      <div class="step"><b>(c) Max work function.</b>
+        For the photocell to fire, $W_0 \leq E_{\text{photon}} = hc/\lambda = 1240/440 = 2.82\,\text{eV}.$
+        <br><span class="boxed-final">$W_0 \leq 2.82$ eV  ($\approx 4.52 \times 10^{-19}$ J)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 12 ===== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 12</span>
+    <span class="problem-title">Silver — threshold $\lambda_0 = 262\,$nm</span>
+    <div class="statement">
+      <div class="label">Statement</div>
+      The threshold wavelength for the photoelectric effect for silver is $262\,$nm.
+      <ol class="parts">
+        <li>Find the work function for silver.</li>
+        <li>Find the stopping potential if the incident radiation has a wavelength of $200\,$nm.</li>
+      </ol>
+    </div>
+    <div class="work-space"></div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>(a) Work function.</b> $W_0 = hc/\lambda_0 = 1240/262 = 4.73\,\text{eV} \approx 7.59 \times 10^{-19}\,\text{J}.$
+        <br><span class="boxed-final">$W_0 \approx 4.73$ eV  ($7.59\times10^{-19}$ J)</span>
+      </div>
+      <div class="step"><b>(b) Stopping potential @ $\lambda = 200$ nm.</b>
+        $E_{\text{photon}} = 1240/200 = 6.20\,\text{eV}.$
+        $eV_s = E - W_0 = 6.20 - 4.73 = 1.47\,\text{eV}.$
+        <br><span class="boxed-final">$V_s \approx 1.47$ V</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 13 ===== -->
+  <div class="problem-wrap page-break">
+    <span class="problem-number">Problem 13</span>
+    <span class="problem-title">$\lambda = 400\,$nm beam, intensity $100\,$W/m²</span>
+    <div class="statement">
+      <div class="label">Statement</div>
+      A light beam of wavelength $400\,$nm has an intensity of $100\,$W/m$^2$.
+      <ol class="parts">
+        <li>What is the energy of each photon in the beam?</li>
+        <li>How much energy strikes an area of $1.0\,$cm$^2$ perpendicular to the beam in $1.0\,$s?</li>
+        <li>How many photons strike this area in $1.0\,$s?</li>
+      </ol>
+    </div>
+    <div class="work-space"></div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>(a) Photon energy.</b>
+        $E = 1240/400 = 3.10\,\text{eV} \approx 4.97 \times 10^{-19}\,\text{J}.$
+        <br><span class="boxed-final">$E \approx 3.10$ eV  ($4.97\times10^{-19}$ J)</span>
+      </div>
+      <div class="step"><b>(b) Energy on $1$ cm² in $1$ s.</b>
+        $1\,\text{cm}^2 = 1\times10^{-4}\,\text{m}^2.$
+        $U = I\,A\,t = 100 \times 1\!\times\!10^{-4} \times 1.0 = 1.00 \times 10^{-2}\,\text{J} = 10\,\text{mJ}.$
+        <br><span class="boxed-final">$U = 0.010$ J</span>
+      </div>
+      <div class="step"><b>(c) Photons/sec.</b>
+        $N = U/E = 1.00\!\times\!10^{-2}\,/\,4.97\!\times\!10^{-19}.$
+        <br><span class="boxed-final">$N \approx 2.01 \times 10^{16}$ photons</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 14 ===== -->
+  <div class="problem-wrap">
+    <span class="problem-number">Problem 14</span>
+    <span class="problem-title">Cesium — $W = 1.9\,$eV</span>
+    <div class="statement">
+      <div class="label">Statement</div>
+      The work function for cesium is $1.9\,$eV.
+      <ol class="parts">
+        <li>Find the threshold frequency and wavelength for the photoelectric effect.</li>
+        <li>Find the stopping potential if the wavelength of incident light is $300\,$nm.</li>
+      </ol>
+    </div>
+    <div class="work-space"></div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>(a) Threshold.</b>
+        $\lambda_0 = 1240/1.9 \approx 653\,\text{nm}.$
+        $f_0 = c/\lambda_0 = 3.0\!\times\!10^8 / 6.53\!\times\!10^{-7} \approx 4.59 \times 10^{14}\,\text{Hz}.$
+        <br><span class="boxed-final">$f_0 \approx 4.59 \times 10^{14}$ Hz,  $\lambda_0 \approx 653$ nm</span>
+      </div>
+      <div class="step"><b>(b) Stopping potential @ $\lambda = 300$ nm.</b>
+        $E = 1240/300 = 4.13\,\text{eV}.$
+        $eV_s = E - W = 4.13 - 1.9 = 2.23\,\text{eV}.$
+        <br><span class="boxed-final">$V_s \approx 2.23$ V</span>
+      </div>
+      <div class="step" style="color:#555; font-size:9.5pt;">
+        <em>Why cesium?</em> Very low work function → fires on visible red/orange light. Used in old TV photodetectors and photoelectric cells.
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Problem 15 ===== -->
+  <div class="problem-wrap page-break">
+    <span class="problem-number">Problem 15</span>
+    <span class="problem-title">$60\,$W bulb, $2.1\%$ efficient, $\lambda_{\text{avg}} = 550\,$nm</span>
+    <div class="statement">
+      <div class="label">Statement</div>
+      A $60.0\,$W light bulb is $2.1\%$ efficient ($2.1\%$ of the electrical energy is converted into visible light)
+      and the average wavelength of the light is $550\,$nm.
+      <ol class="parts">
+        <li>What is the average energy of a visible photon produced by the light bulb?</li>
+        <li>How many visible photons does the light bulb emit per second?</li>
+      </ol>
+    </div>
+    <div class="work-space"></div>
+    <div class="solution-block">
+      <div class="label">Solution</div>
+      <div class="step"><b>(a) Photon energy.</b>
+        $E = 1240/550 = 2.25\,\text{eV} \approx 3.61 \times 10^{-19}\,\text{J}.$
+        <br><span class="boxed-final">$E \approx 2.25$ eV  ($3.61\times10^{-19}$ J)</span>
+      </div>
+      <div class="step"><b>(b) Photons/sec.</b>
+        Visible power $= 60.0 \times 0.021 = 1.26\,\text{W}.$
+        $N = P_{\text{vis}}/E = 1.26 / 3.61\!\times\!10^{-19}.$
+        <br><span class="boxed-final">$N \approx 3.49 \times 10^{18}$ photons/s</span>
+      </div>
+      <div class="step" style="color:#555; font-size:9.5pt;">
+        <em>Comparison.</em> The 60 W bulb spits out about twice as many <em>visible</em> photons per second as the 0.5 W laser of Problem 10 — but the bulb's energy goes mostly into infrared (heat), which is why "$2.1\%$ efficient" hurts so much.
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Newton School · 2026-05-13 · Albert Lee · AP Physics<br>
+    Photoelectric Effect Lecture Note (Problems 7–15) &copy; Copyright Newton School
+  </div>
+
+</div>
+</body>
+</html>
