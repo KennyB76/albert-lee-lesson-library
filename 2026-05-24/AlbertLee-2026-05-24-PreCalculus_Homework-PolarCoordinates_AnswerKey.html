@@ -1,0 +1,353 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Albert Lee ??Polar Coordinates AnswerKey v2 (2026-05-24)</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script>
+window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+    svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+/* ===== base-print.css ===== */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .problem, .answer-block, .reminder, .parent-note, .example, .word-problem { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, .directions, .problem-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+}
+
+/* ===== theme-boy.css ===== */
+:root {
+    --color-primary:        #1565c0;
+    --color-primary-dark:   #0d47a1;
+    --color-accent:         #00838f;
+    --color-header-border:  #1565c0;
+    --color-final-answer:   #2e7d32;
+    --color-warning:        #c62828;
+    --color-parent-note:    #283593;
+    --color-tag-border:     #1565c0;
+    --color-tag-text:       #1565c0;
+    --color-muted:          #555;
+    --color-rule:           #ccc;
+}
+
+/* ===== level-high.css ===== */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 16pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 12px; line-height: 1.5; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+
+.answer-block { margin: 14px 0; padding: 10px 14px; border: 1px solid #ddd; border-radius: 4px; page-break-inside: avoid; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 5px; }
+.problem-text { font-size: 10pt; padding: 6px 10px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 8px; line-height: 1.5; }
+.concept-tag { display: inline-block; font-size: 8pt; padding: 2px 8px; margin: 2px 3px 5px 0; border: 1px solid var(--color-tag-border); color: var(--color-tag-text); border-radius: 10px; }
+.solution { margin: 6px 0; padding-left: 8px; border-left: 3px solid var(--color-final-answer); }
+.solution-step { margin: 4px 0; font-size: 10pt; line-height: 1.6; }
+.final-answer { display: inline-block; border: 2px solid var(--color-final-answer); color: var(--color-final-answer); font-weight: bold; padding: 4px 12px; border-radius: 4px; margin-top: 6px; font-size: 11pt; }
+.we-ref { background: #f6fbf6; border: 1.5px solid var(--color-final-answer); padding: 6px 10px; font-size: 9.5pt; color: var(--color-final-answer); border-radius: 3px; margin: 4px 0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS</div>
+    <span class="key-tag">ANSWER KEY v2</span>
+    <h1>Polar Coordinates: Concepts, Conversion &amp; Graph Sketching</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Albert Lee</span>
+        <span><strong>Date:</strong> 2026-05-24</span>
+    </div>
+</div>
+
+<!-- ============================ PART A ============================ -->
+<div class="part-header">Part A ??Why &amp; Formulas</div>
+
+<div class="answer-block">
+    <div class="problem-header">A1. Why polar is bad for squares, ideal for circles</div>
+    <div class="problem-text">Why are polar coords inefficient for a square's corners but ideal for a circle's points?</div>
+    <span class="concept-tag">Conceptual</span> <span class="concept-tag">Coordinate System Choice</span>
+    <div class="solution">
+        <div class="solution-step">A polar point is described by <em>one</em> angle + <em>one</em> distance from the pole ??exactly the two quantities that stay constant or change predictably on a circle (distance fixed, angle sweeps).</div>
+        <div class="solution-step">On a square, both the distance to the center and the direction vary <em>non-smoothly</em> as you walk along the edges. Each corner has the same distance to the center as some other corner but a totally different angle, and the side lengths require ugly mixed expressions in \(r\) and \(\theta\) (a square has no clean polar equation). Rectangular \((x,y)\) is the natural choice for grid-aligned shapes.</div>
+        <div class="final-answer">Polar = good for radial / circular motion; rect = good for grid shapes.</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">A2. Derive \(r^2\) and \(\tan\theta\)</div>
+    <div class="problem-text">From \(x = r\cos\theta\) and \(y = r\sin\theta\), derive both \(r^2\) and \(\tan\theta\) in terms of \(x, y\).</div>
+    <span class="concept-tag">Pythagorean Identity</span> <span class="concept-tag">Derivation</span>
+    <div class="solution">
+        <div class="solution-step"><strong>For \(r^2\):</strong> Square and add:
+        $$x^2 + y^2 = (r\cos\theta)^2 + (r\sin\theta)^2 = r^2(\cos^2\theta + \sin^2\theta) = r^2 \cdot 1 = r^2.$$
+        So \(\boxed{r^2 = x^2 + y^2.}\)</div>
+        <div class="solution-step"><strong>For \(\tan\theta\):</strong> Divide \(y\) by \(x\) (assuming \(r\cos\theta \neq 0\)):
+        $$\frac{y}{x} = \frac{r\sin\theta}{r\cos\theta} = \tan\theta.$$
+        So \(\boxed{\tan\theta = \dfrac{y}{x}.}\)</div>
+        <div class="final-answer">\( r^2 = x^2+y^2,\quad \tan\theta = y/x \) (with quadrant check).</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">A3. TRUE / FALSE with justification</div>
+    <div class="problem-text">(a) \((r,\theta)\equiv(r,\theta+2\pi)\) &nbsp; (b) \((-r,\theta)\equiv(r,\theta-\pi)\) &nbsp; (c) \((0,\theta)\) is the pole for any \(\theta\) &nbsp; (d) \((r,\theta)\equiv(-r,-\theta)\)</div>
+    <span class="concept-tag">Polar Equivalence</span>
+    <div class="solution">
+        <div class="solution-step"><strong>(a) TRUE.</strong> Adding \(2\pi\) is a full rotation ??same ray, same distance.</div>
+        <div class="solution-step"><strong>(b) TRUE.</strong> Reflecting through the pole flips the radius sign and shifts the angle by \(\pi\) (either \(+\pi\) or \(-\pi\) works).</div>
+        <div class="solution-step"><strong>(c) TRUE.</strong> If \(r = 0\) the point is at distance \(0\) from the pole = the pole itself, regardless of \(\theta\).</div>
+        <div class="solution-step"><strong>(d) FALSE in general.</strong> Counter-example: \((r,\theta) = (1, \pi/4)\) sits at \((\tfrac{\sqrt{2}}{2}, \tfrac{\sqrt{2}}{2})\). But \((-r,-\theta) = (-1, -\pi/4)\): angle \(-\pi/4\) points to \((\tfrac{\sqrt{2}}{2},-\tfrac{\sqrt{2}}{2})\); since \(r=-1\), flip to opposite side \(\Rightarrow (-\tfrac{\sqrt{2}}{2}, \tfrac{\sqrt{2}}{2})\). Different from the original.</div>
+        <div class="final-answer">a-T, b-T, c-T, d-F</div>
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============================ PART B ============================ -->
+<div class="part-header">Part B ??Plotting &amp; Alternative Reps</div>
+<div class="we-ref">B-Worked Example (plot \((-2, 5\pi/6)\) + two alt reps) ??solution shown in worksheet.</div>
+
+<div class="answer-block">
+    <div class="problem-header">B1. Plot \((3,\;-7\pi/4)\), identify quadrant</div>
+    <div class="problem-text">Plot the polar point and state the quadrant.</div>
+    <span class="concept-tag">Negative Angle</span> <span class="concept-tag">Plotting</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Reduce angle.</strong> \(-\dfrac{7\pi}{4} + 2\pi = \dfrac{\pi}{4}.\) So \((3,\;-7\pi/4) \equiv (3,\;\pi/4).\)</div>
+        <div class="solution-step"><strong>Plot.</strong> \(r = 3\) along the ray at \(\theta = \pi/4\) (45째 above positive \(x\)-axis).</div>
+        <div class="solution-step"><strong>Quadrant.</strong> \(\pi/4\) ray sits in <strong>Q-I</strong>.</div>
+        <div class="final-answer">Quadrant I, at \((3\cos\pi/4,\;3\sin\pi/4) = \bigl(\tfrac{3\sqrt{2}}{2},\;\tfrac{3\sqrt{2}}{2}\bigr).\)</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">B2. Plot \((-4,\;13\pi/6)\) + equivalent with \(r>0,\;0\le\theta<2\pi\)</div>
+    <div class="problem-text">Plot, then find equivalent representation.</div>
+    <span class="concept-tag">Negative \(r\)</span> <span class="concept-tag">Angle Reduction</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Reduce angle.</strong> \(\dfrac{13\pi}{6} - 2\pi = \dfrac{\pi}{6}.\) So \((-4,\;13\pi/6)\equiv(-4,\;\pi/6).\)</div>
+        <div class="solution-step"><strong>Flip for \(r>0\).</strong> Apply \((-r,\theta)\equiv(r,\theta+\pi)\): \( (-4,\;\pi/6) \equiv (4,\;\pi/6 + \pi) = (4,\;7\pi/6).\)</div>
+        <div class="solution-step"><strong>Plot.</strong> Ray at \(\theta = 7\pi/6\) (Q-III, 210째), distance 4 from pole.</div>
+        <div class="final-answer">\( (4,\;7\pi/6) \) ??Q-III</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">B3. \((5,\;7\pi/6)\) with \(r<0\) AND \(-2\pi<\theta<0\)</div>
+    <div class="problem-text">Find an equivalent rep with both \(r<0\) and \(\theta\) negative.</div>
+    <span class="concept-tag">Alternative Rep</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Flip sign of \(r\).</strong> \((5,\;7\pi/6)\equiv(-5,\;7\pi/6 - \pi) = (-5,\;\pi/6).\) But \(\pi/6 > 0\) ??doesn't satisfy \(\theta<0\).</div>
+        <div class="solution-step"><strong>Subtract \(2\pi\).</strong> \(\pi/6 - 2\pi = -\dfrac{11\pi}{6}.\) Check: \(-2\pi < -\dfrac{11\pi}{6} < 0\) &check;.</div>
+        <div class="final-answer">\(\bigl(-5,\;-\dfrac{11\pi}{6}\bigr)\)</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">B4. Plot four points; which two coincide?</div>
+    <div class="problem-text">\((2,\pi/3),\;(-2,\pi/3),\;(2,-\pi/3),\;(-2,-\pi/3)\). Which two coincide?</div>
+    <span class="concept-tag">Polar Equivalence</span>
+    <div class="solution">
+        <div class="solution-step">Convert each to rectangular \((r\cos\theta,\,r\sin\theta)\):
+        <ul style="margin:4px 0 0 18px;">
+            <li>\((2,\pi/3) \to (1,\;\sqrt{3})\) ??Q-I.</li>
+            <li>\((-2,\pi/3) \to (-1,\;-\sqrt{3})\) ??Q-III.</li>
+            <li>\((2,-\pi/3) \to (1,\;-\sqrt{3})\) ??Q-IV.</li>
+            <li>\((-2,-\pi/3) \to (-1,\;\sqrt{3})\) ??Q-II.</li>
+        </ul></div>
+        <div class="solution-step">All four are <strong>distinct</strong> ??none coincide. They form a rectangle centered at the origin (the four corners \((\pm 1,\;\pm\sqrt{3})\)).</div>
+        <div class="final-answer">None coincide ??4 distinct points forming a rectangle.</div>
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============================ PART C ============================ -->
+<div class="part-header">Part C ??Point Conversion</div>
+<div class="we-ref">C-Worked Example (convert \((-3, 3\sqrt{3})\) rect \(\to\) polar) ??solution shown in worksheet.</div>
+
+<div class="answer-block">
+    <div class="problem-header">C1. Polar \(\to\) Rect: \((-4,\;23\pi/4)\)</div>
+    <div class="problem-text">Reduce angle, then convert.</div>
+    <span class="concept-tag">Polar?뭃ect</span> <span class="concept-tag">Angle Reduction</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Reduce \(\theta\):</strong> \(\dfrac{23\pi}{4} - 2 \cdot 2\pi = \dfrac{23\pi}{4} - \dfrac{16\pi}{4} = \dfrac{7\pi}{4}.\)</div>
+        <div class="solution-step">So we convert \((-4,\;7\pi/4)\).</div>
+        <div class="solution-step">\(x = -4\cos(7\pi/4) = -4 \cdot \dfrac{\sqrt{2}}{2} = -2\sqrt{2}.\)</div>
+        <div class="solution-step">\(y = -4\sin(7\pi/4) = -4 \cdot \bigl(-\dfrac{\sqrt{2}}{2}\bigr) = 2\sqrt{2}.\)</div>
+        <div class="final-answer">\( (-2\sqrt{2},\;2\sqrt{2}) \) ??Q-II</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">C2. Polar \(\to\) Rect: \((6,\;11\pi/6)\)</div>
+    <div class="problem-text">Convert to rectangular.</div>
+    <span class="concept-tag">Polar?뭃ect</span>
+    <div class="solution">
+        <div class="solution-step">\(\cos(11\pi/6) = \cos(-\pi/6) = \dfrac{\sqrt{3}}{2}.\) \(\;\sin(11\pi/6) = -\dfrac{1}{2}.\)</div>
+        <div class="solution-step">\(x = 6 \cdot \dfrac{\sqrt{3}}{2} = 3\sqrt{3}.\)</div>
+        <div class="solution-step">\(y = 6 \cdot \bigl(-\dfrac{1}{2}\bigr) = -3.\)</div>
+        <div class="final-answer">\( (3\sqrt{3},\;-3) \) ??Q-IV</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">C3. Rect \(\to\) Polar: \((-\sqrt{6},\;-\sqrt{2})\)</div>
+    <div class="problem-text">Tricky Q-III. Exact form, \(r>0,\;0\le\theta<2\pi\).</div>
+    <span class="concept-tag">Rect?뭁olar</span> <span class="concept-tag">Quadrant III</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Quadrant.</strong> \(x<0, y<0 \Rightarrow\) Q-III.</div>
+        <div class="solution-step"><strong>Radius.</strong> \(r = \sqrt{(-\sqrt{6})^2 + (-\sqrt{2})^2} = \sqrt{6 + 2} = \sqrt{8} = 2\sqrt{2}.\)</div>
+        <div class="solution-step"><strong>Reference angle.</strong> \(\tan\theta_{ref} = \left|\dfrac{-\sqrt{2}}{-\sqrt{6}}\right| = \dfrac{\sqrt{2}}{\sqrt{6}} = \dfrac{1}{\sqrt{3}} \Rightarrow \theta_{ref} = \dfrac{\pi}{6}.\)</div>
+        <div class="solution-step"><strong>Q-III adjust.</strong> \(\theta = \pi + \dfrac{\pi}{6} = \dfrac{7\pi}{6}.\)</div>
+        <div class="final-answer">\(\bigl(2\sqrt{2},\;\dfrac{7\pi}{6}\bigr)\)</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">C4. Rect \(\to\) Polar: \((0,\,-5)\)</div>
+    <div class="problem-text">Edge case on the negative \(y\)-axis.</div>
+    <span class="concept-tag">Edge Case</span> <span class="concept-tag">Axis Point</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Don't divide by zero.</strong> \(x = 0\) means \(\tan\theta = y/x\) is undefined ??read the angle directly from the geometry.</div>
+        <div class="solution-step">The point \((0, -5)\) lies on the negative \(y\)-axis: distance 5 from origin, direction \(\theta = 3\pi/2\).</div>
+        <div class="solution-step">\(r = 5,\;\;\theta = \dfrac{3\pi}{2}.\)</div>
+        <div class="final-answer">\(\bigl(5,\;\dfrac{3\pi}{2}\bigr)\)</div>
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============================ PART D ============================ -->
+<div class="part-header">Part D ??Sketching \(r=a\cos\theta\) / \(r=a\sin\theta\)</div>
+<div class="we-ref">D-Worked Example (sketch \(r = -2\cos\theta\)) ??solution shown in worksheet.</div>
+
+<div class="answer-block">
+    <div class="problem-header">D1. Sketch \(r = 3\sin\theta\)</div>
+    <div class="problem-text">Use the two-panel Cartesian-trick. Identify the circle's location and diameter.</div>
+    <span class="concept-tag">Circle (sin)</span> <span class="concept-tag">Cartesian-trick</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Step 1 ??Cartesian \(y = 3\sin x\):</strong> standard sine wave, amplitude 3. Zero at \(x = 0\), max +3 at \(x = \pi/2\), zero at \(x = \pi\), min &minus;3 at \(x = 3\pi/2\), zero at \(x = 2\pi\).</div>
+        <div class="solution-step"><strong>Step 2 ??Read the values into polar:</strong>
+        <ul style="margin:4px 0 0 18px;">
+            <li>\(\theta=0\): \(r=0\) (pole).</li>
+            <li>\(\theta=\pi/2\): \(r=3\) ??point \((0, 3)\).</li>
+            <li>\(\theta=\pi\): \(r=0\) (pole again).</li>
+            <li>\(\theta=3\pi/2\): \(r=-3\) ??opposite ray of \(\theta=3\pi/2\) gives \(\theta=\pi/2\), distance 3 \(\Rightarrow\) point \((0,3)\) again.</li>
+        </ul></div>
+        <div class="solution-step"><strong>Step 3 ??Connect:</strong> a circle of diameter 3 sitting on the <strong>positive \(y\)-axis</strong>, center \((0, 1.5)\), radius 1.5. Traced once over \(\theta\in[0,\pi]\); the second half \([\pi,2\pi]\) retraces it.</div>
+        <div class="final-answer">Circle, diameter 3, on positive \(y\)-axis, center \((0, 1.5)\).</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">D2. Sketch \(r = -4\cos\theta\)</div>
+    <div class="problem-text">Two-panel format. Which side of \(x\)-axis is the circle on? What is the diameter?</div>
+    <span class="concept-tag">Circle (negative cos)</span> <span class="concept-tag">Cartesian-trick</span>
+    <div class="solution">
+        <div class="solution-step"><strong>Step 1 ??Cartesian \(y = -4\cos x\):</strong> flipped cosine. Min &minus;4 at \(x=0\), zero at \(\pi/2\), max +4 at \(\pi\), zero at \(3\pi/2\), min &minus;4 at \(2\pi\).</div>
+        <div class="solution-step"><strong>Step 2 ??Read into polar:</strong>
+        <ul style="margin:4px 0 0 18px;">
+            <li>\(\theta=0\): \(r=-4\) ??opposite ray of \(\theta=0\) is \(\theta=\pi\), distance 4 \(\Rightarrow\) point \((-4, 0)\).</li>
+            <li>\(\theta=\pi/2\): \(r=0\) (pole).</li>
+            <li>\(\theta=\pi\): \(r=4\) ??angle 180째, distance 4 \(\Rightarrow\) point \((-4, 0)\) again.</li>
+            <li>\(\theta=3\pi/2\): \(r=0\) (pole).</li>
+        </ul></div>
+        <div class="solution-step"><strong>Step 3 ??Connect:</strong> a circle of diameter 4 sitting on the <strong>negative \(x\)-axis</strong>, center \((-2, 0)\), radius 2. Compare with \(r = 4\cos\theta\) (positive \(x\)-axis) ??the sign of \(a\) flips the side.</div>
+        <div class="final-answer">Diameter = 4. Negative \(x\)-axis (left side). Center \((-2, 0)\).</div>
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============================ PART E ============================ -->
+<div class="part-header">Part E ??Equation Conversion</div>
+<div class="we-ref">E-Worked Example (convert \(y = x^2\) rect \(\to\) polar) ??solution shown in worksheet.</div>
+
+<div class="answer-block">
+    <div class="problem-header">E1. Rect \(\to\) Polar: \(x^2 + y^2 = 9\)</div>
+    <div class="problem-text">Convert with \(r > 0\).</div>
+    <span class="concept-tag">Circle</span> <span class="concept-tag">Rect?뭁olar</span>
+    <div class="solution">
+        <div class="solution-step">Substitute \(x^2 + y^2 = r^2\):</div>
+        <div class="solution-step">\(r^2 = 9 \;\Rightarrow\; r = 3\) (since \(r > 0\)).</div>
+        <div class="final-answer">\( r = 3 \) (circle of radius 3 centered at the pole)</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">E2. Rect \(\to\) Polar: \(x^2 - y^2 = 1\)</div>
+    <div class="problem-text">Use a double-angle identity.</div>
+    <span class="concept-tag">Hyperbola</span> <span class="concept-tag">Double-Angle</span>
+    <div class="solution">
+        <div class="solution-step">Substitute \(x = r\cos\theta,\;y = r\sin\theta\):
+        $$(r\cos\theta)^2 - (r\sin\theta)^2 = 1 \;\Rightarrow\; r^2(\cos^2\theta - \sin^2\theta) = 1.$$</div>
+        <div class="solution-step">Use \(\cos^2\theta - \sin^2\theta = \cos 2\theta\):
+        $$r^2\cos 2\theta = 1.$$</div>
+        <div class="final-answer">\( r^2 = \dfrac{1}{\cos 2\theta} = \sec 2\theta \) (defined where \(\cos 2\theta > 0\)).</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">E3. Polar \(\to\) Rect: \(r = \dfrac{1}{\sin\theta - \cos\theta}\)</div>
+    <div class="problem-text">Convert to rectangular form.</div>
+    <span class="concept-tag">Polar?뭃ect</span> <span class="concept-tag">Line</span>
+    <div class="solution">
+        <div class="solution-step">Multiply both sides by \((\sin\theta - \cos\theta)\):
+        $$r(\sin\theta - \cos\theta) = 1.$$</div>
+        <div class="solution-step">Distribute:
+        $$r\sin\theta - r\cos\theta = 1.$$</div>
+        <div class="solution-step">Substitute \(r\sin\theta = y\) and \(r\cos\theta = x\):
+        $$y - x = 1.$$</div>
+        <div class="final-answer">\( y = x + 1 \) (a line)</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">E4. Polar \(\to\) Rect: \(r^2 = \tan\theta\)</div>
+    <div class="problem-text">Convert to rectangular form. Verify the pole.</div>
+    <span class="concept-tag">Polar?뭃ect</span> <span class="concept-tag">Manipulation</span>
+    <div class="solution">
+        <div class="solution-step">Write \(\tan\theta = \dfrac{\sin\theta}{\cos\theta}\):
+        $$r^2 = \frac{\sin\theta}{\cos\theta}.$$</div>
+        <div class="solution-step">Multiply both sides by \(\cos\theta\):
+        $$r^2 \cos\theta = \sin\theta.$$</div>
+        <div class="solution-step">Multiply both sides by \(r\) (introduces \(x\) and \(y\)):
+        $$r^3 \cos\theta = r\sin\theta \;\Rightarrow\; r^2 \cdot (r\cos\theta) = (r\sin\theta) \;\Rightarrow\; (x^2 + y^2)\,x = y.$$</div>
+        <div class="solution-step"><strong>Final form:</strong> \((x^2+y^2)\,x = y,\;\) equivalently \(x^3 + xy^2 = y.\)</div>
+        <div class="solution-step"><strong>Verify pole:</strong> \((0,0)\) gives \(0 = 0\) &check;. The pole is on the curve, consistent with \(\theta=0,\;r=0\) in the original equation.</div>
+        <div class="final-answer">\( x^3 + xy^2 = y \) (equivalently \((x^2+y^2)x = y\))</div>
+    </div>
+</div>
+
+<div class="footer">Created by Newton School 2026-05-24 &copy; Copyright 쨌 Answer Key v2</div>
+
+</div>
+</body>
+</html>

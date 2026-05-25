@@ -1,0 +1,405 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Albert Lee ??Polar Coordinates Worksheet v2 (2026-05-24)</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script>
+window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+    svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+/* ===== base-print.css ===== */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .problem, .answer-block, .reminder, .parent-note, .example, .word-problem, .note-box {
+        page-break-inside: avoid; break-inside: avoid;
+    }
+    .part-header, .directions, .problem-header, h1, h2, h3 {
+        page-break-after: avoid; break-after: avoid;
+    }
+    .page-break { page-break-before: always; break-before: page; }
+}
+
+/* ===== theme-boy.css ===== */
+:root {
+    --color-primary:        #1565c0;
+    --color-primary-dark:   #0d47a1;
+    --color-accent:         #00838f;
+    --color-header-border:  #1565c0;
+    --color-final-answer:   #2e7d32;
+    --color-warning:        #c62828;
+    --color-parent-note:    #283593;
+    --color-tag-bg:         transparent;
+    --color-tag-border:     #1565c0;
+    --color-tag-text:       #1565c0;
+    --color-muted:          #555;
+    --color-rule:           #ccc;
+}
+
+/* ===== level-high.css ===== */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 16pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 12px; line-height: 1.5; }
+.directions strong { color: #000; font-style: normal; }
+.problem { margin: 14px 0; font-size: 10.5pt; line-height: 1.6; padding-left: 8px; border-left: 3px solid var(--color-primary); }
+.q-num { display: inline-block; min-width: 26px; font-weight: bold; color: var(--color-primary); }
+.ans-line { display: inline-block; border-bottom: 1.5px solid #000; min-width: 80px; height: 18px; margin: 0 4px; vertical-align: bottom; }
+.work-space { min-height: 100px; margin-left: 24px; margin-top: 6px; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+
+/* ===== Note box (concept summary at start of each Part) ===== */
+.note-box {
+    border: 1px solid #bbb;
+    border-left: 4px solid var(--color-accent);
+    background: #f5f7f8;
+    padding: 9px 14px;
+    margin: 10px 0 14px 0;
+    font-size: 9.5pt;
+    line-height: 1.55;
+}
+.note-box .title {
+    font-weight: bold;
+    color: var(--color-accent);
+    margin-bottom: 4px;
+    font-size: 10pt;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* ===== Worked Example (green border) ===== */
+.example {
+    border: 2px solid var(--color-final-answer);
+    border-radius: 4px;
+    background: #f6fbf6;
+    padding: 10px 14px;
+    margin: 12px 0;
+    font-size: 10pt;
+}
+.example .title {
+    font-weight: bold;
+    color: var(--color-final-answer);
+    margin-bottom: 6px;
+    font-size: 10.5pt;
+}
+.example .we-step {
+    margin: 5px 0;
+    line-height: 1.6;
+}
+.example .we-step .label {
+    font-weight: bold;
+    color: var(--color-final-answer);
+}
+
+/* ===== Reminder (top of worksheet) ===== */
+.reminder {
+    border: 2px solid var(--color-warning);
+    border-left-width: 5px;
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-size: 9.5pt;
+}
+.reminder .title { font-weight: bold; color: var(--color-warning); margin-bottom: 6px; font-size: 10pt; }
+.reminder ol { margin: 4px 0 0 18px; padding: 0; }
+.reminder li { margin: 3px 0; }
+
+/* ===== Sketch boxes ===== */
+.sketch-pair { display: flex; gap: 14px; margin: 8px 0 0 24px; }
+.sketch-pair .box {
+    flex: 1;
+    border: 1px solid #888;
+    min-height: 220px;
+    padding: 6px 8px;
+    position: relative;
+}
+.sketch-pair .box-label {
+    font-size: 9pt;
+    font-weight: bold;
+    color: var(--color-primary);
+    margin-bottom: 4px;
+}
+
+/* ===== TRUE/FALSE ===== */
+.tf-list { margin: 4px 0 0 24px; }
+.tf-list li { margin: 8px 0; }
+.tf-circle {
+    display: inline-block;
+    border: 1px solid #000;
+    border-radius: 50%;
+    width: 22px; height: 22px;
+    text-align: center;
+    margin: 0 4px;
+    font-size: 9pt;
+    line-height: 20px;
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS 쨌 WORKSHEET v2</div>
+    <h1>Polar Coordinates: Concepts, Conversion &amp; Graph Sketching</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Albert Lee</span>
+        <span><strong>Date:</strong> 2026-05-24</span>
+    </div>
+    <div class="standard"><strong>Standard:</strong> CCSS.MATH.CONTENT.HSF.TF ??Trigonometric Functions in Polar Form. Convert between rectangular and polar coordinates; sketch polar equations using the Cartesian-trick.</div>
+</div>
+
+<!-- Weakness Reminder Box -->
+<div class="reminder">
+    <div class="title">Watch out for these (today's weak spots)</div>
+    <ol>
+        <li><strong>Negative \(r\).</strong> A negative \(r\) means the point is on the <em>opposite</em> side of the pole.</li>
+        <li><strong>Angle unit = radians</strong> by default (calculus convention).</li>
+        <li><strong>arctan quadrant trap.</strong> \(\tan\theta = y/x\) alone does NOT pin down the quadrant. Always check the signs of \(x\) and \(y\) separately.</li>
+        <li><strong>Choosing \(r\).</strong> Take \(r = \sqrt{x^2+y^2} > 0\) unless the problem allows \(r<0\).</li>
+        <li><strong>Multiplying by \(r\).</strong> When converting polar \(\to\) rectangular, multiplying both sides by \(r\) introduces the pole (origin) as an extra solution ??verify it satisfies the original equation.</li>
+    </ol>
+</div>
+
+<!-- ============================ PART A ============================ -->
+<div class="part-header">Part A ??Why &amp; Formulas</div>
+<div class="directions"><strong>Directions:</strong> Show your reasoning. These check that the big idea is solid before you compute.</div>
+
+<div class="note-box">
+    <div class="title">Note 쨌 Concept</div>
+    Polar coordinates describe a point using <strong>one angle</strong> \(\theta\) and <strong>one distance</strong> \(r\) ??natural for circular motion, awkward for grid shapes.
+    Conversion formulas:
+    $$x = r\cos\theta, \qquad y = r\sin\theta, \qquad r^2 = x^2 + y^2, \qquad \tan\theta = \frac{y}{x}$$
+    <em>Trap:</em> \(\tan\theta = y/x\) loses the quadrant. Always check signs of \(x\) and \(y\).
+</div>
+
+<div class="example">
+    <div class="title">Worked Example ??Derive \(\tan\theta = y/x\)</div>
+    <div class="we-step"><span class="label">Start.</span> From \(x = r\cos\theta\) and \(y = r\sin\theta\) (the two conversion formulas):</div>
+    <div class="we-step"><span class="label">Step 1.</span> Divide \(y\) by \(x\):
+    $$\frac{y}{x} = \frac{r\sin\theta}{r\cos\theta}$$</div>
+    <div class="we-step"><span class="label">Step 2.</span> The \(r\) cancels (assuming \(r\neq 0\)), leaving
+    $$\frac{y}{x} = \frac{\sin\theta}{\cos\theta} = \tan\theta. \quad\blacksquare$$</div>
+</div>
+
+<div class="problem">
+    <span class="q-num">A1.</span> Explain in 2&ndash;3 sentences why polar coordinates are <em>inefficient</em> for describing the four corners of a square but <em>ideal</em> for describing points on a circle.
+    <div class="work-space" style="min-height:80px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">A2.</span> Given \(x = r\cos\theta\) and \(y = r\sin\theta\), derive <strong>both</strong> \(r^2\) and \(\tan\theta\) in terms of \(x\) and \(y\). Show every step (similar style to the worked example above).
+    <div class="work-space" style="min-height:140px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">A3.</span> Mark each statement <strong>T</strong> or <strong>F</strong> and <em>justify in one short sentence</em>.
+    <ol class="tf-list" type="a">
+        <li><span class="tf-circle">T</span> / <span class="tf-circle">F</span> &nbsp; \((r,\theta)\) and \((r,\theta+2\pi)\) are the same point.</li>
+        <li><span class="tf-circle">T</span> / <span class="tf-circle">F</span> &nbsp; \((-r,\theta)\) and \((r,\theta-\pi)\) are the same point.</li>
+        <li><span class="tf-circle">T</span> / <span class="tf-circle">F</span> &nbsp; \((0,\theta)\) is the pole for <em>any</em> value of \(\theta\).</li>
+        <li><span class="tf-circle">T</span> / <span class="tf-circle">F</span> &nbsp; \((r,\theta)\) and \((-r,-\theta)\) are the same point.</li>
+    </ol>
+    <div class="work-space" style="min-height:80px;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============================ PART B ============================ -->
+<div class="part-header">Part B ??Plotting &amp; Alternative Representations</div>
+<div class="directions"><strong>Directions:</strong> Use a polar grid (sketch in the work space). Read the signs of \(r\) and \(\theta\) <em>both</em> carefully.</div>
+
+<div class="note-box">
+    <div class="title">Note 쨌 Multiple labels</div>
+    A polar point has <strong>infinitely many labels</strong>:
+    $$(r,\theta) \;=\; (-r,\; \theta+\pi) \;=\; (r,\; \theta + 2\pi k), \quad k \in \mathbb{Z}.$$
+    Negative \(r\) reflects the point across the pole (origin).
+</div>
+
+<div class="example">
+    <div class="title">Worked Example ??Plot \((-2,\;5\pi/6)\) and find two alternative reps</div>
+    <div class="we-step"><span class="label">Plot.</span> Rotate to \(\theta = 5\pi/6\) (a ray pointing into Q-II at 150째). Since \(r = -2\), the point lies on the <em>opposite</em> ray, i.e. in Q-IV at \(\theta = 5\pi/6 - \pi = -\pi/6\), distance 2 from the pole.</div>
+    <div class="we-step"><span class="label">Rep #1 (\(r > 0\)).</span> Use \((-r,\;\theta+\pi)\) rule: \( \bigl(2,\; 5\pi/6 + \pi\bigr) = \bigl(2,\; 11\pi/6\bigr).\)</div>
+    <div class="we-step"><span class="label">Rep #2 (\(r < 0\), different \(\theta\)).</span> Add \(2\pi\) to the angle: \( \bigl(-2,\; 5\pi/6 + 2\pi\bigr) = \bigl(-2,\; 17\pi/6\bigr).\)</div>
+</div>
+
+<div class="problem">
+    <span class="q-num">B1.</span> Plot \(\left(3,\;-\dfrac{7\pi}{4}\right)\) and state which <strong>quadrant</strong> it lies in. (Watch the negative angle.)
+    <div class="work-space" style="min-height:240px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">B2.</span> Plot \(\left(-4,\;\dfrac{13\pi}{6}\right)\). Then give the equivalent rep with \(r > 0\) and \(0 \le \theta < 2\pi\).
+    <div class="work-space" style="min-height:240px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">B3.</span> Given \(\left(5,\;\dfrac{7\pi}{6}\right)\), find an equivalent representation with \(r < 0\) AND \(-2\pi < \theta < 0\).
+    <div class="work-space" style="min-height:100px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">B4.</span> Plot the following four points on <strong>one</strong> polar grid: \(\bigl(2,\;\pi/3\bigr),\;\bigl(-2,\;\pi/3\bigr),\;\bigl(2,\;-\pi/3\bigr),\;\bigl(-2,\;-\pi/3\bigr).\) Which <em>two</em> coincide?
+    <div class="work-space" style="min-height:260px;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============================ PART C ============================ -->
+<div class="part-header">Part C ??Point Conversion</div>
+<div class="directions"><strong>Directions:</strong> Reduce any over-rotated angles first. For rect \(\to\) polar, give \(r>0\) and \(0 \le \theta < 2\pi\). Quadrant check is required.</div>
+
+<div class="note-box">
+    <div class="title">Note 쨌 Direction matters</div>
+    <strong>Polar \(\to\) Rectangular:</strong> \(x = r\cos\theta,\;\; y = r\sin\theta\). Just substitute.<br>
+    <strong>Rectangular \(\to\) Polar:</strong> \(r = \sqrt{x^2+y^2},\;\; \theta = \operatorname{atan2}(y,x)\). <em>Always</em> check the quadrant from the signs of \(x\) and \(y\) <em>before</em> reporting \(\theta\) ??naive \(\arctan(y/x)\) loses Q-II and Q-III.
+</div>
+
+<div class="example">
+    <div class="title">Worked Example ??Convert \((-3,\; 3\sqrt{3})\) rect \(\to\) polar (\(r>0,\;0\le\theta<2\pi\))</div>
+    <div class="we-step"><span class="label">Quadrant.</span> \(x = -3 < 0\), \(y = 3\sqrt{3} > 0\) \(\Rightarrow\) the point lies in Q-II.</div>
+    <div class="we-step"><span class="label">Radius.</span> \(r = \sqrt{(-3)^2 + (3\sqrt{3})^2} = \sqrt{9 + 27} = \sqrt{36} = 6.\)</div>
+    <div class="we-step"><span class="label">Reference angle.</span> \(\tan\theta_{ref} = \left|\dfrac{y}{x}\right| = \dfrac{3\sqrt{3}}{3} = \sqrt{3} \;\Rightarrow\; \theta_{ref} = \dfrac{\pi}{3}.\)</div>
+    <div class="we-step"><span class="label">Quadrant adjust (Q-II).</span> \(\theta = \pi - \dfrac{\pi}{3} = \dfrac{2\pi}{3}.\)</div>
+    <div class="we-step"><span class="label">Answer.</span> \(\bigl(r,\theta\bigr) = \bigl(6,\;\dfrac{2\pi}{3}\bigr).\)</div>
+</div>
+
+<div class="problem">
+    <span class="q-num">C1.</span> Polar \(\to\) Rectangular: \(\left(-4,\;\dfrac{23\pi}{4}\right).\) <em>Hint:</em> reduce \(\theta\) modulo \(2\pi\) first.
+    <div class="work-space" style="min-height:130px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">C2.</span> Polar \(\to\) Rectangular: \(\left(6,\;\dfrac{11\pi}{6}\right).\)
+    <div class="work-space" style="min-height:120px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">C3.</span> Rectangular \(\to\) Polar: \((-\sqrt{6},\;-\sqrt{2}).\) (Tricky &mdash; Q-III. Exact form, \(r>0,\;0\le\theta<2\pi\).)
+    <div class="work-space" style="min-height:140px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">C4.</span> Rectangular \(\to\) Polar: \((0,\,-5).\) (Edge case &mdash; on the negative \(y\)-axis. State \(r\) and \(\theta\) directly without dividing by zero.)
+    <div class="work-space" style="min-height:100px;"></div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============================ PART D ============================ -->
+<div class="part-header">Part D ??Sketching \(r = a\cos\theta\) / \(r = a\sin\theta\)</div>
+<div class="directions"><strong>Directions:</strong> Use the Cartesian-trick. Sketch the sinusoid first; then read its height as \(r\) and convert to a polar point.</div>
+
+<div class="note-box">
+    <div class="title">Note 쨌 The Cartesian-trick</div>
+    <strong>Step 1.</strong> First sketch the Cartesian \(y = a\cos x\) (or \(y = a\sin x\)).<br>
+    <strong>Step 2.</strong> Treat the input \(x\) as the polar angle \(\theta\). The output \(y\) becomes the polar radius \(r\) for that angle.<br>
+    <strong>Step 3.</strong> When \(y < 0\) (i.e. \(r < 0\)), the polar point lies on the <em>opposite</em> ray. Don't worry &mdash; the curve still ends up on the same circle.<br>
+    <strong>Result.</strong> \(r = a\cos\theta\) is a circle of diameter \(|a|\) sitting on the \(x\)-axis. \(r = a\sin\theta\) is a circle of diameter \(|a|\) sitting on the \(y\)-axis. Sign of \(a\) flips the side.
+</div>
+
+<div class="example">
+    <div class="title">Worked Example ??Sketch \(r = -2\cos\theta\)</div>
+    <div class="we-step"><span class="label">Step 1.</span> Sketch \(y = -2\cos x\) on Cartesian axes. (A flipped cosine: max \(+2\) at \(x = \pi\); min \(-2\) at \(x = 0\); zeros at \(x = \pi/2,\;3\pi/2\).)</div>
+    <div class="we-step"><span class="label">Step 2.</span> Read off values:
+    <ul style="margin:4px 0 0 18px;">
+        <li>At \(\theta = 0\): \(r = -2\) &rarr; opposite side, distance 2 from pole &rarr; point \((-2, 0)\) in rect.</li>
+        <li>At \(\theta = \pi/2\): \(r = 0\) &rarr; the pole.</li>
+        <li>At \(\theta = \pi\): \(r = 2\) &rarr; angle 180째, distance 2 &rarr; point \((-2, 0)\) again.</li>
+        <li>At \(\theta = 3\pi/2\): \(r = 0\) &rarr; pole.</li>
+    </ul></div>
+    <div class="we-step"><span class="label">Step 3.</span> Connect smoothly &rarr; circle of diameter 2 lying entirely on the <strong>negative</strong> \(x\)-axis (center \((-1, 0)\), radius 1). The whole circle is traced over \(\theta \in [0,\pi]\); \(\theta \in [\pi, 2\pi]\) retraces it.</div>
+</div>
+
+<div class="problem">
+    <span class="q-num">D1.</span> Sketch \(r = 3\sin\theta\) over \(0 \le \theta \le 2\pi\). Use the two-panel format.
+    <div class="sketch-pair">
+        <div class="box">
+            <div class="box-label">Step 1: Cartesian \(y = 3\sin x\)</div>
+        </div>
+        <div class="box">
+            <div class="box-label">Step 2: Polar \(r = 3\sin\theta\)</div>
+        </div>
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<div class="problem">
+    <span class="q-num">D2.</span> Sketch \(r = -4\cos\theta\) over \(0 \le \theta \le 2\pi\). Two-panel format. Confirm: which side of the \(x\)-axis is the circle on, and what is its diameter?
+    <div class="sketch-pair">
+        <div class="box">
+            <div class="box-label">Step 1: Cartesian \(y = -4\cos x\)</div>
+        </div>
+        <div class="box">
+            <div class="box-label">Step 2: Polar \(r = -4\cos\theta\)</div>
+        </div>
+    </div>
+    <div class="work-space" style="min-height:60px;"><em>Answer:</em> diameter = ________ , circle is on the ________ side of \(x\)-axis.</div>
+</div>
+
+<!-- ============================ PART E ============================ -->
+<div class="part-header">Part E ??Equation Conversion</div>
+<div class="directions"><strong>Directions:</strong> Show the substitution step before simplifying. State the final form clearly.</div>
+
+<div class="note-box">
+    <div class="title">Note 쨌 Substitution rules</div>
+    <strong>Rect \(\to\) Polar:</strong> sub \(x = r\cos\theta\) and \(y = r\sin\theta\), then simplify.<br>
+    <strong>Polar \(\to\) Rect:</strong> often it helps to multiply both sides by \(r\); then use \(r^2 = x^2+y^2,\; r\cos\theta = x,\; r\sin\theta = y\). <em>Verify</em> that the pole (origin) is consistent if you multiplied by \(r\).
+</div>
+
+<div class="example">
+    <div class="title">Worked Example ??Convert \(y = x^2\) (rect) to polar</div>
+    <div class="we-step"><span class="label">Sub.</span> \(r\sin\theta = (r\cos\theta)^2 = r^2\cos^2\theta.\)</div>
+    <div class="we-step"><span class="label">Divide by \(r\)</span> (assuming \(r\neq 0\)): \(\sin\theta = r\cos^2\theta.\)</div>
+    <div class="we-step"><span class="label">Solve for \(r\):</span> \(r = \dfrac{\sin\theta}{\cos^2\theta} = \sec\theta\,\tan\theta.\) The pole \((r=0)\) corresponds to \(\theta = 0\) (since \(\sin 0 = 0\)), which is the origin &mdash; on the parabola. Consistent.</div>
+</div>
+
+<div class="problem">
+    <span class="q-num">E1.</span> Rect \(\to\) Polar: \(x^2 + y^2 = 9.\) Give the answer with \(r > 0\).
+    <div class="work-space" style="min-height:90px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">E2.</span> Rect \(\to\) Polar: \(x^2 - y^2 = 1.\) (A hyperbola &mdash; use a double-angle identity to compact the answer.)
+    <div class="work-space" style="min-height:140px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">E3.</span> Polar \(\to\) Rect: \( r = \dfrac{1}{\sin\theta - \cos\theta}.\) <em>Hint:</em> multiply both sides by \((\sin\theta - \cos\theta)\), then by \(r\) if useful.
+    <div class="work-space" style="min-height:130px;"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">E4.</span> Polar \(\to\) Rect: \( r^2 = \tan\theta.\) <em>Hint:</em> write \(\tan\theta = \sin\theta / \cos\theta\), then multiply both sides by \(r\,\cos\theta\) to introduce \(x\) and \(y\). Verify the pole.
+    <div class="work-space" style="min-height:160px;"></div>
+</div>
+
+<div class="footer">Created by Newton School 2026-05-24 &copy; Copyright</div>
+
+</div>
+</body>
+</html>

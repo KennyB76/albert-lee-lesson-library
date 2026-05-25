@@ -1,0 +1,400 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Albert Lee ??Polar Curves Gallery AnswerKey (2026-05-24)</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script>
+window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+    svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+<script src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+
+<style>
+/* ===== base-print.css ===== */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .problem, .answer-block, .reminder, .parent-note, .example, .word-problem { page-break-inside: avoid; break-inside: avoid; }
+    .part-header, .directions, .problem-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+}
+
+/* ===== theme-boy.css ===== */
+:root {
+    --color-primary:        #1565c0;
+    --color-primary-dark:   #0d47a1;
+    --color-accent:         #00838f;
+    --color-header-border:  #1565c0;
+    --color-final-answer:   #2e7d32;
+    --color-warning:        #c62828;
+    --color-tag-border:     #1565c0;
+    --color-tag-text:       #1565c0;
+    --color-muted:          #555;
+    --color-rule:           #ccc;
+}
+
+/* ===== level-high.css ===== */
+body { font-family: 'Source Serif Pro', 'Georgia', 'Times New Roman', serif; font-size: 10.5pt; line-height: 1.55; }
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 16px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 7px 3px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 16pt; margin: 6px 0 8px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 4px; color: var(--color-muted); }
+.part-header { font-size: 13pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 1.5px solid var(--color-primary); }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 20px; padding-top: 6px; }
+
+.answer-block { margin: 14px 0; padding: 10px 14px; border: 1px solid #ddd; border-radius: 4px; page-break-inside: avoid; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 5px; }
+.problem-text { font-size: 10pt; padding: 6px 10px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 8px; line-height: 1.5; }
+.concept-tag { display: inline-block; font-size: 8pt; padding: 2px 8px; margin: 2px 3px 5px 0; border: 1px solid var(--color-tag-border); color: var(--color-tag-text); border-radius: 10px; }
+.solution { margin: 6px 0; padding-left: 8px; border-left: 3px solid var(--color-final-answer); }
+.solution-step { margin: 4px 0; font-size: 10pt; line-height: 1.6; }
+.final-answer { display: inline-block; border: 2px solid var(--color-final-answer); color: var(--color-final-answer); font-weight: bold; padding: 4px 12px; border-radius: 4px; margin-top: 6px; font-size: 11pt; }
+.we-ref { background: #f6fbf6; border: 1.5px solid var(--color-final-answer); padding: 6px 10px; font-size: 9.5pt; color: var(--color-final-answer); border-radius: 3px; margin: 4px 0; }
+
+/* JSXGraph answer canvas */
+.jxgbox { width: 280px; height: 280px; border: 1px solid #888; margin: 8px 0 4px 24px; background: #fff; }
+.curve-label { font-size: 9pt; font-weight: bold; color: var(--color-final-answer); margin: 2px 0 0 24px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS</div>
+    <span class="key-tag">ANSWER KEY</span>
+    <h1>Polar Curves Gallery: Identify &amp; Sketch</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Albert Lee</span>
+        <span><strong>Date:</strong> 2026-05-24</span>
+    </div>
+</div>
+
+<!-- ============================ PART A ============================ -->
+<div class="part-header">Part A ??Identify the Curve Family</div>
+<div class="we-ref">A-Worked Example (classify \(r = 2 + 2\sin\theta\)) ??solution shown in worksheet.</div>
+
+<div class="answer-block">
+    <div class="problem-header">A1. Classify each equation</div>
+    <span class="concept-tag">Lima챌on</span> <span class="concept-tag">Rose</span>
+    <div class="solution">
+        <div class="solution-step"><strong>(a) \(r = 3 + 5\cos\theta\):</strong> lima챌on, \(a=3, b=5 \Rightarrow a < b \Rightarrow\) <em>inner loop</em>. Orientation: \(+\cos \Rightarrow\) main lobe right.</div>
+        <div class="solution-step"><strong>(b) \(r = 4 - 2\sin\theta\):</strong> lima챌on, \(a=4, b=2 \Rightarrow a > b\) but \(a = 2b\) \(\Rightarrow\) borderline <em>convex</em> (just at the convex threshold). Orientation: \(-\sin \Rightarrow\) main lobe down.</div>
+        <div class="solution-step"><strong>(c) \(r = 2\cos 3\theta\):</strong> rose. \(n = 3\) odd \(\Rightarrow\) <em>3 petals</em>. First petal along \(+x\)-axis.</div>
+        <div class="solution-step"><strong>(d) \(r = 5\sin 4\theta\):</strong> rose. \(n = 4\) even \(\Rightarrow\) <em>8 petals</em>. First petal along \(\theta = \pi/8\) (22.5째).</div>
+        <div class="final-answer">a) inner-loop lima챌on 쨌 b) convex lima챌on (borderline) 쨌 c) 3-petal rose 쨌 d) 8-petal rose</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">A2. Lima챌on orientation rule</div>
+    <span class="concept-tag">Orientation Rule</span>
+    <div class="solution">
+        <div class="solution-step"><strong>(a) \(r = 1 + \cos\theta\):</strong> right (max at \(\theta = 0\)).</div>
+        <div class="solution-step"><strong>(b) \(r = 1 - \cos\theta\):</strong> left (max at \(\theta = \pi\)).</div>
+        <div class="solution-step"><strong>(c) \(r = 1 + \sin\theta\):</strong> up (max at \(\theta = \pi/2\)).</div>
+        <div class="solution-step"><strong>(d) \(r = 1 - \sin\theta\):</strong> down (max at \(\theta = 3\pi/2\)).</div>
+        <div class="solution-step"><strong>Rule (one sentence):</strong> The main lobe points in the direction where the trig term is most positive: \(+\cos \to\) right, \(-\cos \to\) left, \(+\sin \to\) up, \(-\sin \to\) down.</div>
+        <div class="final-answer">cos = horizontal axis (sign chooses L/R); sin = vertical axis (sign chooses U/D).</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">A3. Skeleton of \(r = 2\cos 5\theta\)</div>
+    <span class="concept-tag">Rose Anatomy</span>
+    <div class="solution">
+        <div class="solution-step">\(n = 5\) odd \(\Rightarrow\) <strong>5 petals</strong>, each of length 2. \(\cos\) form means the first petal points along the positive \(x\)-axis. Petals are evenly spaced at \(\theta = 0,\;2\pi/5,\;4\pi/5,\;6\pi/5,\;8\pi/5\).</div>
+        <div class="final-answer">5 petals, first along \(+x\)-axis.</div>
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============================ PART B ============================ -->
+<div class="part-header">Part B ??Circles &amp; Cardioids</div>
+<div class="we-ref">B-Worked Example (\(r = 1+\cos\theta\) cardioid right) ??solution shown in worksheet.</div>
+
+<div class="answer-block">
+    <div class="problem-header">B1. \(r = 4\sin\theta\)</div>
+    <span class="concept-tag">Circle (sin)</span> <span class="concept-tag">Diameter 4</span>
+    <div class="solution">
+        <div class="solution-step">Circle of diameter 4 sitting on the positive \(y\)-axis. Center \((0, 2)\), radius 2. Passes through origin and \((0, 4)\).</div>
+        <div id="b1Box" class="jxgbox"></div>
+        <div class="curve-label">Diameter 4, on positive \(y\)-axis.</div>
+        <div class="final-answer">Circle, center \((0,2)\), radius 2.</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">B2. \(r = 6\cos\theta\)</div>
+    <span class="concept-tag">Circle (cos)</span> <span class="concept-tag">Diameter 6</span>
+    <div class="solution">
+        <div class="solution-step">Circle of diameter 6 sitting on the positive \(x\)-axis (right of \(y\)-axis). Center \((3, 0)\), radius 3.</div>
+        <div id="b2Box" class="jxgbox"></div>
+        <div class="curve-label">Diameter 6, right side of \(y\)-axis.</div>
+        <div class="final-answer">Circle, center \((3,0)\), radius 3.</div>
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<div class="answer-block">
+    <div class="problem-header">B3. \(r = 3(1 - \sin\theta)\)</div>
+    <span class="concept-tag">Cardioid</span> <span class="concept-tag">Downward</span>
+    <div class="solution">
+        <div class="solution-step">Cardioid. Max \(r = 6\) at \(\theta = 3\pi/2\) (bottom), \(r = 0\) at \(\theta = \pi/2\). Heart points <strong>downward</strong>.</div>
+        <div id="b3Box" class="jxgbox"></div>
+        <div class="curve-label">Cardioid pointing down.</div>
+        <div class="final-answer">Cardioid, downward, max distance 6.</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">B4. \(r = 2 + 2\cos\theta\)</div>
+    <span class="concept-tag">Cardioid</span> <span class="concept-tag">Rightward</span>
+    <div class="solution">
+        <div class="solution-step">Cardioid. Max \(r = 4\) at \(\theta = 0\) (right), \(r = 0\) at \(\theta = \pi\). Heart points <strong>right</strong>. Mirror image of B3 (rotated 90째 &mdash; sin vs cos swaps vertical &harr; horizontal).</div>
+        <div id="b4Box" class="jxgbox"></div>
+        <div class="curve-label">Cardioid pointing right.</div>
+        <div class="final-answer">Cardioid, rightward, max distance 4.</div>
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============================ PART C ============================ -->
+<div class="part-header">Part C ??Lima챌ons</div>
+<div class="we-ref">C-Worked Example (\(r = 1 + 2\sin\theta\) inner loop) ??solution shown in worksheet.</div>
+
+<div class="answer-block">
+    <div class="problem-header">C1. \(r = 2 - \cos\theta\)</div>
+    <span class="concept-tag">Dimpled Lima챌on</span> <span class="concept-tag">Leftward</span>
+    <div class="solution">
+        <div class="solution-step">\(a = 2,\;b = 1 \Rightarrow a > b\) but \(a < 2b\), so <strong>dimpled lima챌on</strong>. Sign \(-\cos\) \(\Rightarrow\) max at \(\theta = \pi\) (left), min (dimple) at \(\theta = 0\) (right).</div>
+        <div class="solution-step">Key values: \(\theta=0 \Rightarrow r=1\); \(\theta=\pi/2 \Rightarrow r=2\); \(\theta=\pi \Rightarrow r=3\); \(\theta=3\pi/2 \Rightarrow r=2\).</div>
+        <div id="c1Box" class="jxgbox"></div>
+        <div class="curve-label">Dimpled lima챌on, oriented left.</div>
+        <div class="final-answer">Dimpled, left-pointing main lobe, max 3, dimple distance 1.</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">C2. \(r = 1 - 2\cos\theta\)</div>
+    <span class="concept-tag">Inner-Loop Lima챌on</span> <span class="concept-tag">Leftward</span>
+    <div class="solution">
+        <div class="solution-step">\(a = 1,\;b = 2 \Rightarrow a < b\), so <strong>inner-loop lima챌on</strong>. Sign \(-\cos\) \(\Rightarrow\) main lobe points left.</div>
+        <div class="solution-step"><strong>Pole crossings:</strong> \(1 - 2\cos\theta = 0 \Rightarrow \cos\theta = 1/2 \Rightarrow \theta = \pi/3,\;5\pi/3\). Inner loop between these angles, on the right.</div>
+        <div class="solution-step">Key: \(\theta=0 \Rightarrow r=-1\) (flips to left, distance 1 ??inner loop tip); \(\theta=\pi \Rightarrow r=3\) (main lobe tip, left).</div>
+        <div id="c2Box" class="jxgbox"></div>
+        <div class="curve-label">Inner-loop lima챌on, oriented left.</div>
+        <div class="final-answer">Inner loop with pole crossings at \(\pi/3, 5\pi/3\); main lobe left.</div>
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<div class="answer-block">
+    <div class="problem-header">C3. \(r = 4 + 2\sin\theta\)</div>
+    <span class="concept-tag">Convex Lima챌on</span> <span class="concept-tag">Upward</span>
+    <div class="solution">
+        <div class="solution-step">\(a = 4,\;b = 2 \Rightarrow a = 2b\), exactly at the convex threshold. <strong>Convex lima챌on</strong> (smooth oval, no dimple).</div>
+        <div class="solution-step">Max at \(\theta = \pi/2\) (\(r = 6\), top); min at \(\theta = 3\pi/2\) (\(r = 2\), bottom). Slightly elongated vertically.</div>
+        <div id="c3Box" class="jxgbox"></div>
+        <div class="curve-label">Convex lima챌on, elongated upward.</div>
+        <div class="final-answer">Convex oval, max 6 (top), min 2 (bottom).</div>
+    </div>
+</div>
+
+<!-- ============================ PART D ============================ -->
+<div class="part-header">Part D ??Roses</div>
+<div class="we-ref">D-Worked Example (\(r = 3\sin 2\theta\), 4 petals) ??solution shown in worksheet.</div>
+
+<div class="answer-block">
+    <div class="problem-header">D1. \(r = 2\cos 3\theta\)</div>
+    <span class="concept-tag">Rose</span> <span class="concept-tag">3 Petals</span>
+    <div class="solution">
+        <div class="solution-step">\(n = 3\) odd \(\Rightarrow\) 3 petals, length 2. \(\cos\) form \(\Rightarrow\) first petal along \(+x\)-axis (\(\theta = 0\)). Other two at \(\theta = 2\pi/3\) and \(\theta = 4\pi/3\).</div>
+        <div id="d1Box" class="jxgbox"></div>
+        <div class="curve-label">3-petal rose, first along \(+x\).</div>
+        <div class="final-answer">3 petals, length 2, evenly spaced 120째 apart.</div>
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<div class="answer-block">
+    <div class="problem-header">D2. \(r = 4\sin 4\theta\)</div>
+    <span class="concept-tag">Rose</span> <span class="concept-tag">8 Petals</span>
+    <div class="solution">
+        <div class="solution-step">\(n = 4\) even \(\Rightarrow 2n = 8\) petals, length 4. \(\sin\) form \(\Rightarrow\) first petal along bisector \(\theta = \pi/(2 \cdot 4) = \pi/8\) (22.5째). Petals every \(\pi/4 = 45째\) thereafter.</div>
+        <div id="d2Box" class="jxgbox"></div>
+        <div class="curve-label">8-petal rose, length 4.</div>
+        <div class="final-answer">8 petals, length 4, spaced 45째 apart, first at 22.5째.</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">D3. \(r = \sin 5\theta\)</div>
+    <span class="concept-tag">Rose</span> <span class="concept-tag">5 Petals</span>
+    <div class="solution">
+        <div class="solution-step">\(n = 5\) odd \(\Rightarrow\) 5 petals, length 1. \(\sin\) form \(\Rightarrow\) first petal along \(\theta = \pi/10\) (18째). Petals at \(\pi/10,\;\pi/10 + 2\pi/5,\;\ldots\) (every 72째).</div>
+        <div id="d3Box" class="jxgbox"></div>
+        <div class="curve-label">5-petal rose, length 1.</div>
+        <div class="final-answer">5 petals, length 1, spaced 72째 apart, first at 18째.</div>
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============================ PART E ============================ -->
+<div class="part-header">Part E ??Edge Cases</div>
+<div class="we-ref">E-Worked Example (\(r^2 = \tan\theta\)) ??solution shown in worksheet.</div>
+
+<div class="answer-block">
+    <div class="problem-header">E1. \(r = \sec\theta\)</div>
+    <span class="concept-tag">Vertical Line</span> <span class="concept-tag">Polar?뭃ect</span>
+    <div class="solution">
+        <div class="solution-step">Rewrite: \(r = \dfrac{1}{\cos\theta} \;\Rightarrow\; r\cos\theta = 1 \;\Rightarrow\; x = 1.\)</div>
+        <div class="solution-step">This is the <strong>vertical line</strong> \(x = 1\).</div>
+        <div id="e1Box" class="jxgbox"></div>
+        <div class="curve-label">Vertical line \(x = 1\).</div>
+        <div class="final-answer">\(x = 1\) (vertical line).</div>
+    </div>
+</div>
+
+<div class="answer-block">
+    <div class="problem-header">E2. \(r = \dfrac{4}{1 + 2\sin\theta}\)</div>
+    <span class="concept-tag">Conic (Hyperbola)</span> <span class="concept-tag">Eccentricity 2</span>
+    <div class="solution">
+        <div class="solution-step">Conic section in polar form with eccentricity \(e = 2\). Since \(e > 1\), this is a <strong>hyperbola</strong>.</div>
+        <div class="solution-step"><strong>Denominator zero</strong> when \(\sin\theta = -1/2 \Rightarrow \theta = 7\pi/6, 11\pi/6\). At these angles \(r \to \pm\infty\) ??the asymptotic directions of the hyperbola.</div>
+        <div class="solution-step">At \(\theta = \pi/2\) (top): \(r = 4/3\). At \(\theta = 3\pi/2\) (bottom): \(r = 4/(-1) = -4\) (flips to top, distance 4). At \(\theta = 0\): \(r = 4\). At \(\theta = \pi\): \(r = 4\).</div>
+        <div id="e2Box" class="jxgbox"></div>
+        <div class="curve-label">Hyperbola, eccentricity 2.</div>
+        <div class="final-answer">Hyperbola (\(e = 2\)) with asymptotic angles at \(\theta = 7\pi/6,\;11\pi/6\).</div>
+    </div>
+</div>
+
+<div class="footer">Created by Newton School 2026-05-24 &copy; Copyright 쨌 Answer Key</div>
+
+</div>
+
+<script>
+// Helper: build a polar-grid board with given size and ring spacing
+function polarBoard(id, bbox) {
+    const board = JXG.JSXGraph.initBoard(id, {
+        boundingbox: bbox,
+        axis: true,
+        showCopyright: false,
+        showNavigation: false,
+        keepAspectRatio: true,
+        grid: false,
+        defaultAxes: {
+            x: { ticks: { ticksDistance: 1, label: { fontSize: 8 } }, strokeColor: '#888' },
+            y: { ticks: { ticksDistance: 1, label: { fontSize: 8 } }, strokeColor: '#888' }
+        }
+    });
+    // polar grid circles
+    const maxR = Math.abs(bbox[2]);
+    for (let i = 1; i <= Math.ceil(maxR); i++) {
+        board.create('circle', [[0,0], i], {
+            strokeColor: '#eee', strokeWidth: 1, fillColor: 'none', highlight: false, fixed: true
+        });
+    }
+    // polar grid rays
+    [0, Math.PI/4, Math.PI/2, 3*Math.PI/4].forEach(a => {
+        const r = maxR;
+        board.create('segment', [
+            [r * Math.cos(a), r * Math.sin(a)],
+            [-r * Math.cos(a), -r * Math.sin(a)]
+        ], { strokeColor: '#eee', strokeWidth: 1, highlight: false, fixed: true });
+    });
+    return board;
+}
+
+function plotPolar(board, fn, tStart, tEnd, color) {
+    color = color || '#2e7d32';
+    return board.create('curve', [
+        function(t) { return fn(t) * Math.cos(t); },
+        function(t) { return fn(t) * Math.sin(t); },
+        tStart, tEnd
+    ], { strokeColor: color, strokeWidth: 2.5 });
+}
+
+// B1: r = 4 sin 罐
+let bb;
+bb = polarBoard('b1Box', [-5, 5, 5, -5]);
+plotPolar(bb, t => 4 * Math.sin(t), 0, 2*Math.PI);
+
+// B2: r = 6 cos 罐
+bb = polarBoard('b2Box', [-4, 5, 8, -5]);
+plotPolar(bb, t => 6 * Math.cos(t), 0, 2*Math.PI);
+
+// B3: r = 3(1 - sin 罐)
+bb = polarBoard('b3Box', [-7, 4, 7, -7]);
+plotPolar(bb, t => 3 * (1 - Math.sin(t)), 0, 2*Math.PI);
+
+// B4: r = 2 + 2 cos 罐
+bb = polarBoard('b4Box', [-3, 4, 5, -4]);
+plotPolar(bb, t => 2 + 2 * Math.cos(t), 0, 2*Math.PI);
+
+// C1: r = 2 - cos 罐
+bb = polarBoard('c1Box', [-4, 4, 3, -4]);
+plotPolar(bb, t => 2 - Math.cos(t), 0, 2*Math.PI);
+
+// C2: r = 1 - 2 cos 罐
+bb = polarBoard('c2Box', [-4, 3, 2, -3]);
+plotPolar(bb, t => 1 - 2 * Math.cos(t), 0, 2*Math.PI);
+
+// C3: r = 4 + 2 sin 罐
+bb = polarBoard('c3Box', [-7, 7, 7, -3]);
+plotPolar(bb, t => 4 + 2 * Math.sin(t), 0, 2*Math.PI);
+
+// D1: r = 2 cos 3罐  (3 petals)
+bb = polarBoard('d1Box', [-3, 3, 3, -3]);
+plotPolar(bb, t => 2 * Math.cos(3*t), 0, Math.PI);
+
+// D2: r = 4 sin 4罐  (8 petals)
+bb = polarBoard('d2Box', [-5, 5, 5, -5]);
+plotPolar(bb, t => 4 * Math.sin(4*t), 0, 2*Math.PI);
+
+// D3: r = sin 5罐  (5 petals)
+bb = polarBoard('d3Box', [-1.5, 1.5, 1.5, -1.5]);
+plotPolar(bb, t => Math.sin(5*t), 0, Math.PI);
+
+// E1: r = sec 罐  ?? x = 1
+bb = polarBoard('e1Box', [-3, 4, 4, -4]);
+bb.create('line', [[1, -10], [1, 10]], { strokeColor: '#2e7d32', strokeWidth: 2.5, straightFirst: true, straightLast: true });
+
+// E2: r = 4 / (1 + 2 sin 罐) ??hyperbola; split into branches around singularities
+bb = polarBoard('e2Box', [-10, 10, 10, -10]);
+// First branch: where 1 + 2 sin 罐 > 0  (罐 avoiding asymptotes 7?/6, 11?/6)
+// Branch A: 罐 ??(-?/6 + 琯, 7?/6 - 琯)
+plotPolar(bb, t => 4 / (1 + 2 * Math.sin(t)), -Math.PI/6 + 0.02, 7*Math.PI/6 - 0.02);
+// Branch B: 罐 ??(7?/6 + 琯, 11?/6 - 琯)  ??denominator negative, r negative, draws other branch
+plotPolar(bb, t => 4 / (1 + 2 * Math.sin(t)), 7*Math.PI/6 + 0.02, 11*Math.PI/6 - 0.02);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1259 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Polar Interactive ??Mapping + Curves Gallery</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script>
+window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+    svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+<script src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+
+<style>
+:root {
+    --primary: #1565c0;
+    --primary-dark: #0d47a1;
+    --accent: #00838f;
+    --warning: #c62828;
+    --good: #2e7d32;
+    --muted: #555;
+    --rule: #ddd;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #f4f6f9; }
+body { font-family: 'Source Serif Pro', Georgia, 'Times New Roman', serif; color: #222; }
+
+.wrap { max-width: 1200px; margin: 0 auto; padding: 24px 28px 60px; }
+
+.header { text-align: center; padding-bottom: 14px; margin-bottom: 14px; border-bottom: 2px solid var(--primary); }
+.school-name { font-size: 10pt; letter-spacing: 5px; color: var(--primary); font-weight: bold; }
+.subject-tag {
+    display: inline-block; padding: 3px 12px; font-size: 9pt; letter-spacing: 2px;
+    margin: 6px 3px 8px; font-weight: bold;
+    border: 1.5px solid var(--primary); color: var(--primary);
+}
+h1 { font-family: 'Libre Baskerville', Georgia, serif; font-size: 22pt; margin: 8px 0 6px; line-height: 1.25; }
+.subtitle { color: var(--muted); font-size: 11pt; font-style: italic; }
+
+/* ===== Tab nav ===== */
+.tabs {
+    display: flex; gap: 0; margin: 0 0 18px 0;
+    border-bottom: 2px solid var(--primary);
+}
+.tab-btn {
+    flex: 1;
+    padding: 12px 18px;
+    background: #e7ecf1;
+    border: none;
+    border-right: 1px solid #ccc;
+    color: var(--muted);
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-size: 12pt;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.tab-btn:last-child { border-right: none; }
+.tab-btn:hover { background: #d8e0e8; }
+.tab-btn.active {
+    background: var(--primary);
+    color: #fff;
+}
+
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* ===== Control panel (shared style) ===== */
+.controls {
+    background: #fff; border: 1px solid var(--rule); border-radius: 6px;
+    padding: 14px 18px; margin-bottom: 18px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.controls .row { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin: 8px 0; }
+.controls .label { font-weight: bold; color: var(--primary); min-width: 140px; }
+.controls input[type="range"] { flex: 1; min-width: 200px; }
+.controls .value {
+    font-family: 'Source Code Pro', Consolas, monospace;
+    color: var(--primary-dark); min-width: 140px; text-align: right; font-size: 11pt;
+}
+.controls .radio-group label { margin-right: 14px; cursor: pointer; }
+.controls button {
+    background: var(--primary); color: #fff; border: none;
+    padding: 7px 16px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 10pt;
+}
+.controls button.clear { background: #fff; color: var(--warning); border: 1.5px solid var(--warning); }
+.controls button:hover { opacity: 0.85; }
+.controls button:disabled { opacity: 0.4; cursor: not-allowed; }
+.controls select {
+    padding: 5px 10px; font-size: 10.5pt; font-family: inherit;
+    border: 1px solid #aaa; border-radius: 4px; background: #fff;
+}
+
+/* ===== Mode 1 panels (two-panel) ===== */
+.panels {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+}
+.panel {
+    background: #fff; border: 1px solid var(--rule); border-radius: 6px;
+    padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.panel-title {
+    font-family: 'Libre Baskerville', Georgia, serif; font-weight: bold;
+    color: var(--primary); font-size: 12pt; margin: 0 0 8px; text-align: center;
+}
+.panel-eq { text-align: center; color: var(--muted); font-size: 11pt; margin-bottom: 6px; }
+.jxgbox { width: 100%; height: 380px; border: 1px solid #e0e0e0; }
+
+/* ===== Readout ===== */
+.readout {
+    margin-top: 18px; background: #fff; border: 1px solid var(--rule); border-radius: 6px;
+    padding: 14px 18px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.readout .cell { text-align: center; padding: 4px; }
+.readout .cell .key {
+    font-size: 9pt; text-transform: uppercase; letter-spacing: 1.5px;
+    color: var(--muted); margin-bottom: 4px;
+}
+.readout .cell .val {
+    font-family: 'Source Code Pro', Consolas, monospace;
+    font-size: 13pt; color: var(--primary-dark); font-weight: bold;
+}
+.readout .cell.r-cell .val.neg { color: var(--warning); }
+
+/* ===== Insight box ===== */
+.insight {
+    margin-top: 18px; background: #f0f9fa; border: 1.5px dashed var(--accent);
+    border-radius: 6px; padding: 12px 16px;
+}
+.insight .title { font-weight: bold; color: var(--accent); margin-bottom: 6px; }
+.insight ol { margin: 4px 0 0 18px; padding: 0; }
+.insight li { margin: 4px 0; line-height: 1.5; }
+
+/* ===== Mode 2 layout (gallery) ===== */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 18px;
+}
+.gallery-side {
+    background: #fff; border: 1px solid var(--rule); border-radius: 6px;
+    padding: 14px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    align-self: start;
+}
+.gallery-side h3 {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    color: var(--primary); margin: 0 0 8px; font-size: 13pt;
+    border-bottom: 1px solid var(--rule); padding-bottom: 4px;
+}
+.gallery-side .rules-list {
+    margin: 6px 0 0 0; padding: 0 0 0 18px; font-size: 9.5pt; line-height: 1.55;
+}
+.gallery-side .rules-list li { margin: 4px 0; }
+.gallery-side .rules-list li.match {
+    background: #fff8d6; padding: 3px 6px; margin-left: -8px;
+    border-left: 3px solid #e0a800;
+    font-weight: bold; color: #6b4d00;
+}
+
+.gallery-main {
+    background: #fff; border: 1px solid var(--rule); border-radius: 6px;
+    padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.gallery-eq {
+    text-align: center; font-size: 13pt; color: var(--primary-dark);
+    margin: 0 0 8px; font-family: 'Source Code Pro', Consolas, monospace;
+}
+/* dual-panel inside gallery-main */
+.g2-panels {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.g2-panel-title {
+    font-family: 'Libre Baskerville', Georgia, serif; font-weight: bold;
+    color: var(--primary); font-size: 11pt; margin: 0 0 6px; text-align: center;
+}
+.g2-panel-eq { text-align: center; color: var(--muted); font-size: 10.5pt; margin-bottom: 4px; min-height: 18px; }
+#g2CartBox, #galleryBox { width: 100%; height: 360px; border: 1px solid #e0e0e0; background: #fff; }
+
+/* ===== Worked examples ===== */
+.examples-box {
+    margin-top: 16px;
+    background: #fffbe6; border: 1.5px solid #e0c060; border-radius: 6px;
+    padding: 14px 18px;
+}
+.examples-box .title {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    color: #8a6500; font-weight: bold; font-size: 12pt; margin-bottom: 4px;
+}
+.examples-box .subtitle {
+    color: #6b4d00; font-size: 10pt; font-style: italic; margin-bottom: 10px;
+}
+.examples-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+}
+.example-card {
+    background: #fff; border: 1px solid #e0c060; border-radius: 5px;
+    padding: 10px 12px; font-size: 10pt;
+}
+.example-card .ex-label {
+    display: inline-block; background: #e0a800; color: #fff;
+    font-weight: bold; font-size: 9pt; letter-spacing: 1px;
+    padding: 2px 8px; border-radius: 3px; margin-bottom: 6px;
+}
+.example-card .ex-eq { font-size: 11pt; margin: 4px 0; }
+.example-card .ex-calc { color: var(--muted); font-size: 9.5pt; margin: 4px 0; line-height: 1.5; }
+.example-card .ex-calc code {
+    background: #f4f6f9; padding: 1px 5px; border-radius: 3px;
+    font-family: 'Source Code Pro', Consolas, monospace; font-size: 9.5pt;
+}
+.example-card button {
+    background: var(--accent); color: #fff; border: none;
+    padding: 5px 12px; border-radius: 4px; font-weight: bold;
+    cursor: pointer; font-size: 9.5pt; margin-top: 6px;
+}
+.example-card button:hover { opacity: 0.85; }
+
+@media (max-width: 900px) {
+    .g2-panels { grid-template-columns: 1fr; }
+    .examples-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== Thumbnail textbook gallery ===== */
+.thumb-strip {
+    margin-top: 14px; display: grid;
+    grid-template-columns: repeat(5, 1fr); gap: 10px;
+}
+.thumb {
+    background: #f9fafb; border: 1px solid var(--rule); border-radius: 4px;
+    padding: 6px 4px; text-align: center; font-size: 9pt; color: var(--muted);
+    cursor: pointer; transition: all 0.15s;
+}
+.thumb:hover { border-color: var(--accent); background: #e7f4f7; }
+.thumb.active { border-color: var(--primary); background: #e3f2fd; color: var(--primary-dark); font-weight: bold; }
+.thumb .thumb-label { display: block; margin-top: 2px; }
+
+/* ===== Footer ===== */
+.footer {
+    text-align: center; font-size: 9pt; color: #888;
+    margin-top: 24px; padding-top: 10px; border-top: 1px solid var(--rule);
+}
+
+@media (max-width: 900px) {
+    .panels { grid-template-columns: 1fr; }
+    .readout { grid-template-columns: repeat(2, 1fr); }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .thumb-strip { grid-template-columns: repeat(3, 1fr); }
+    .g2-panels { grid-template-columns: 1fr; }
+    .examples-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-CALCULUS 쨌 INTERACTIVE</div>
+    <h1>Polar Interactive Lab</h1>
+    <div class="subtitle">Two explorations: the Cartesian&harr;Polar mapping trick, and a live gallery of common polar curves.</div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+    <button class="tab-btn active" data-tab="mode1">Mode 1: Cartesian&rarr;Polar Mapping</button>
+    <button class="tab-btn" data-tab="mode2">Mode 2: Common Polar Curves Gallery</button>
+</div>
+
+<!-- =========================================================== -->
+<!-- MODE 1: Cartesian ??Polar Mapping (original, preserved) -->
+<!-- =========================================================== -->
+<div class="tab-pane active" id="mode1">
+
+    <!-- Controls -->
+    <div class="controls">
+        <div class="row">
+            <span class="label">Function:</span>
+            <div class="radio-group">
+                <label><input type="radio" name="m1fn" value="cos" checked> \(r = a\cos\theta\)</label>
+                <label><input type="radio" name="m1fn" value="sin"> \(r = a\sin\theta\)</label>
+            </div>
+        </div>
+        <div class="row">
+            <span class="label">Amplitude \(a\):</span>
+            <input type="range" id="m1AmpSlider" min="-5" max="5" step="0.5" value="4">
+            <span class="value" id="m1AmpVal">a = 4.0</span>
+        </div>
+        <div class="row">
+            <span class="label">Angle \(\theta\):</span>
+            <input type="range" id="m1ThetaSlider" min="0" max="6.2832" step="0.0314" value="0">
+            <span class="value" id="m1ThetaVal">罐 = 0.000 rad</span>
+        </div>
+        <div class="row" style="justify-content: flex-end; gap: 10px;">
+            <button id="m1AnimateBtn">?? Show full trace (0 ??2?)</button>
+            <button id="m1ClearBtn" class="clear">Clear trace</button>
+        </div>
+    </div>
+
+    <!-- Two panels -->
+    <div class="panels">
+        <div class="panel">
+            <div class="panel-title">Cartesian view</div>
+            <div class="panel-eq" id="m1CartEq">\(y = 4\cos x\)</div>
+            <div id="m1CartBox" class="jxgbox"></div>
+        </div>
+        <div class="panel">
+            <div class="panel-title">Polar view</div>
+            <div class="panel-eq" id="m1PolarEq">\(r = 4\cos\theta\)</div>
+            <div id="m1PolarBox" class="jxgbox"></div>
+        </div>
+    </div>
+
+    <!-- Readout -->
+    <div class="readout">
+        <div class="cell"><div class="key">罐 (rad)</div><div class="val" id="m1ReadTheta">0.000</div></div>
+        <div class="cell"><div class="key">罐 (deg)</div><div class="val" id="m1ReadDeg">0.0째</div></div>
+        <div class="cell r-cell"><div class="key">r</div><div class="val" id="m1ReadR">4.000</div></div>
+        <div class="cell"><div class="key">rect (x, y)</div><div class="val" id="m1ReadXY">(4.000, 0.000)</div></div>
+    </div>
+
+    <div class="insight">
+        <div class="title">What to notice (Kenny's trick ??verify it yourself)</div>
+        <ol>
+            <li><strong>Same x ??Same 罐.</strong> The vertical red line in the Cartesian plot lives at \(x = \theta\) (in radians).</li>
+            <li><strong>Height becomes radius.</strong> The \(y\)-value of the cosine wave at that \(x\) is exactly the \(r\) used in the polar plot.</li>
+            <li><strong>Watch the negative half.</strong> When \(y &lt; 0\) (so \(r &lt; 0\)), the polar point flips to the <em>opposite</em> side of the pole. The trace still lands on the same circle ??that's why the circle gets traced completely over \(\theta \in [0, \pi]\).</li>
+            <li><strong>Cosine vs sine.</strong> Switch the function. The circle rotates 90째: \(r = a\cos\theta\) sits on the \(x\)-axis; \(r = a\sin\theta\) sits on the \(y\)-axis. Diameter \(= |a|\) either way.</li>
+        </ol>
+    </div>
+</div>
+
+<!-- =========================================================== -->
+<!-- MODE 2: Common Polar Curves Gallery (new) -->
+<!-- =========================================================== -->
+<div class="tab-pane" id="mode2">
+
+    <!-- Family selector -->
+    <div class="controls">
+        <div class="row">
+            <span class="label">Family:</span>
+            <select id="g2Family">
+                <option value="circle_const">Circle (\(r = a\))</option>
+                <option value="circle_cos">Circle (\(r = a\cos\theta\))</option>
+                <option value="circle_sin">Circle (\(r = a\sin\theta\))</option>
+                <option value="limacon" selected>Lima챌on / Cardioid (\(r = a \pm b\cdot\text{trig}\,\theta\))</option>
+                <option value="rose">Rose (\(r = a\cdot\text{trig}(n\theta)\))</option>
+                <option value="spiral">Spiral (\(r = a\theta\))</option>
+            </select>
+        </div>
+        <!-- Dynamic controls (populated by JS) -->
+        <div id="g2Controls"></div>
+        <!-- 罐 slider (always present in Mode 2) -->
+        <div class="row">
+            <span class="label">Angle \(\theta\):</span>
+            <input type="range" id="g2ThetaSlider" min="0" max="6.2832" step="0.0314" value="0">
+            <span class="value" id="g2ThetaVal">罐 = 0.000 rad</span>
+        </div>
+        <div class="row" style="justify-content: flex-end; gap: 10px;">
+            <button id="g2AnimateBtn">?? Show full trace (0 ??2?)</button>
+            <button id="g2ClearBtn" class="clear">Clear trace</button>
+        </div>
+    </div>
+
+    <div class="gallery-grid">
+        <!-- Side: classification rules -->
+        <div class="gallery-side">
+            <h3>Classification</h3>
+            <div id="g2Status" style="font-size: 9.5pt; color: var(--muted); margin-bottom: 8px; font-style: italic;"></div>
+            <ul class="rules-list" id="g2Rules"></ul>
+        </div>
+
+        <!-- Main: dual-panel Cartesian + Polar -->
+        <div class="gallery-main">
+            <div class="gallery-eq" id="g2Eq">\(r = a + b\sin\theta\)</div>
+            <div class="g2-panels">
+                <div>
+                    <div class="g2-panel-title">Cartesian view</div>
+                    <div class="g2-panel-eq" id="g2CartEq">\(y = 1 + 2\sin x\)</div>
+                    <div id="g2CartBox"></div>
+                </div>
+                <div>
+                    <div class="g2-panel-title">Polar view</div>
+                    <div class="g2-panel-eq" id="g2PolarEq">\(r = 1 + 2\sin\theta\)</div>
+                    <div id="galleryBox"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Readout -->
+    <div class="readout">
+        <div class="cell"><div class="key">罐 (rad)</div><div class="val" id="g2ReadTheta">0.000</div></div>
+        <div class="cell"><div class="key">罐 (deg)</div><div class="val" id="g2ReadDeg">0.0째</div></div>
+        <div class="cell r-cell"><div class="key">r</div><div class="val" id="g2ReadR">1.000</div></div>
+        <div class="cell"><div class="key">rect (x, y)</div><div class="val" id="g2ReadXY">(1.000, 0.000)</div></div>
+    </div>
+
+    <!-- Worked examples ??easy-number checkpoints -->
+    <div class="examples-box">
+        <div class="title">TRY: Worked examples ??easy numbers (compute by hand, then check)</div>
+        <div class="subtitle">Each example uses a "friendly" angle so \(r\) lands on an integer or half-integer. Click "Jump" to position the red dot on both panels ??your hand-computed answer should match.</div>
+        <div class="examples-grid">
+            <div class="example-card">
+                <span class="ex-label">EX 1</span>
+                <div class="ex-eq">\(r = 2\sin\theta\) at \(\theta = \pi/6\)</div>
+                <div class="ex-calc">
+                    \(r = 2 \cdot \sin(\pi/6) = 2 \cdot \tfrac{1}{2} =\) <code>1</code><br>
+                    Cartesian point: \((\pi/6,\ 1)\)<br>
+                    Polar (x,y): \((\cos\frac{\pi}{6},\ \sin\frac{\pi}{6}) \approx (0.866,\ 0.5)\)
+                </div>
+                <button data-ex="ex1">Jump to this point</button>
+            </div>
+            <div class="example-card">
+                <span class="ex-label">EX 2</span>
+                <div class="ex-eq">\(r = 4\cos\theta\) at \(\theta = \pi/3\)</div>
+                <div class="ex-calc">
+                    \(r = 4 \cdot \cos(\pi/3) = 4 \cdot \tfrac{1}{2} =\) <code>2</code><br>
+                    Cartesian point: \((\pi/3,\ 2)\)<br>
+                    Polar (x,y): \((2\cos\frac{\pi}{3},\ 2\sin\frac{\pi}{3}) = (1,\ \sqrt{3}) \approx (1,\ 1.732)\)
+                </div>
+                <button data-ex="ex2">Jump to this point</button>
+            </div>
+            <div class="example-card">
+                <span class="ex-label">EX 3</span>
+                <div class="ex-eq">\(r = 1 + 2\cos\theta\) (lima챌on) at \(\theta = \pi/3\)</div>
+                <div class="ex-calc">
+                    \(r = 1 + 2 \cdot \tfrac{1}{2} =\) <code>2</code><br>
+                    The lima챌on's radius equals \(2\) at this angle.
+                </div>
+                <button data-ex="ex3">Jump to this point</button>
+            </div>
+            <div class="example-card">
+                <span class="ex-label">EX 4</span>
+                <div class="ex-eq">\(r = 4\cos(2\theta)\) (rose) at \(\theta = \pi/4\)</div>
+                <div class="ex-calc">
+                    \(r = 4 \cdot \cos(\pi/2) =\) <code>0</code> &nbsp;&larr; <em>pole crossing</em><br>
+                    The curve passes through the origin between petals.
+                </div>
+                <button data-ex="ex4">Jump to this point</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Textbook thumbnail strip ??click to load preset -->
+    <div class="thumb-strip">
+        <div class="thumb" data-preset="circle_sin:4">\(r = 4\sin\theta\)<span class="thumb-label">circle</span></div>
+        <div class="thumb" data-preset="circle_cos:6">\(r = 6\cos\theta\)<span class="thumb-label">circle</span></div>
+        <div class="thumb" data-preset="limacon:1,1,cos,+">\(r = 1+\cos\theta\)<span class="thumb-label">cardioid</span></div>
+        <div class="thumb" data-preset="limacon:1,2,sin,+">\(r = 1+2\sin\theta\)<span class="thumb-label">inner loop</span></div>
+        <div class="thumb" data-preset="limacon:2,1,cos,-">\(r = 2-\cos\theta\)<span class="thumb-label">dimpled</span></div>
+        <div class="thumb" data-preset="limacon:4,2,sin,+">\(r = 4+2\sin\theta\)<span class="thumb-label">convex</span></div>
+        <div class="thumb" data-preset="rose:2,3,cos">\(r = 2\cos 3\theta\)<span class="thumb-label">3 petals</span></div>
+        <div class="thumb" data-preset="rose:3,2,sin">\(r = 3\sin 2\theta\)<span class="thumb-label">4 petals</span></div>
+        <div class="thumb" data-preset="rose:1,5,sin">\(r = \sin 5\theta\)<span class="thumb-label">5 petals</span></div>
+        <div class="thumb" data-preset="spiral:0.5">\(r = 0.5\theta\)<span class="thumb-label">spiral</span></div>
+    </div>
+
+    <div class="insight" style="margin-top: 14px;">
+        <div class="title">How to use this gallery</div>
+        <ol>
+            <li>Pick a family from the dropdown. The sliders update for that family.</li>
+            <li>Drag sliders ??the polar plot redraws live. The classification panel on the left highlights which sub-type your current \((a, b)\) lands in.</li>
+            <li>Click a textbook thumbnail below to jump to that specific equation.</li>
+        </ol>
+    </div>
+</div>
+
+<div class="footer">Newton School 쨌 Pre-Calculus 쨌 Albert Lee 쨌 2026-05-24 쨌 Polar Coordinates &amp; Curves Gallery</div>
+
+</div>
+
+<!-- ============================================================ -->
+<!--  JAVASCRIPT ??Mode 1 (preserved) + Mode 2 (new)             -->
+<!-- ============================================================ -->
+<script>
+// ============================================================
+//  TAB SWITCHING
+// ============================================================
+document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+        // when switching to mode 2, ensure board exists
+        if (btn.dataset.tab === 'mode2' && !window.g2Inited) {
+            initMode2();
+            window.g2Inited = true;
+        }
+    });
+});
+
+// ============================================================
+//  MODE 1 ??Cartesian ??Polar Mapping (preserved)
+// ============================================================
+let m1fn = 'cos';
+let m1amp = 4;
+let m1theta = 0;
+let m1traceCart = [];
+let m1tracePolarX = [];
+let m1tracePolarY = [];
+let m1animId = null;
+
+const m1CartBoard = JXG.JSXGraph.initBoard('m1CartBox', {
+    boundingbox: [-0.8, 6, 7.5, -6],
+    axis: true, showCopyright: false, showNavigation: false,
+    keepAspectRatio: false, grid: true,
+    defaultAxes: {
+        x: { ticks: { ticksDistance: Math.PI/2, label: { fontSize: 9 }, generateLabelText: function(tick) {
+            const v = tick.usrCoords[1];
+            const ratio = v / Math.PI;
+            if (Math.abs(ratio) < 0.01) return '0';
+            if (Math.abs(ratio - 0.5) < 0.01) return '?/2';
+            if (Math.abs(ratio - 1) < 0.01) return '?';
+            if (Math.abs(ratio - 1.5) < 0.01) return '3?/2';
+            if (Math.abs(ratio - 2) < 0.01) return '2?';
+            return v.toFixed(1);
+        }}},
+        y: { ticks: { ticksDistance: 1, label: { fontSize: 9 } } }
+    }
+});
+
+m1CartBoard.create('functiongraph', [
+    function(x) { return m1amp * (m1fn === 'cos' ? Math.cos(x) : Math.sin(x)); },
+    0, 2 * Math.PI
+], { strokeColor: '#1565c0', strokeWidth: 2.5 });
+
+m1CartBoard.create('line', [
+    [function() { return m1theta; }, -10],
+    [function() { return m1theta; }, 10]
+], { strokeColor: '#c62828', strokeWidth: 1.5, dash: 2, straightFirst: false, straightLast: false, highlight: false });
+
+m1CartBoard.create('point', [
+    function() { return m1theta; },
+    function() { return m1amp * (m1fn === 'cos' ? Math.cos(m1theta) : Math.sin(m1theta)); }
+], { name: '', size: 4, color: '#c62828', fixed: true });
+
+m1CartBoard.create('segment', [
+    [function() { return m1theta; }, 0],
+    [function() { return m1theta; }, function() { return m1amp * (m1fn === 'cos' ? Math.cos(m1theta) : Math.sin(m1theta)); }]
+], { strokeColor: '#2e7d32', strokeWidth: 3, dash: 0, highlight: false });
+
+let m1CartTraceCurve = m1CartBoard.create('curve', [[],[]], { strokeColor: '#ff9800', strokeWidth: 2 });
+
+const m1PolarBoard = JXG.JSXGraph.initBoard('m1PolarBox', {
+    boundingbox: [-6, 6, 6, -6],
+    axis: true, showCopyright: false, showNavigation: false,
+    keepAspectRatio: true, grid: true
+});
+
+for (let i = 1; i <= 5; i++) {
+    m1PolarBoard.create('circle', [[0,0], i], { strokeColor: '#ddd', strokeWidth: 1, fillColor: 'none', highlight: false, fixed: true });
+}
+[0, Math.PI/4, Math.PI/2, 3*Math.PI/4, Math.PI, 5*Math.PI/4, 3*Math.PI/2, 7*Math.PI/4].forEach(a => {
+    m1PolarBoard.create('segment', [
+        [0, 0], [6 * Math.cos(a), 6 * Math.sin(a)]
+    ], { strokeColor: '#eee', strokeWidth: 1, highlight: false, fixed: true });
+});
+
+m1PolarBoard.create('curve', [
+    function(t) { const r = m1amp * (m1fn === 'cos' ? Math.cos(t) : Math.sin(t)); return r * Math.cos(t); },
+    function(t) { const r = m1amp * (m1fn === 'cos' ? Math.cos(t) : Math.sin(t)); return r * Math.sin(t); },
+    0, 2 * Math.PI
+], { strokeColor: '#bbdefb', strokeWidth: 1.5, dash: 2 });
+
+m1PolarBoard.create('segment', [
+    [0, 0],
+    [function() { return 6 * Math.cos(m1theta); }, function() { return 6 * Math.sin(m1theta); }]
+], { strokeColor: '#c62828', strokeWidth: 1, dash: 2, highlight: false });
+
+function m1polarPtX() { const r = m1amp * (m1fn === 'cos' ? Math.cos(m1theta) : Math.sin(m1theta)); return r * Math.cos(m1theta); }
+function m1polarPtY() { const r = m1amp * (m1fn === 'cos' ? Math.cos(m1theta) : Math.sin(m1theta)); return r * Math.sin(m1theta); }
+
+m1PolarBoard.create('segment', [
+    [0, 0], [m1polarPtX, m1polarPtY]
+], {
+    strokeColor: function() { const r = m1amp * (m1fn === 'cos' ? Math.cos(m1theta) : Math.sin(m1theta)); return r >= 0 ? '#2e7d32' : '#c62828'; },
+    strokeWidth: 3, highlight: false
+});
+
+m1PolarBoard.create('point', [m1polarPtX, m1polarPtY], { name: '', size: 5, color: '#c62828', fixed: true });
+
+let m1PolarTraceCurve = m1PolarBoard.create('curve', [[],[]], { strokeColor: '#ff9800', strokeWidth: 2.5 });
+
+function m1UpdateReadout() {
+    const r = m1amp * (m1fn === 'cos' ? Math.cos(m1theta) : Math.sin(m1theta));
+    const x = r * Math.cos(m1theta);
+    const y = r * Math.sin(m1theta);
+    document.getElementById('m1ReadTheta').textContent = m1theta.toFixed(3);
+    document.getElementById('m1ReadDeg').textContent = (m1theta * 180 / Math.PI).toFixed(1) + '째';
+    const rEl = document.getElementById('m1ReadR');
+    rEl.textContent = r.toFixed(3);
+    if (r < 0) rEl.classList.add('neg'); else rEl.classList.remove('neg');
+    document.getElementById('m1ReadXY').textContent = '(' + x.toFixed(3) + ', ' + y.toFixed(3) + ')';
+    document.getElementById('m1AmpVal').textContent = 'a = ' + m1amp.toFixed(1);
+    document.getElementById('m1ThetaVal').textContent = '罐 = ' + m1theta.toFixed(3) + ' rad';
+}
+
+function m1UpdateEquations() {
+    const fnStr = m1fn === 'cos' ? '\\cos' : '\\sin';
+    document.getElementById('m1CartEq').innerHTML = '\\(y = ' + m1amp.toFixed(1).replace('.0','') + fnStr + ' x\\)';
+    document.getElementById('m1PolarEq').innerHTML = '\\(r = ' + m1amp.toFixed(1).replace('.0','') + fnStr + '\\theta\\)';
+    if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([document.getElementById('m1CartEq'), document.getElementById('m1PolarEq')]);
+    }
+}
+
+function m1AppendTrace() {
+    const x = m1polarPtX(); const y = m1polarPtY();
+    m1tracePolarX.push(x); m1tracePolarY.push(y);
+    m1PolarTraceCurve.dataX = m1tracePolarX.slice();
+    m1PolarTraceCurve.dataY = m1tracePolarY.slice();
+    m1traceCart.push({ x: m1theta, y: m1amp * (m1fn === 'cos' ? Math.cos(m1theta) : Math.sin(m1theta)) });
+    m1CartTraceCurve.dataX = m1traceCart.map(p => p.x);
+    m1CartTraceCurve.dataY = m1traceCart.map(p => p.y);
+}
+
+function m1RedrawAll() { m1CartBoard.update(); m1PolarBoard.update(); m1UpdateReadout(); }
+function m1ClearTrace() {
+    m1traceCart = []; m1tracePolarX = []; m1tracePolarY = [];
+    m1PolarTraceCurve.dataX = []; m1PolarTraceCurve.dataY = [];
+    m1CartTraceCurve.dataX = []; m1CartTraceCurve.dataY = [];
+    m1RedrawAll();
+}
+
+document.getElementById('m1AmpSlider').addEventListener('input', (e) => {
+    m1amp = parseFloat(e.target.value);
+    if (m1amp === 0) m1amp = 0.1;
+    m1ClearTrace(); m1UpdateEquations(); m1RedrawAll();
+});
+document.getElementById('m1ThetaSlider').addEventListener('input', (e) => {
+    m1theta = parseFloat(e.target.value); m1AppendTrace(); m1RedrawAll();
+});
+document.querySelectorAll('input[name="m1fn"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        m1fn = e.target.value; m1ClearTrace(); m1UpdateEquations(); m1RedrawAll();
+    });
+});
+document.getElementById('m1ClearBtn').addEventListener('click', m1ClearTrace);
+document.getElementById('m1AnimateBtn').addEventListener('click', () => {
+    if (m1animId) {
+        clearInterval(m1animId); m1animId = null;
+        document.getElementById('m1AnimateBtn').textContent = '?? Show full trace (0 ??2?)';
+        return;
+    }
+    m1ClearTrace(); m1theta = 0;
+    document.getElementById('m1ThetaSlider').value = 0;
+    document.getElementById('m1AnimateBtn').textContent = '?? Pause';
+    const step = 0.04;
+    m1animId = setInterval(() => {
+        m1theta += step;
+        if (m1theta > 2 * Math.PI) {
+            m1theta = 2 * Math.PI;
+            document.getElementById('m1ThetaSlider').value = m1theta;
+            m1AppendTrace(); m1RedrawAll();
+            clearInterval(m1animId); m1animId = null;
+            document.getElementById('m1AnimateBtn').textContent = '?? Show full trace (0 ??2?)';
+            return;
+        }
+        document.getElementById('m1ThetaSlider').value = m1theta;
+        m1AppendTrace(); m1RedrawAll();
+    }, 30);
+});
+
+m1UpdateEquations();
+m1RedrawAll();
+
+
+// ============================================================
+//  MODE 2 ??Common Polar Curves Gallery (dual-panel, mapping-aware)
+// ============================================================
+let g2State = {
+    family: 'limacon',
+    a: 1, b: 2, n: 3, trig: 'sin', sign: '+'
+};
+let g2theta = 0;
+let g2Board = null;            // polar board
+let g2CartBoard = null;        // cartesian board
+let g2Curve = null;            // polar curve object
+let g2CartCurve = null;        // cartesian curve object
+let g2tracePolarX = [], g2tracePolarY = [];
+let g2traceCartX = [], g2traceCartY = [];
+let g2PolarTraceCurve = null, g2CartTraceCurve = null;
+let g2animId = null;
+let g2currentMaxR = 5;
+
+// helper: format angle as a ? fraction if close to a common one
+function g2fmtThetaPi(t) {
+    const ratio = t / Math.PI;
+    const cands = [
+        [0, '0'], [1/6, '?/6'], [1/4, '?/4'], [1/3, '?/3'], [1/2, '?/2'],
+        [2/3, '2?/3'], [3/4, '3?/4'], [5/6, '5?/6'], [1, '?'],
+        [7/6, '7?/6'], [5/4, '5?/4'], [4/3, '4?/3'], [3/2, '3?/2'],
+        [5/3, '5?/3'], [7/4, '7?/4'], [11/6, '11?/6'], [2, '2?']
+    ];
+    for (const [v, str] of cands) {
+        if (Math.abs(ratio - v) < 0.012) return str;
+    }
+    return null;
+}
+
+function initMode2() {
+    // === Cartesian board (left) ===
+    g2CartBoard = JXG.JSXGraph.initBoard('g2CartBox', {
+        boundingbox: [-0.8, 6, 7.5, -6],
+        axis: true, showCopyright: false, showNavigation: false,
+        keepAspectRatio: false, grid: true,
+        defaultAxes: {
+            x: { ticks: { ticksDistance: Math.PI/2, label: { fontSize: 9 }, generateLabelText: function(tick) {
+                const v = tick.usrCoords[1];
+                const ratio = v / Math.PI;
+                if (Math.abs(ratio) < 0.01) return '0';
+                if (Math.abs(ratio - 0.5) < 0.01) return '?/2';
+                if (Math.abs(ratio - 1) < 0.01) return '?';
+                if (Math.abs(ratio - 1.5) < 0.01) return '3?/2';
+                if (Math.abs(ratio - 2) < 0.01) return '2?';
+                return v.toFixed(1);
+            }}},
+            y: { ticks: { ticksDistance: 1, label: { fontSize: 9 } } }
+        }
+    });
+
+    // Cartesian function curve (y = r(x))
+    g2CartCurve = g2CartBoard.create('functiongraph', [
+        function(x) { return g2R(x); },
+        0, 2 * Math.PI
+    ], { strokeColor: '#1565c0', strokeWidth: 2.5 });
+
+    // Cartesian vertical 罐 line
+    g2CartBoard.create('line', [
+        [function() { return g2theta; }, -100],
+        [function() { return g2theta; }, 100]
+    ], { strokeColor: '#c62828', strokeWidth: 1.5, dash: 2, straightFirst: false, straightLast: false, highlight: false });
+
+    // Cartesian segment from x-axis to point
+    g2CartBoard.create('segment', [
+        [function() { return g2theta; }, 0],
+        [function() { return g2theta; }, function() { return g2R(g2theta); }]
+    ], {
+        strokeColor: function() { return g2R(g2theta) >= 0 ? '#2e7d32' : '#c62828'; },
+        strokeWidth: 3, highlight: false
+    });
+
+    // Cartesian red point
+    g2CartBoard.create('point', [
+        function() { return g2theta; },
+        function() { return g2R(g2theta); }
+    ], { name: '', size: 4, color: '#c62828', fixed: true });
+
+    // Cartesian trace
+    g2CartTraceCurve = g2CartBoard.create('curve', [[],[]], { strokeColor: '#ff9800', strokeWidth: 2 });
+
+    // === Polar board (right) ===
+    g2Board = JXG.JSXGraph.initBoard('galleryBox', {
+        boundingbox: [-6, 6, 6, -6],
+        axis: true, showCopyright: false, showNavigation: false,
+        keepAspectRatio: true, grid: false
+    });
+    for (let i = 1; i <= 5; i++) {
+        g2Board.create('circle', [[0,0], i], { strokeColor: '#eee', strokeWidth: 1, fillColor: 'none', highlight: false, fixed: true });
+    }
+    [0, Math.PI/4, Math.PI/2, 3*Math.PI/4].forEach(a => {
+        g2Board.create('segment', [
+            [6 * Math.cos(a), 6 * Math.sin(a)],
+            [-6 * Math.cos(a), -6 * Math.sin(a)]
+        ], { strokeColor: '#eee', strokeWidth: 1, highlight: false, fixed: true });
+    });
+
+    // Polar red ray (direction 罐)
+    g2Board.create('segment', [
+        [0, 0],
+        [function() { return g2currentMaxR * Math.cos(g2theta); },
+         function() { return g2currentMaxR * Math.sin(g2theta); }]
+    ], { strokeColor: '#c62828', strokeWidth: 1, dash: 2, highlight: false });
+
+    // Polar radius segment from origin to current point (green if r>=0, red if r<0)
+    g2Board.create('segment', [
+        [0, 0],
+        [function() { return g2R(g2theta) * Math.cos(g2theta); },
+         function() { return g2R(g2theta) * Math.sin(g2theta); }]
+    ], {
+        strokeColor: function() { return g2R(g2theta) >= 0 ? '#2e7d32' : '#c62828'; },
+        strokeWidth: 3, highlight: false
+    });
+
+    // Polar red point
+    g2Board.create('point', [
+        function() { return g2R(g2theta) * Math.cos(g2theta); },
+        function() { return g2R(g2theta) * Math.sin(g2theta); }
+    ], { name: '', size: 5, color: '#c62828', fixed: true });
+
+    // Polar trace
+    g2PolarTraceCurve = g2Board.create('curve', [[],[]], { strokeColor: '#ff9800', strokeWidth: 2.5 });
+
+    g2BuildControls();
+    g2Render();
+    g2WireThetaAndTrace();
+}
+
+function g2WireThetaAndTrace() {
+    document.getElementById('g2ThetaSlider').addEventListener('input', (e) => {
+        g2theta = parseFloat(e.target.value);
+        g2AppendTrace();
+        g2UpdateReadout();
+        g2RedrawBoards();
+    });
+    document.getElementById('g2ClearBtn').addEventListener('click', g2ClearTrace);
+    document.getElementById('g2AnimateBtn').addEventListener('click', () => {
+        if (g2animId) {
+            clearInterval(g2animId); g2animId = null;
+            document.getElementById('g2AnimateBtn').textContent = '?? Show full trace (0 ??2?)';
+            return;
+        }
+        g2ClearTrace();
+        g2theta = 0;
+        document.getElementById('g2ThetaSlider').value = 0;
+        document.getElementById('g2AnimateBtn').textContent = '?? Pause';
+        const step = 0.04;
+        g2animId = setInterval(() => {
+            g2theta += step;
+            if (g2theta > 2 * Math.PI) {
+                g2theta = 2 * Math.PI;
+                document.getElementById('g2ThetaSlider').value = g2theta;
+                g2AppendTrace(); g2UpdateReadout(); g2RedrawBoards();
+                clearInterval(g2animId); g2animId = null;
+                document.getElementById('g2AnimateBtn').textContent = '?? Show full trace (0 ??2?)';
+                return;
+            }
+            document.getElementById('g2ThetaSlider').value = g2theta;
+            g2AppendTrace(); g2UpdateReadout(); g2RedrawBoards();
+        }, 30);
+    });
+}
+
+function g2AppendTrace() {
+    const r = g2R(g2theta);
+    g2tracePolarX.push(r * Math.cos(g2theta));
+    g2tracePolarY.push(r * Math.sin(g2theta));
+    g2PolarTraceCurve.dataX = g2tracePolarX.slice();
+    g2PolarTraceCurve.dataY = g2tracePolarY.slice();
+    g2traceCartX.push(g2theta);
+    g2traceCartY.push(r);
+    g2CartTraceCurve.dataX = g2traceCartX.slice();
+    g2CartTraceCurve.dataY = g2traceCartY.slice();
+}
+
+function g2ClearTrace() {
+    g2tracePolarX = []; g2tracePolarY = [];
+    g2traceCartX = []; g2traceCartY = [];
+    if (g2PolarTraceCurve) { g2PolarTraceCurve.dataX = []; g2PolarTraceCurve.dataY = []; }
+    if (g2CartTraceCurve) { g2CartTraceCurve.dataX = []; g2CartTraceCurve.dataY = []; }
+    g2RedrawBoards();
+}
+
+function g2RedrawBoards() {
+    if (g2Board) g2Board.update();
+    if (g2CartBoard) g2CartBoard.update();
+}
+
+function g2UpdateReadout() {
+    const r = g2R(g2theta);
+    const x = r * Math.cos(g2theta);
+    const y = r * Math.sin(g2theta);
+    const piFrac = g2fmtThetaPi(g2theta);
+    const thetaLabel = piFrac
+        ? `${piFrac} ??${g2theta.toFixed(3)}`
+        : g2theta.toFixed(3);
+    document.getElementById('g2ReadTheta').textContent = thetaLabel;
+    document.getElementById('g2ReadDeg').textContent = (g2theta * 180 / Math.PI).toFixed(1) + '째';
+    const rEl = document.getElementById('g2ReadR');
+    rEl.textContent = r.toFixed(3);
+    if (r < 0) rEl.classList.add('neg'); else rEl.classList.remove('neg');
+    document.getElementById('g2ReadXY').textContent = '(' + x.toFixed(3) + ', ' + y.toFixed(3) + ')';
+    document.getElementById('g2ThetaVal').textContent = '罐 = ' + (piFrac ? `${piFrac} (${g2theta.toFixed(3)} rad)` : `${g2theta.toFixed(3)} rad`);
+}
+
+// Build dynamic controls based on family
+function g2BuildControls() {
+    const wrap = document.getElementById('g2Controls');
+    let html = '';
+    if (g2State.family === 'circle_const') {
+        html = `
+            <div class="row">
+                <span class="label">a:</span>
+                <input type="range" id="g2A" min="0.5" max="5" step="0.1" value="${g2State.a}">
+                <span class="value" id="g2AVal">a = ${g2State.a.toFixed(1)}</span>
+            </div>`;
+    } else if (g2State.family === 'circle_cos' || g2State.family === 'circle_sin') {
+        html = `
+            <div class="row">
+                <span class="label">a:</span>
+                <input type="range" id="g2A" min="-5" max="5" step="0.1" value="${g2State.a}">
+                <span class="value" id="g2AVal">a = ${g2State.a.toFixed(1)}</span>
+            </div>`;
+    } else if (g2State.family === 'limacon') {
+        html = `
+            <div class="row">
+                <span class="label">a:</span>
+                <input type="range" id="g2A" min="0.1" max="5" step="0.1" value="${g2State.a}">
+                <span class="value" id="g2AVal">a = ${g2State.a.toFixed(1)}</span>
+            </div>
+            <div class="row">
+                <span class="label">b:</span>
+                <input type="range" id="g2B" min="0.1" max="5" step="0.1" value="${g2State.b}">
+                <span class="value" id="g2BVal">b = ${g2State.b.toFixed(1)}</span>
+            </div>
+            <div class="row">
+                <span class="label">Trig:</span>
+                <div class="radio-group">
+                    <label><input type="radio" name="g2Trig" value="cos" ${g2State.trig==='cos'?'checked':''}> cos 罐</label>
+                    <label><input type="radio" name="g2Trig" value="sin" ${g2State.trig==='sin'?'checked':''}> sin 罐</label>
+                </div>
+                <span class="label" style="min-width:60px;">Sign:</span>
+                <div class="radio-group">
+                    <label><input type="radio" name="g2Sign" value="+" ${g2State.sign==='+'?'checked':''}> +</label>
+                    <label><input type="radio" name="g2Sign" value="-" ${g2State.sign==='-'?'checked':''}> &minus;</label>
+                </div>
+            </div>`;
+    } else if (g2State.family === 'rose') {
+        html = `
+            <div class="row">
+                <span class="label">a (length):</span>
+                <input type="range" id="g2A" min="0.5" max="5" step="0.1" value="${g2State.a}">
+                <span class="value" id="g2AVal">a = ${g2State.a.toFixed(1)}</span>
+            </div>
+            <div class="row">
+                <span class="label">n (petals):</span>
+                <input type="range" id="g2N" min="1" max="8" step="1" value="${g2State.n}">
+                <span class="value" id="g2NVal">n = ${g2State.n}</span>
+            </div>
+            <div class="row">
+                <span class="label">Trig:</span>
+                <div class="radio-group">
+                    <label><input type="radio" name="g2Trig" value="cos" ${g2State.trig==='cos'?'checked':''}> cos n罐</label>
+                    <label><input type="radio" name="g2Trig" value="sin" ${g2State.trig==='sin'?'checked':''}> sin n罐</label>
+                </div>
+            </div>`;
+    } else if (g2State.family === 'spiral') {
+        html = `
+            <div class="row">
+                <span class="label">a:</span>
+                <input type="range" id="g2A" min="0.1" max="2" step="0.05" value="${g2State.a}">
+                <span class="value" id="g2AVal">a = ${g2State.a.toFixed(2)}</span>
+            </div>`;
+    }
+    wrap.innerHTML = html;
+    g2WireControls();
+}
+
+function g2WireControls() {
+    const aEl = document.getElementById('g2A');
+    if (aEl) aEl.addEventListener('input', (e) => {
+        g2State.a = parseFloat(e.target.value);
+        const av = document.getElementById('g2AVal');
+        av.textContent = 'a = ' + g2State.a.toFixed(g2State.family === 'spiral' ? 2 : 1);
+        g2ClearTrace(); g2Render();
+    });
+    const bEl = document.getElementById('g2B');
+    if (bEl) bEl.addEventListener('input', (e) => {
+        g2State.b = parseFloat(e.target.value);
+        document.getElementById('g2BVal').textContent = 'b = ' + g2State.b.toFixed(1);
+        g2ClearTrace(); g2Render();
+    });
+    const nEl = document.getElementById('g2N');
+    if (nEl) nEl.addEventListener('input', (e) => {
+        g2State.n = parseInt(e.target.value);
+        document.getElementById('g2NVal').textContent = 'n = ' + g2State.n;
+        g2ClearTrace(); g2Render();
+    });
+    document.querySelectorAll('input[name="g2Trig"]').forEach(r => {
+        r.addEventListener('change', (e) => { g2State.trig = e.target.value; g2ClearTrace(); g2Render(); });
+    });
+    document.querySelectorAll('input[name="g2Sign"]').forEach(r => {
+        r.addEventListener('change', (e) => { g2State.sign = e.target.value; g2ClearTrace(); g2Render(); });
+    });
+}
+
+document.getElementById('g2Family').addEventListener('change', (e) => {
+    g2State.family = e.target.value;
+    // sensible defaults
+    if (g2State.family === 'circle_const') g2State.a = 3;
+    if (g2State.family === 'circle_cos' || g2State.family === 'circle_sin') g2State.a = 4;
+    if (g2State.family === 'limacon') { g2State.a = 1; g2State.b = 2; g2State.trig = 'sin'; g2State.sign = '+'; }
+    if (g2State.family === 'rose') { g2State.a = 3; g2State.n = 3; g2State.trig = 'cos'; }
+    if (g2State.family === 'spiral') { g2State.a = 0.5; }
+    g2BuildControls();
+    g2ClearTrace();
+    g2Render();
+});
+
+// r(罐) function for current state
+function g2R(t) {
+    const s = g2State.sign === '+' ? 1 : -1;
+    const trigFn = g2State.trig === 'cos' ? Math.cos : Math.sin;
+    switch (g2State.family) {
+        case 'circle_const': return g2State.a;
+        case 'circle_cos':   return g2State.a * Math.cos(t);
+        case 'circle_sin':   return g2State.a * Math.sin(t);
+        case 'limacon':      return g2State.a + s * g2State.b * trigFn(t);
+        case 'rose':         return g2State.a * trigFn(g2State.n * t);
+        case 'spiral':       return g2State.a * t;
+        default: return 0;
+    }
+}
+
+function g2RangeFor() {
+    if (g2State.family === 'spiral') return [0, 6 * Math.PI];
+    return [0, 2 * Math.PI];
+}
+
+function g2Render() {
+    if (!g2Board) return;
+    // remove old polar curve
+    if (g2Curve) { try { g2Board.removeObject(g2Curve); } catch(e){} g2Curve = null; }
+    const [t0, t1] = g2RangeFor();
+    g2Curve = g2Board.create('curve', [
+        function(t) { return g2R(t) * Math.cos(t); },
+        function(t) { return g2R(t) * Math.sin(t); },
+        t0, t1
+    ], { strokeColor: '#1565c0', strokeWidth: 2.5 });
+
+    // auto-fit polar bounding box
+    let maxR = 0;
+    let minY = 0, maxY = 0;
+    const N = 200;
+    for (let i = 0; i <= N; i++) {
+        const t = t0 + (t1 - t0) * i / N;
+        const rVal = g2R(t);
+        if (isFinite(rVal)) {
+            maxR = Math.max(maxR, Math.abs(rVal));
+            minY = Math.min(minY, rVal);
+            maxY = Math.max(maxY, rVal);
+        }
+    }
+    maxR = Math.max(maxR, 1) * 1.2;
+    g2currentMaxR = maxR;
+    g2Board.setBoundingBox([-maxR, maxR, maxR, -maxR], true);
+
+    // === Update Cartesian board ===
+    if (g2CartBoard) {
+        // refresh Cartesian curve domain via removal+recreate (for spiral wide domain)
+        if (g2CartCurve) { try { g2CartBoard.removeObject(g2CartCurve); } catch(e){} g2CartCurve = null; }
+        g2CartCurve = g2CartBoard.create('functiongraph', [
+            function(x) { return g2R(x); },
+            t0, t1
+        ], { strokeColor: '#1565c0', strokeWidth: 2.5 });
+
+        // Cartesian bounding box: x = [-0.5, t1+0.5], y based on min/max of r over domain
+        const yMargin = Math.max(1, (maxY - minY) * 0.15);
+        const yTop = Math.max(maxY + yMargin, 1);
+        const yBot = Math.min(minY - yMargin, -1);
+        const xRight = t1 + 0.5;
+        const xLeft = Math.max(-0.8, -0.05 * t1);
+        g2CartBoard.setBoundingBox([xLeft, yTop, xRight, yBot], false);
+    }
+
+    g2UpdateEquationAndRules();
+    g2UpdateReadout();
+    g2RedrawBoards();
+}
+
+function g2UpdateEquationAndRules() {
+    let eq = '', cartEq = '', polarEq = '', rules = [], status = '';
+    const a = g2State.a, b = g2State.b, n = g2State.n;
+    const sSign = g2State.sign === '+' ? '+' : '??;
+    const trigStr = g2State.trig === 'cos' ? '\\cos' : '\\sin';
+    const fmtA = a.toFixed(g2State.family === 'spiral' ? 2 : 1).replace(/\.0$/, '');
+    const fmtB = b.toFixed(1).replace(/\.0$/, '');
+
+    if (g2State.family === 'circle_const') {
+        eq = `\\(r = ${fmtA}\\)`;
+        cartEq = `\\(y = ${fmtA}\\)`;
+        polarEq = `\\(r = ${fmtA}\\)`;
+        status = `Circle centered at the pole, radius ${fmtA}.`;
+        rules = ['Constant radius ??circle at the origin.'];
+    } else if (g2State.family === 'circle_cos') {
+        eq = `\\(r = ${fmtA}\\cos\\theta\\)`;
+        cartEq = `\\(y = ${fmtA}\\cos x\\)`;
+        polarEq = `\\(r = ${fmtA}\\cos\\theta\\)`;
+        status = `Circle through the pole, diameter ${Math.abs(a).toFixed(1)}, on the ${a >= 0 ? 'positive' : 'negative'} x-axis.`;
+        rules = [
+            `${a >= 0 ? '<strong>a &gt; 0</strong> ??right side of y-axis' : 'a &gt; 0 ??right side of y-axis'}`,
+            `${a < 0 ? '<strong>a &lt; 0</strong> ??left side of y-axis' : 'a &lt; 0 ??left side of y-axis'}`,
+            `Diameter = |a| = ${Math.abs(a).toFixed(1)}.`
+        ];
+        rules = rules.map((r, i) => ({text: r, match: (i === 0 && a >= 0) || (i === 1 && a < 0)}));
+    } else if (g2State.family === 'circle_sin') {
+        eq = `\\(r = ${fmtA}\\sin\\theta\\)`;
+        cartEq = `\\(y = ${fmtA}\\sin x\\)`;
+        polarEq = `\\(r = ${fmtA}\\sin\\theta\\)`;
+        status = `Circle through the pole, diameter ${Math.abs(a).toFixed(1)}, on the ${a >= 0 ? 'positive' : 'negative'} y-axis.`;
+        rules = [
+            {text: '<strong>a &gt; 0</strong> ??above x-axis (positive y-axis)', match: a >= 0},
+            {text: '<strong>a &lt; 0</strong> ??below x-axis (negative y-axis)', match: a < 0},
+            {text: `Diameter = |a| = ${Math.abs(a).toFixed(1)}.`, match: false}
+        ];
+    } else if (g2State.family === 'limacon') {
+        eq = `\\(r = ${fmtA} ${sSign} ${fmtB}${trigStr}\\theta\\)`;
+        cartEq = `\\(y = ${fmtA} ${sSign} ${fmtB}${trigStr} x\\)`;
+        polarEq = `\\(r = ${fmtA} ${sSign} ${fmtB}${trigStr}\\theta\\)`;
+        let subtype = '', orient = '';
+        if (Math.abs(a - b) < 0.05) subtype = 'cardioid';
+        else if (a < b) subtype = 'inner loop';
+        else if (a >= 2*b) subtype = 'convex';
+        else subtype = 'dimpled';
+        if (g2State.trig === 'cos') orient = g2State.sign === '+' ? 'right' : 'left';
+        else                       orient = g2State.sign === '+' ? 'up'    : 'down';
+        status = `Lima챌on (${subtype}), main lobe points ${orient}. a=${fmtA}, b=${fmtB}.`;
+        rules = [
+            {text: '<strong>a &lt; b</strong> ??inner loop', match: subtype === 'inner loop'},
+            {text: '<strong>a = b</strong> ??cardioid', match: subtype === 'cardioid'},
+            {text: '<strong>a &gt; b</strong> (but a &lt; 2b) ??dimpled', match: subtype === 'dimpled'},
+            {text: '<strong>a ??2b</strong> ??convex', match: subtype === 'convex'}
+        ];
+    } else if (g2State.family === 'rose') {
+        eq = `\\(r = ${fmtA}${trigStr}(${n}\\theta)\\)`;
+        cartEq = `\\(y = ${fmtA}${trigStr}(${n}x)\\)`;
+        polarEq = `\\(r = ${fmtA}${trigStr}(${n}\\theta)\\)`;
+        const petals = n % 2 === 0 ? 2 * n : n;
+        status = `${petals}-petal rose (n = ${n}, ${n % 2 === 0 ? 'even' : 'odd'}), petal length ${fmtA}.`;
+        rules = [
+            {text: '<strong>n odd</strong> ??n petals', match: n % 2 === 1},
+            {text: '<strong>n even</strong> ??2n petals', match: n % 2 === 0},
+            {text: `cos ??first petal along +x 쨌 sin ??along bisector at 罐 = ?/(2n) = ${(180/(2*n)).toFixed(1)}째`, match: false}
+        ];
+    } else if (g2State.family === 'spiral') {
+        eq = `\\(r = ${fmtA}\\theta\\)`;
+        cartEq = `\\(y = ${fmtA}\\,x\\)`;
+        polarEq = `\\(r = ${fmtA}\\theta\\)`;
+        status = `Archimedean spiral. Radius grows linearly with angle; rate = ${fmtA} per radian.`;
+        rules = [
+            {text: 'Constant gap between successive loops = 2?쨌a.', match: true}
+        ];
+    }
+
+    document.getElementById('g2Eq').innerHTML = eq;
+    const cartEl = document.getElementById('g2CartEq');
+    const polarEl = document.getElementById('g2PolarEq');
+    if (cartEl) cartEl.innerHTML = cartEq;
+    if (polarEl) polarEl.innerHTML = polarEq;
+    document.getElementById('g2Status').innerHTML = status;
+    const ul = document.getElementById('g2Rules');
+    ul.innerHTML = rules.map(r => {
+        if (typeof r === 'string') return '<li>' + r + '</li>';
+        return `<li class="${r.match ? 'match' : ''}">${r.text}</li>`;
+    }).join('');
+
+    if (window.MathJax && window.MathJax.typesetPromise) {
+        const els = [document.getElementById('g2Eq')];
+        if (cartEl) els.push(cartEl);
+        if (polarEl) els.push(polarEl);
+        MathJax.typesetPromise(els);
+    }
+}
+
+// Thumbnail click ??load preset
+document.querySelectorAll('.thumb').forEach(t => {
+    t.addEventListener('click', () => {
+        document.querySelectorAll('.thumb').forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        if (!window.g2Inited) { initMode2(); window.g2Inited = true; }
+        const [fam, params] = t.dataset.preset.split(':');
+        const p = params.split(',');
+        if (fam === 'circle_cos' || fam === 'circle_sin' || fam === 'circle_const') {
+            g2State.family = fam; g2State.a = parseFloat(p[0]);
+        } else if (fam === 'limacon') {
+            g2State.family = 'limacon';
+            g2State.a = parseFloat(p[0]); g2State.b = parseFloat(p[1]);
+            g2State.trig = p[2]; g2State.sign = p[3];
+        } else if (fam === 'rose') {
+            g2State.family = 'rose';
+            g2State.a = parseFloat(p[0]); g2State.n = parseInt(p[1]); g2State.trig = p[2];
+        } else if (fam === 'spiral') {
+            g2State.family = 'spiral'; g2State.a = parseFloat(p[0]);
+        }
+        document.getElementById('g2Family').value = g2State.family;
+        g2BuildControls();
+        g2ClearTrace();
+        g2Render();
+        // Switch to Mode 2 tab if not already there
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+        document.querySelector('[data-tab="mode2"]').classList.add('active');
+        document.getElementById('mode2').classList.add('active');
+    });
+});
+
+// ============================================================
+//  WORKED EXAMPLES ??Jump to this point
+// ============================================================
+// Each example sets (family, params, 罐) and updates the dual-panel red dot.
+const g2Examples = {
+    ex1: {  // r = 2 sin 罐 at 罐 = ?/6
+        family: 'circle_sin', a: 2, theta: Math.PI / 6
+    },
+    ex2: {  // r = 4 cos 罐 at 罐 = ?/3
+        family: 'circle_cos', a: 4, theta: Math.PI / 3
+    },
+    ex3: {  // r = 1 + 2 cos 罐 at 罐 = ?/3
+        family: 'limacon', a: 1, b: 2, trig: 'cos', sign: '+', theta: Math.PI / 3
+    },
+    ex4: {  // r = 4 cos(2罐) at 罐 = ?/4
+        family: 'rose', a: 4, n: 2, trig: 'cos', theta: Math.PI / 4
+    }
+};
+
+function g2JumpTo(exKey) {
+    const ex = g2Examples[exKey];
+    if (!ex) return;
+    if (!window.g2Inited) { initMode2(); window.g2Inited = true; }
+    // 1) set family + params on state
+    g2State.family = ex.family;
+    if (typeof ex.a === 'number') g2State.a = ex.a;
+    if (typeof ex.b === 'number') g2State.b = ex.b;
+    if (typeof ex.n === 'number') g2State.n = ex.n;
+    if (ex.trig) g2State.trig = ex.trig;
+    if (ex.sign) g2State.sign = ex.sign;
+    // 2) sync the family dropdown
+    document.getElementById('g2Family').value = g2State.family;
+    // 3) rebuild controls (sliders for this family)
+    g2BuildControls();
+    // 4) clear any old trace
+    g2ClearTrace();
+    // 5) render curves with new params
+    g2Render();
+    // 6) set 罐 slider value and update the red dot
+    g2theta = ex.theta;
+    const thetaSlider = document.getElementById('g2ThetaSlider');
+    if (thetaSlider) thetaSlider.value = g2theta;
+    g2UpdateReadout();
+    g2RedrawBoards();
+    // 7) make sure Mode 2 tab is active
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.querySelector('[data-tab="mode2"]').classList.add('active');
+    document.getElementById('mode2').classList.add('active');
+    // 8) scroll the readout into view so student sees the red dot + numbers
+    setTimeout(() => {
+        document.querySelector('#mode2 .readout').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 80);
+}
+
+document.querySelectorAll('.example-card button[data-ex]').forEach(btn => {
+    btn.addEventListener('click', () => g2JumpTo(btn.dataset.ex));
+});
+</script>
+
+</body>
+</html>
